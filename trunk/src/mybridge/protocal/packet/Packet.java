@@ -1,4 +1,4 @@
-package mybridge.protocal;
+package mybridge.protocal.packet;
  
 import xnet.core.util.StringUtil;
 

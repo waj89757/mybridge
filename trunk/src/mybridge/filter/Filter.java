@@ -3,7 +3,7 @@ package mybridge.filter;
  
 import java.util.List;
 
-import mybridge.protocal.*;
+import mybridge.protocal.packet.*;
 
 public interface Filter {
 	/**

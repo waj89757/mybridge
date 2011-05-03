@@ -1,11 +1,11 @@
-package mybridge.protocal;
+package mybridge.protocal.packet;
 
 import mybridge.util.Buffer;
 
 public class PacketEof extends Packet {
 	public byte type = (byte) 0xfe;
-	public int warningCount;
-	public int statusFlags;
+	public int warningCount = 0;
+	public int statusFlags = 0;
 
 	@Override
 	public byte[] getBytes() {
