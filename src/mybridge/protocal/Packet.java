@@ -1,10 +1,8 @@
 package mybridge.protocal;
  
-import xnet.core.util.Packer;
 import xnet.core.util.StringUtil;
 
 public abstract class Packet {
-	Packer packer = new Packer();
 
 	public abstract void putBytes(byte[] bs);
 
