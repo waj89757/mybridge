@@ -13,22 +13,32 @@ import mybridge.protocal.*;
 public class SessionHandle {
 	static Log logger = LogFactory.getLog(SessionHandle.class);
 
-	MyBridgeSession session;
-	State state;
-	byte packetNum = 0;
-	Iterator<Packet> resultIter = null;
+	MyBridgeSession session;//链接对应的session
+	State state;//当前协议交互状态
+	byte packetNum = 0;//下一个packet的序列号
+	Iterator<Packet> resultIter = null;//要写的packet迭代器，只要不为空就会一直写状态直到为空
 
 	public SessionHandle(MyBridgeSession session) {
 		this.session = session;
 		state = State.WRITE_INIT;
 	}
 
+	/**
+	 * 链接建立事件
+	 * @param readBuf
+	 * @param writeBuf
+	 */
 	public void onPacketInit(IOBuffer readBuf, IOBuffer writeBuf) {
 		PacketInit init = new PacketInit();
 		init.putBytes(PacketInit.defaultPacket);
 		writePacket(writeBuf, init);
 	}
 
+	/**
+	 * 读完一个packet事件
+	 * @param readBuf
+	 * @param writeBuf
+	 */
 	public void onPacketReceived(IOBuffer readBuf, IOBuffer writeBuf) {
 		logger.debug("DEBUG ENTER");
 
@@ -74,6 +84,11 @@ public class SessionHandle {
 		}
 	}
 
+	/**
+	 * 写完一个packet事件
+	 * @param readBuf
+	 * @param writeBuf
+	 */
 	public void onPacketSended(IOBuffer readBuf, IOBuffer writeBuf) {
 		logger.debug("DEBUG ENTER");
 
