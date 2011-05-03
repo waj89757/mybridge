@@ -43,7 +43,7 @@ public class MysqlHandle implements Handle {
 			fieldPacket.orgTable = meta.getTableName(i);
 			fieldPacket.name = meta.getColumnName(i);
 			fieldPacket.orgName = meta.getColumnName(i);
-			fieldPacket.type = (byte) 254;
+			fieldPacket.type = (byte) MysqlDefs.javaTypeToMysql(meta.getColumnType(i));
 			fieldPacket.length = meta.getColumnDisplaySize(i);
 			packetList.add(fieldPacket);
 		}

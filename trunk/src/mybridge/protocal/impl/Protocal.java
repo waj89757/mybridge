@@ -68,6 +68,10 @@ public class Protocal {
 					throw new Exception(handleClass + " is not a Handle");
 				}
 				List<Packet> resultList = ((Handle) handle).doCommand(cmd);
+				if (resultList == null || resultList.size() == 0) {
+					session.setNextState(MyBridgeSession.STATE_CLOSE);
+					return;
+				}
 				resultIter = resultList.iterator();
 			} catch (Exception e) {
 				e.printStackTrace();
