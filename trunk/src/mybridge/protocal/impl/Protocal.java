@@ -11,15 +11,15 @@ import mybridge.protocal.packet.*;
 import mybridge.server.MyBridgeSession;
 import mybridge.storyge.mysql.MysqlHandle;
 
-public class SessionHandle {
-	static Log logger = LogFactory.getLog(SessionHandle.class);
+public class Protocal {
+	static Log logger = LogFactory.getLog(Protocal.class);
 
 	MyBridgeSession session;//链接对应的session
 	State state;//当前协议交互状态
 	public byte packetNum = 0;//下一个packet的序列号
 	Iterator<Packet> resultIter = null;//要写的packet迭代器，只要不为空就会一直写状态直到为空
 
-	public SessionHandle(MyBridgeSession session) {
+	public Protocal(MyBridgeSession session) {
 		this.session = session;
 		state = State.WRITE_INIT;
 	}
@@ -50,25 +50,17 @@ public class SessionHandle {
 			auth.putBytes(readBuf.getBytes(0, readBuf.limit()));
 			PacketOk ok = new PacketOk();
 			ok.type = 0;
-			ok.serverStatus = 2;
+			ok.serverStatus = 0;
 			ok.message = "welcom to mybridge designed by quanwei";
 			writePacket(writeBuf, ok);
 			break;
 		case READ_COMMOND:
 			state = State.WRITE_RESULT;
-			PacketCommond commond = new PacketCommond();
-			commond.putBytes(readBuf.getBytes(0, readBuf.limit()));
-			if (commond.type != 0x03) {
-				PacketEof eof = new PacketEof();
-				eof.warningCount = 0;
-				eof.statusFlags = 0;
-				writePacket(writeBuf, eof);
-				break;
-			}
-
+			PacketCommand cmd = new PacketCommand();
+			cmd.putBytes(readBuf.getBytes(0, readBuf.limit()));
 			try {
-				MysqlHandle filter = new MysqlHandle();
-				List<Packet> resultList = filter.doFilter(commond.sql);
+				MysqlHandle handle = new MysqlHandle();
+				List<Packet> resultList = handle.doCommand(cmd);
 				resultIter = resultList.iterator();
 			} catch (Exception e) {
 				e.printStackTrace();

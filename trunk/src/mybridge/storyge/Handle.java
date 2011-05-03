@@ -12,5 +12,5 @@ public interface Handle {
 	 * @return
 	 * @throws Exception 
 	 */
-	public List<Packet> doFilter(String sql) throws Exception;
+	public List<Packet> doCommand(PacketCommand cmd) throws Exception;
 }
