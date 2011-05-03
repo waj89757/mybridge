@@ -27,7 +27,7 @@ public class MysqlHandle implements Handle {
 		}
 
 		//执行sql
-		ResultSet rs = query(cmd.sql);
+		ResultSet rs = query(cmd.value);
 		ResultSetMetaData meta = (ResultSetMetaData) rs.getMetaData();
 
 		//result set packet
