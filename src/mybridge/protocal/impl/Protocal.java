@@ -15,14 +15,16 @@ public class Protocal {
 	static Log logger = LogFactory.getLog(Protocal.class);
 	public static Class<?> handleClass;
 
+	Handle handle;
 	MyBridgeSession session;//链接对应的session
 	State state;//当前协议交互状态
 	public byte packetNum = 0;//下一个packet的序列号
 	Iterator<Packet> resultIter = null;//要写的packet迭代器，只要不为空就会一直写状态直到为空
 
-	public Protocal(MyBridgeSession session) {
+	public Protocal(MyBridgeSession session) throws InstantiationException, IllegalAccessException {
 		this.session = session;
 		state = State.WRITE_INIT;
+		handle = (Handle) handleClass.newInstance();
 	}
 
 	/**
@@ -60,14 +62,7 @@ public class Protocal {
 			PacketCommand cmd = new PacketCommand();
 			cmd.putBytes(readBuf.getBytes(0, readBuf.limit()));
 			try {
-				if (handleClass == null) {
-					throw new Exception("handleClass is not init");
-				}
-				Object handle = handleClass.newInstance();
-				if (!(handle instanceof Handle)) {
-					throw new Exception(handleClass + " is not a Handle");
-				}
-				List<Packet> resultList = ((Handle) handle).doCommand(cmd);
+				List<Packet> resultList = handle.doCommand(cmd);
 				if (resultList == null || resultList.size() == 0) {
 					session.setNextState(MyBridgeSession.STATE_CLOSE);
 					return;
@@ -122,7 +117,6 @@ public class Protocal {
 	 */
 	public void writePacket(IOBuffer writeBuf, Packet packet) {
 		logger.debug("DEBUG ENTER");
-		logger.info(packet);
 
 		byte[] bodyBytes = packet.getBytes();
 		PacketHeader header = new PacketHeader();
