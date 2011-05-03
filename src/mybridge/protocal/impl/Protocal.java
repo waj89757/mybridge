@@ -9,10 +9,11 @@ import org.apache.commons.logging.LogFactory;
 import xnet.core.util.IOBuffer;
 import mybridge.protocal.packet.*;
 import mybridge.server.MyBridgeSession;
-import mybridge.storyge.mysql.MysqlHandle;
+import mybridge.storyge.Handle;
 
 public class Protocal {
 	static Log logger = LogFactory.getLog(Protocal.class);
+	public static Class<?> handleClass;
 
 	MyBridgeSession session;//链接对应的session
 	State state;//当前协议交互状态
@@ -59,8 +60,14 @@ public class Protocal {
 			PacketCommand cmd = new PacketCommand();
 			cmd.putBytes(readBuf.getBytes(0, readBuf.limit()));
 			try {
-				MysqlHandle handle = new MysqlHandle();
-				List<Packet> resultList = handle.doCommand(cmd);
+				if (handleClass == null) {
+					throw new Exception("handleClass is not init");
+				}
+				Object handle = handleClass.newInstance();
+				if (!(handle instanceof Handle)) {
+					throw new Exception(handleClass + " is not a Handle");
+				}
+				List<Packet> resultList = ((Handle) handle).doCommand(cmd);
 				resultIter = resultList.iterator();
 			} catch (Exception e) {
 				e.printStackTrace();
