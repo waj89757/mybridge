@@ -7,9 +7,9 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 import xnet.core.util.IOBuffer;
-import mybridge.filter.MysqlFilter;
 import mybridge.protocal.packet.*;
 import mybridge.server.MyBridgeSession;
+import mybridge.storyge.mysql.MysqlHandle;
 
 public class SessionHandle {
 	static Log logger = LogFactory.getLog(SessionHandle.class);
@@ -67,7 +67,7 @@ public class SessionHandle {
 			}
 
 			try {
-				MysqlFilter filter = new MysqlFilter();
+				MysqlHandle filter = new MysqlHandle();
 				List<Packet> resultList = filter.doFilter(commond.sql);
 				resultIter = resultList.iterator();
 			} catch (Exception e) {
