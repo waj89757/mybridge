@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<project name="HelloWorld" default="jar" basedir=".">
+	<property name="src" value="src" />
+	<property name="classes" value="classes" />
+	<property name="dest" value="dest" />
+	<property name="lib" value="lib" />
+	<property name="jar" value="${dest}/mybridge.jar" />
+	<path id="classpath">
+		<fileset dir="${lib}">
+			<include name="*.jar" />
+		</fileset>
+	</path>
+	<target name="init">
+		<mkdir dir="${classes}" />
+		<mkdir dir="${dest}" />
+	</target>
+	<target name="compile" depends="init">
+		<javac srcdir="${src}" destdir="${classes}" includeantruntime="on" debug="true" debuglevel="source,lines,vars">
+			<classpath refid="classpath" />
+			<compilerarg line="-encoding UTF-8 -Xlint:unchecked "/>
+		</javac>
+	</target>
+	<target name="jar" depends="compile">
+		<jar destfile="${jar}">
+			<fileset dir="${classes}">
+				<include name="**/*.class" />
+			</fileset>
+		</jar>
+	</target>
+	<target name="clean">
+		<delete dir="${dest}" />
+		<delete dir="${classes}" />
+	</target>
+</project>
