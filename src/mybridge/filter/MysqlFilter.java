@@ -9,11 +9,11 @@ import com.mysql.jdbc.ResultSet;
 import com.mysql.jdbc.ResultSetMetaData;
 import com.mysql.jdbc.Statement;
 
-import mybridge.protocal.Packet;
-import mybridge.protocal.PacketEof;
-import mybridge.protocal.PacketField;
-import mybridge.protocal.PacketResultSet;
-import mybridge.protocal.PacketRow;
+import mybridge.protocal.packet.Packet;
+import mybridge.protocal.packet.PacketEof;
+import mybridge.protocal.packet.PacketField;
+import mybridge.protocal.packet.PacketResultSet;
+import mybridge.protocal.packet.PacketRow;
 
 public class MysqlFilter implements Filter {
 	public List<Packet> doFilter(String sql) throws Exception {

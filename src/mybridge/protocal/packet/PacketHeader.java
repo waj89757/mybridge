@@ -1,4 +1,4 @@
-package mybridge.protocal;
+package mybridge.protocal.packet;
 
 /*
  The Packet Header
@@ -28,7 +28,6 @@ public class PacketHeader extends Packet {
 	@Override
 	public byte[] getBytes() {
 		byte[] bs = new byte[4];
-
 		bs[0] = (byte) ((packetLen) & 0xff);
 		bs[1] = (byte) ((packetLen >> 8) & 0xff);
 		bs[2] = (byte) ((packetLen >> 16) & 0xff);

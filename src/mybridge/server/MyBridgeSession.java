@@ -1,6 +1,7 @@
 package mybridge.server;
 
-import mybridge.protocal.*;
+import mybridge.protocal.impl.SessionHandle;
+import mybridge.protocal.packet.*;
 import xnet.core.server.Session;
 import xnet.core.util.IOBuffer;
 

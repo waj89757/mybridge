@@ -1,4 +1,4 @@
-package mybridge.server;
+package mybridge.protocal.impl;
 
 import java.util.Iterator;
 import java.util.List;
@@ -8,14 +8,15 @@ import org.apache.commons.logging.LogFactory;
 
 import xnet.core.util.IOBuffer;
 import mybridge.filter.MysqlFilter;
-import mybridge.protocal.*;
+import mybridge.protocal.packet.*;
+import mybridge.server.MyBridgeSession;
 
 public class SessionHandle {
 	static Log logger = LogFactory.getLog(SessionHandle.class);
 
 	MyBridgeSession session;//链接对应的session
 	State state;//当前协议交互状态
-	byte packetNum = 0;//下一个packet的序列号
+	public byte packetNum = 0;//下一个packet的序列号
 	Iterator<Packet> resultIter = null;//要写的packet迭代器，只要不为空就会一直写状态直到为空
 
 	public SessionHandle(MyBridgeSession session) {
