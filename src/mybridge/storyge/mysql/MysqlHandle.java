@@ -10,6 +10,7 @@ import com.mysql.jdbc.ResultSetMetaData;
 import com.mysql.jdbc.Statement;
 
 import mybridge.protocal.packet.Packet;
+import mybridge.protocal.packet.PacketCommand;
 import mybridge.protocal.packet.PacketEof;
 import mybridge.protocal.packet.PacketField;
 import mybridge.protocal.packet.PacketResultSet;
@@ -17,11 +18,16 @@ import mybridge.protocal.packet.PacketRow;
 import mybridge.storyge.Handle;
 
 public class MysqlHandle implements Handle {
-	public List<Packet> doFilter(String sql) throws Exception {
+	public List<Packet> doCommand(PacketCommand cmd) throws Exception {
 		List<Packet> packetList = new ArrayList<Packet>();
 
+		if (cmd.type != 3) {
+			packetList.add(new PacketEof());
+			return packetList;
+		}
+
 		//执行sql
-		ResultSet rs = query(sql);
+		ResultSet rs = query(cmd.sql);
 		ResultSetMetaData meta = (ResultSetMetaData) rs.getMetaData();
 
 		//result set packet
@@ -41,10 +47,7 @@ public class MysqlHandle implements Handle {
 			fieldPacket.length = meta.getColumnDisplaySize(i);
 			packetList.add(fieldPacket);
 		}
-		PacketEof eof = new PacketEof();
-		eof.warningCount = 0;
-		eof.statusFlags = 0;
-		packetList.add(eof);
+		packetList.add(new PacketEof());
 
 		while (rs.next()) {
 			PacketRow rowPacket = new PacketRow();
@@ -53,7 +56,7 @@ public class MysqlHandle implements Handle {
 			}
 			packetList.add(rowPacket);
 		}
-		packetList.add(eof);
+		packetList.add(new PacketEof());
 		return packetList;
 	}
 

@@ -2,7 +2,7 @@ package mybridge.protocal.packet;
 
 import mybridge.util.Buffer;
 
-public class PacketCommond extends Packet {
+public class PacketCommand extends Packet {
 	public byte type;
 	public String sql;
 	
