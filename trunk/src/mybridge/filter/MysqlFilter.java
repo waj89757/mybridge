@@ -16,7 +16,6 @@ import mybridge.protocal.PacketResultSet;
 import mybridge.protocal.PacketRow;
 
 public class MysqlFilter implements Filter {
-	@Override
 	public List<Packet> doFilter(String sql) throws Exception {
 		List<Packet> packetList = new ArrayList<Packet>();
 
