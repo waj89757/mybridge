@@ -7,7 +7,11 @@ import mybridge.protocal.packet.*;
 
 public interface Handle {
 	/**
-	 * 执行过滤器，并返回要发送给client的packet list
+	 * 初始化
+	 */
+	public void init();
+	/**
+	 * 执行命令，并返回要发送给client的packet list
 	 * @param sql
 	 * @return
 	 * @throws Exception 
