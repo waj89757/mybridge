@@ -13,4 +13,8 @@ public class MemcacheHandle implements Handle {
 		List<Packet> packetList = new ArrayList<Packet>();
 		return packetList;
 	}
+
+	@Override
+	public void init() {
+	}
 }

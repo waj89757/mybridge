@@ -25,6 +25,7 @@ public class Protocal {
 		this.session = session;
 		state = State.WRITE_INIT;
 		handle = (Handle) handleClass.newInstance();
+		handle.init();
 	}
 
 	/**
