@@ -17,4 +17,10 @@ public class MemcacheHandle implements Handle {
 	@Override
 	public void init() {
 	}
+
+	@Override
+	public void destrory() {
+		// TODO Auto-generated method stub
+		
+	}
 }

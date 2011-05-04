@@ -41,6 +41,12 @@ public class MyBridgeSession extends Session {
 	@Override
 	public void open(IOBuffer readBuf, IOBuffer writeBuf) throws Exception {
 		protocal = new Protocal(this);
-		protocal.onPacketInit(readBuf, writeBuf);
+		protocal.onSessionOpen(readBuf, writeBuf);
+	}
+
+	public void close() {
+		if (protocal != null) {
+			protocal.onSessionClose();
+		}
 	}
 }

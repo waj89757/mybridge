@@ -3,9 +3,13 @@ package mybridge.storyge.mysql;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+
+import com.mchange.v2.c3p0.ComboPooledDataSource;
 
 import mybridge.protocal.impl.Protocal;
 import mybridge.protocal.packet.*;
@@ -15,7 +19,10 @@ import mybridge.util.MysqlTool;
 
 public class MysqlHandle implements Handle {
 	static Log logger = LogFactory.getLog(Protocal.class);
-	Connection conn = null;
+	static Pattern pattern = Pattern.compile("^(INSERT|CREATE|UPDATE|REPLACE|DELETE|DROP|ALTER|TRUNCT)");
+	Connection master = null;
+	Connection slave = null;
+	List<ComboPooledDataSource> dsList = new ArrayList<ComboPooledDataSource>();
 
 	public List<Packet> doCommand(PacketCommand cmd) throws Exception {
 		List<Packet> packetList = new ArrayList<Packet>();
@@ -45,30 +52,58 @@ public class MysqlHandle implements Handle {
 		logger.info("sql:" + sql);
 
 		//执行sql
-		conn = getConnection();
+		Connection conn = getConnection(sql);
+		if (conn == null) {
+			throw new Exception("connect error");
+		}
 		return MysqlTool.query(conn, sql);
 	}
 
-	Connection getConnection() throws Exception {
-		if (conn == null) {
-			// 驱动程序名
-			String driver = "com.mysql.jdbc.Driver";
-			// URL指向要访问的数据库名scutcs
-			String url = "jdbc:mysql://127.0.0.1:3306/mysql";
-			// MySQL配置时的用户名
-			String user = "root";
-			// MySQL配置时的密码
-			String password = "";
-			// 加载驱动程序
-			Class.forName(driver);
-			// 连续数据库
-			conn = DriverManager.getConnection(url, user, password);
+	Connection getConnection(String sql) throws Exception {
+		if (master != null) {
+			return master;
 		}
-		return conn;
+
+		Matcher matcher = pattern.matcher(sql);
+		if (matcher.find()) {
+			ComboPooledDataSource cpds = dsList.get(0);
+			master = cpds.getConnection();
+			return master;
+		} else {
+			if (slave != null) {
+				return slave;
+			} else {
+				ComboPooledDataSource cpds = dsList.get(1);
+				cpds.getConnectionPoolDataSource().getPooledConnection().getConnection();
+				//slave = cpds.getConnection();
+				return slave;
+			}
+		}
 	}
 
 	@Override
 	public void init() {
+		dsList.add(new ComboPooledDataSource("db0"));
+		dsList.add(new ComboPooledDataSource("db1"));
+	}
+
+	@Override
+	public void destrory() {
+		logger.info("close a session");
+		if (master != null) {
+			try {
+				master.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		if (slave != null) {
+			try {
+				slave.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
 	}
 
 }
