@@ -17,4 +17,8 @@ public interface Handle {
 	 * @throws Exception 
 	 */
 	public List<Packet> doCommand(PacketCommand cmd) throws Exception;
+	/**
+	 * 会话结束
+	 */
+	public void destrory();
 }

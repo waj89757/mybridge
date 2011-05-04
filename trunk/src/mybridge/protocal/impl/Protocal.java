@@ -33,10 +33,16 @@ public class Protocal {
 	 * @param readBuf
 	 * @param writeBuf
 	 */
-	public void onPacketInit(IOBuffer readBuf, IOBuffer writeBuf) {
+	public void onSessionOpen(IOBuffer readBuf, IOBuffer writeBuf) {
 		PacketInit init = new PacketInit();
 		init.putBytes(PacketInit.defaultPacket);
 		writePacket(writeBuf, init);
+	}
+	/**
+	 * session关闭事件
+	 */
+	public void onSessionClose() {
+		handle.destrory();
 	}
 
 	/**
