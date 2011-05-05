@@ -14,11 +14,9 @@ public class MemcacheHandle implements Handle {
 		return packetList;
 	}
 
-	@Override
 	public void init() {
 	}
 
-	@Override
 	public void destrory() {
 		// TODO Auto-generated method stub
 		
