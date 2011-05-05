@@ -89,13 +89,13 @@ import mybridge.util.Buffer;
 //(Note SHA1(A+B) is the SHA1 of the concatenation of A with B.)
 //This protocol fixes the flaw of the old one, neither snooping on the wire nor mysql.user.Password are sufficient for a successful connection. But when one has both mysql.user.Password and the intercepted data on the wire, he has enough information to connect.
 public class PacketAuth extends Packet {
-	long clientFlag;
-	long maxPacketSize;
-	byte charsetNum;
-	byte[] filler;
-	String user;
-	String scrambleBuf;
-	String dbName;
+	public long clientFlag;
+	public long maxPacketSize;
+	public byte charsetNum;
+	public byte[] filler;
+	public String user;
+	public String scrambleBuf;
+	public String dbName;
 
 	@Override
 	public byte[] getBytes() {

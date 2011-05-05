@@ -20,5 +20,14 @@ public interface Handle {
 	/**
 	 * 会话结束
 	 */
-	public void destrory();
+	public void destrory();	
+	/**
+	 * 设置当前连接编码
+	 * @param charsetIndex
+	 */
+	public void setCharset(String charset);
+	/**
+	 * 获取连接编码
+	 */
+	public String getCharSet();
 }

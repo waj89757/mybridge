@@ -9,7 +9,7 @@ public class PacketField extends Packet {
 	public String orgTable = "";
 	public String name = "";
 	public String orgName = "";
-	public byte fill1 = 0x0;
+	public byte fill1 = 0x0c;//影响client 显示格式
 	public int charsetnr = 0x08;
 	public long length;
 	public byte type;
