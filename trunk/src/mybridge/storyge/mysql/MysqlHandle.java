@@ -81,13 +81,11 @@ public class MysqlHandle implements Handle {
 		}
 	}
 
-	@Override
 	public void init() {
 		dsList.add(new ComboPooledDataSource("db0"));
 		dsList.add(new ComboPooledDataSource("db1"));
 	}
 
-	@Override
 	public void destrory() {
 		logger.info("close a session");
 		if (master != null) {
