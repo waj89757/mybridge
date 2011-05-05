@@ -10,6 +10,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 import com.mchange.v2.c3p0.ComboPooledDataSource;
+import com.mchange.v2.c3p0.PoolConfig;
 
 import mybridge.protocal.impl.Protocal;
 import mybridge.protocal.packet.*;
