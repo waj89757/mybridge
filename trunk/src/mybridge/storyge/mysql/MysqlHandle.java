@@ -22,6 +22,7 @@ public class MysqlHandle implements Handle {
 	static Pattern pattern = Pattern.compile("^(INSERT|CREATE|UPDATE|REPLACE|DELETE|DROP|ALTER|TRUNCT)");
 	Connection master = null;
 	Connection slave = null;
+	String charset = "ASCII";
 	List<ComboPooledDataSource> dsList = new ArrayList<ComboPooledDataSource>();
 
 	public List<Packet> doCommand(PacketCommand cmd) throws Exception {
@@ -51,15 +52,24 @@ public class MysqlHandle implements Handle {
 		}
 		logger.info("sql:" + sql);
 
-		//执行sql
+		// 执行sql
 		Connection conn = getConnection(sql);
 		if (conn == null) {
 			throw new Exception("connect error");
 		}
-		return MysqlTool.query(conn, sql);
+		try {
+			packetList = MysqlTool.query(conn, sql,charset);			 
+		} catch (SQLException e) {
+			PacketError error = new PacketError();
+			error.errno = e.getErrorCode();
+			error.sqlstate = e.getSQLState();
+			error.message = e.getMessage();
+			packetList.add(error);
+		}
+		return packetList;
 	}
 
-	Connection getConnection(String sql) throws Exception {
+	Connection getConnection(String sql) throws SQLException {
 		if (master != null) {
 			return master;
 		}
@@ -74,8 +84,7 @@ public class MysqlHandle implements Handle {
 				return slave;
 			} else {
 				ComboPooledDataSource cpds = dsList.get(1);
-				cpds.getConnectionPoolDataSource().getPooledConnection().getConnection();
-				//slave = cpds.getConnection();
+				slave = cpds.getConnection();
 				return slave;
 			}
 		}
@@ -102,6 +111,14 @@ public class MysqlHandle implements Handle {
 				e.printStackTrace();
 			}
 		}
+	}
+
+	public String getCharSet() {
+		return charset;
+	}
+
+	public void setCharset(String charset) {
+		this.charset = charset;
 	}
 
 }

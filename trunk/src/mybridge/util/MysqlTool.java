@@ -10,7 +10,8 @@ import java.util.List;
 import mybridge.protocal.packet.*;
 
 public class MysqlTool {
-	public static List<Packet> query(Connection conn, String sql) throws Exception {
+	public static List<Packet> query(Connection conn, String sql, String charset)
+			throws Exception {
 		List<Packet> packetList = new ArrayList<Packet>();
 		// statement用来执行SQL语句
 		Statement statement = conn.createStatement();
@@ -21,15 +22,15 @@ public class MysqlTool {
 			return packetList;
 		}
 
-		//返回结果集
+		// 返回结果集
 		ResultSet rs = statement.getResultSet();
 		ResultSetMetaData meta = rs.getMetaData();
-		//result set packet
+		// result set packet
 		PacketResultSet setPacket = new PacketResultSet();
 		setPacket.fieldCount = meta.getColumnCount();
 		packetList.add(setPacket);
 
-		//field packets
+		// field packets
 		for (int i = 1; i <= meta.getColumnCount(); i++) {
 			PacketField fieldPacket = new PacketField();
 			fieldPacket.db = meta.getCatalogName(i);
@@ -46,7 +47,7 @@ public class MysqlTool {
 		while (rs.next()) {
 			PacketRow rowPacket = new PacketRow();
 			for (int i = 1; i <= meta.getColumnCount(); i++) {
-				rowPacket.valueList.add(new String(rs.getBytes(i), "ASCII"));
+				rowPacket.valueList.add(new String(rs.getBytes(i), charset));
 			}
 			packetList.add(rowPacket);
 		}
