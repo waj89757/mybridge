@@ -1,4 +1,4 @@
-// $ANTLR 3.3 Nov 30, 2010 12:45:30 G:\\code\\mybridge\\src\\mybridge\\sql\\parser\\Sql.g 2011-05-06 20:56:48
+// $ANTLR 3.3 Nov 30, 2010 12:45:30 G:\\code\\mybridge\\src\\mybridge\\sql\\parser\\Sql.g 2011-05-06 21:05:30
 
 package mybridge.sql.parser;
 
@@ -182,13 +182,13 @@ public class SqlParser extends Parser {
 
 
     // $ANTLR start "select"
-    // G:\\code\\mybridge\\src\\mybridge\\sql\\parser\\Sql.g:24:1: select : SELECT columns FROM e= ID where ;
+    // G:\\code\\mybridge\\src\\mybridge\\sql\\parser\\Sql.g:24:1: select : SELECT columns FROM e= ID ( where )? ;
     public final void select() throws RecognitionException {
         Token e=null;
 
         try {
-            // G:\\code\\mybridge\\src\\mybridge\\sql\\parser\\Sql.g:24:8: ( SELECT columns FROM e= ID where )
-            // G:\\code\\mybridge\\src\\mybridge\\sql\\parser\\Sql.g:24:10: SELECT columns FROM e= ID where
+            // G:\\code\\mybridge\\src\\mybridge\\sql\\parser\\Sql.g:24:8: ( SELECT columns FROM e= ID ( where )? )
+            // G:\\code\\mybridge\\src\\mybridge\\sql\\parser\\Sql.g:24:10: SELECT columns FROM e= ID ( where )?
             {
             match(input,SELECT,FOLLOW_SELECT_in_select62); 
             sql.type=SqlStatement.SELECT;
@@ -200,10 +200,27 @@ public class SqlParser extends Parser {
             match(input,FROM,FOLLOW_FROM_in_select75); 
             e=(Token)match(input,ID,FOLLOW_ID_in_select83); 
             sql.table = (e!=null?e.getText():null);
-            pushFollow(FOLLOW_where_in_select91);
-            where();
+            // G:\\code\\mybridge\\src\\mybridge\\sql\\parser\\Sql.g:28:4: ( where )?
+            int alt2=2;
+            int LA2_0 = input.LA(1);
 
-            state._fsp--;
+            if ( (LA2_0==WHERE) ) {
+                alt2=1;
+            }
+            switch (alt2) {
+                case 1 :
+                    // G:\\code\\mybridge\\src\\mybridge\\sql\\parser\\Sql.g:28:4: where
+                    {
+                    pushFollow(FOLLOW_where_in_select91);
+                    where();
+
+                    state._fsp--;
+
+
+                    }
+                    break;
+
+            }
 
 
             }
@@ -229,22 +246,22 @@ public class SqlParser extends Parser {
             // G:\\code\\mybridge\\src\\mybridge\\sql\\parser\\Sql.g:29:9: ( INSERT INTO e= ID '(' columns ')' VALUES '(' e= VALUE ( ',' e= VALUE )* ')' )
             // G:\\code\\mybridge\\src\\mybridge\\sql\\parser\\Sql.g:29:11: INSERT INTO e= ID '(' columns ')' VALUES '(' e= VALUE ( ',' e= VALUE )* ')'
             {
-            match(input,INSERT,FOLLOW_INSERT_in_insert99); 
+            match(input,INSERT,FOLLOW_INSERT_in_insert100); 
             sql.type=SqlStatement.INSERT;
-            match(input,INTO,FOLLOW_INTO_in_insert111); 
-            e=(Token)match(input,ID,FOLLOW_ID_in_insert119); 
+            match(input,INTO,FOLLOW_INTO_in_insert112); 
+            e=(Token)match(input,ID,FOLLOW_ID_in_insert120); 
             sql.table = (e!=null?e.getText():null);
-            match(input,20,FOLLOW_20_in_insert127); 
-            pushFollow(FOLLOW_columns_in_insert132);
+            match(input,20,FOLLOW_20_in_insert128); 
+            pushFollow(FOLLOW_columns_in_insert133);
             columns();
 
             state._fsp--;
 
             Iterator<String> it = sql.fields.iterator();
-            match(input,21,FOLLOW_21_in_insert139); 
-            match(input,VALUES,FOLLOW_VALUES_in_insert145); 
-            match(input,20,FOLLOW_20_in_insert150); 
-            e=(Token)match(input,VALUE,FOLLOW_VALUE_in_insert159); 
+            match(input,21,FOLLOW_21_in_insert140); 
+            match(input,VALUES,FOLLOW_VALUES_in_insert146); 
+            match(input,20,FOLLOW_20_in_insert151); 
+            e=(Token)match(input,VALUE,FOLLOW_VALUE_in_insert160); 
 
             	  	if (!it.hasNext())
             	  	{
@@ -253,22 +270,22 @@ public class SqlParser extends Parser {
             	  	sql.values.put(it.next(),(e!=null?e.getText():null));
             	  
             // G:\\code\\mybridge\\src\\mybridge\\sql\\parser\\Sql.g:46:4: ( ',' e= VALUE )*
-            loop2:
+            loop3:
             do {
-                int alt2=2;
-                int LA2_0 = input.LA(1);
+                int alt3=2;
+                int LA3_0 = input.LA(1);
 
-                if ( (LA2_0==22) ) {
-                    alt2=1;
+                if ( (LA3_0==22) ) {
+                    alt3=1;
                 }
 
 
-                switch (alt2) {
+                switch (alt3) {
             	case 1 :
             	    // G:\\code\\mybridge\\src\\mybridge\\sql\\parser\\Sql.g:46:5: ',' e= VALUE
             	    {
-            	    match(input,22,FOLLOW_22_in_insert171); 
-            	    e=(Token)match(input,VALUE,FOLLOW_VALUE_in_insert180); 
+            	    match(input,22,FOLLOW_22_in_insert172); 
+            	    e=(Token)match(input,VALUE,FOLLOW_VALUE_in_insert181); 
 
             	    	  	if (!it.hasNext())
             	    	  	{
@@ -281,7 +298,7 @@ public class SqlParser extends Parser {
             	    break;
 
             	default :
-            	    break loop2;
+            	    break loop3;
                 }
             } while (true);
 
@@ -290,7 +307,7 @@ public class SqlParser extends Parser {
             	  	    throw new RecognitionException();
             	  	}
             	  
-            match(input,21,FOLLOW_21_in_insert202); 
+            match(input,21,FOLLOW_21_in_insert203); 
 
             }
 
@@ -307,23 +324,40 @@ public class SqlParser extends Parser {
 
 
     // $ANTLR start "delete"
-    // G:\\code\\mybridge\\src\\mybridge\\sql\\parser\\Sql.g:62:1: delete : DELETE FROM e= ID where ;
+    // G:\\code\\mybridge\\src\\mybridge\\sql\\parser\\Sql.g:62:1: delete : DELETE FROM e= ID ( where )? ;
     public final void delete() throws RecognitionException {
         Token e=null;
 
         try {
-            // G:\\code\\mybridge\\src\\mybridge\\sql\\parser\\Sql.g:62:9: ( DELETE FROM e= ID where )
-            // G:\\code\\mybridge\\src\\mybridge\\sql\\parser\\Sql.g:62:11: DELETE FROM e= ID where
+            // G:\\code\\mybridge\\src\\mybridge\\sql\\parser\\Sql.g:62:9: ( DELETE FROM e= ID ( where )? )
+            // G:\\code\\mybridge\\src\\mybridge\\sql\\parser\\Sql.g:62:11: DELETE FROM e= ID ( where )?
             {
-            match(input,DELETE,FOLLOW_DELETE_in_delete210); 
+            match(input,DELETE,FOLLOW_DELETE_in_delete211); 
             sql.type=SqlStatement.DELETE;
-            match(input,FROM,FOLLOW_FROM_in_delete218); 
-            e=(Token)match(input,ID,FOLLOW_ID_in_delete225); 
+            match(input,FROM,FOLLOW_FROM_in_delete219); 
+            e=(Token)match(input,ID,FOLLOW_ID_in_delete226); 
             sql.table = (e!=null?e.getText():null);
-            pushFollow(FOLLOW_where_in_delete233);
-            where();
+            // G:\\code\\mybridge\\src\\mybridge\\sql\\parser\\Sql.g:65:4: ( where )?
+            int alt4=2;
+            int LA4_0 = input.LA(1);
 
-            state._fsp--;
+            if ( (LA4_0==WHERE) ) {
+                alt4=1;
+            }
+            switch (alt4) {
+                case 1 :
+                    // G:\\code\\mybridge\\src\\mybridge\\sql\\parser\\Sql.g:65:4: where
+                    {
+                    pushFollow(FOLLOW_where_in_delete234);
+                    where();
+
+                    state._fsp--;
+
+
+                    }
+                    break;
+
+            }
 
 
             }
@@ -341,57 +375,74 @@ public class SqlParser extends Parser {
 
 
     // $ANTLR start "update"
-    // G:\\code\\mybridge\\src\\mybridge\\sql\\parser\\Sql.g:66:1: update : UPDATE e= ID SET e= ID '=' f= VALUE ( ',' e= ID '=' f= VALUE )* where ;
+    // G:\\code\\mybridge\\src\\mybridge\\sql\\parser\\Sql.g:66:1: update : UPDATE e= ID SET e= ID '=' f= VALUE ( ',' e= ID '=' f= VALUE )* ( where )? ;
     public final void update() throws RecognitionException {
         Token e=null;
         Token f=null;
 
         try {
-            // G:\\code\\mybridge\\src\\mybridge\\sql\\parser\\Sql.g:66:9: ( UPDATE e= ID SET e= ID '=' f= VALUE ( ',' e= ID '=' f= VALUE )* where )
-            // G:\\code\\mybridge\\src\\mybridge\\sql\\parser\\Sql.g:66:11: UPDATE e= ID SET e= ID '=' f= VALUE ( ',' e= ID '=' f= VALUE )* where
+            // G:\\code\\mybridge\\src\\mybridge\\sql\\parser\\Sql.g:66:9: ( UPDATE e= ID SET e= ID '=' f= VALUE ( ',' e= ID '=' f= VALUE )* ( where )? )
+            // G:\\code\\mybridge\\src\\mybridge\\sql\\parser\\Sql.g:66:11: UPDATE e= ID SET e= ID '=' f= VALUE ( ',' e= ID '=' f= VALUE )* ( where )?
             {
-            match(input,UPDATE,FOLLOW_UPDATE_in_update242); 
+            match(input,UPDATE,FOLLOW_UPDATE_in_update244); 
             sql.type=SqlStatement.UPDATE;
-            e=(Token)match(input,ID,FOLLOW_ID_in_update252); 
+            e=(Token)match(input,ID,FOLLOW_ID_in_update254); 
             sql.table = (e!=null?e.getText():null);
-            match(input,SET,FOLLOW_SET_in_update260); 
-            e=(Token)match(input,ID,FOLLOW_ID_in_update264); 
-            match(input,23,FOLLOW_23_in_update266); 
-            f=(Token)match(input,VALUE,FOLLOW_VALUE_in_update270); 
+            match(input,SET,FOLLOW_SET_in_update262); 
+            e=(Token)match(input,ID,FOLLOW_ID_in_update266); 
+            match(input,23,FOLLOW_23_in_update268); 
+            f=(Token)match(input,VALUE,FOLLOW_VALUE_in_update272); 
             sql.values.put((e!=null?e.getText():null),(f!=null?f.getText():null));
             // G:\\code\\mybridge\\src\\mybridge\\sql\\parser\\Sql.g:69:5: ( ',' e= ID '=' f= VALUE )*
-            loop3:
+            loop5:
             do {
-                int alt3=2;
-                int LA3_0 = input.LA(1);
+                int alt5=2;
+                int LA5_0 = input.LA(1);
 
-                if ( (LA3_0==22) ) {
-                    alt3=1;
+                if ( (LA5_0==22) ) {
+                    alt5=1;
                 }
 
 
-                switch (alt3) {
+                switch (alt5) {
             	case 1 :
             	    // G:\\code\\mybridge\\src\\mybridge\\sql\\parser\\Sql.g:70:5: ',' e= ID '=' f= VALUE
             	    {
-            	    match(input,22,FOLLOW_22_in_update284); 
-            	    e=(Token)match(input,ID,FOLLOW_ID_in_update288); 
-            	    match(input,23,FOLLOW_23_in_update290); 
-            	    f=(Token)match(input,VALUE,FOLLOW_VALUE_in_update294); 
+            	    match(input,22,FOLLOW_22_in_update286); 
+            	    e=(Token)match(input,ID,FOLLOW_ID_in_update290); 
+            	    match(input,23,FOLLOW_23_in_update292); 
+            	    f=(Token)match(input,VALUE,FOLLOW_VALUE_in_update296); 
             	    sql.values.put((e!=null?e.getText():null),(f!=null?f.getText():null));
 
             	    }
             	    break;
 
             	default :
-            	    break loop3;
+            	    break loop5;
                 }
             } while (true);
 
-            pushFollow(FOLLOW_where_in_update305);
-            where();
+            // G:\\code\\mybridge\\src\\mybridge\\sql\\parser\\Sql.g:71:8: ( where )?
+            int alt6=2;
+            int LA6_0 = input.LA(1);
 
-            state._fsp--;
+            if ( (LA6_0==WHERE) ) {
+                alt6=1;
+            }
+            switch (alt6) {
+                case 1 :
+                    // G:\\code\\mybridge\\src\\mybridge\\sql\\parser\\Sql.g:71:8: where
+                    {
+                    pushFollow(FOLLOW_where_in_update307);
+                    where();
+
+                    state._fsp--;
+
+
+                    }
+                    break;
+
+            }
 
 
             }
@@ -420,35 +471,35 @@ public class SqlParser extends Parser {
             // G:\\code\\mybridge\\src\\mybridge\\sql\\parser\\Sql.g:72:10: (e= ID )
             // G:\\code\\mybridge\\src\\mybridge\\sql\\parser\\Sql.g:72:11: e= ID
             {
-            e=(Token)match(input,ID,FOLLOW_ID_in_columns315); 
+            e=(Token)match(input,ID,FOLLOW_ID_in_columns318); 
 
             }
 
             sql.fields.add((e!=null?e.getText():null));
             // G:\\code\\mybridge\\src\\mybridge\\sql\\parser\\Sql.g:74:3: ( ',' e= ID )*
-            loop4:
+            loop7:
             do {
-                int alt4=2;
-                int LA4_0 = input.LA(1);
+                int alt7=2;
+                int LA7_0 = input.LA(1);
 
-                if ( (LA4_0==22) ) {
-                    alt4=1;
+                if ( (LA7_0==22) ) {
+                    alt7=1;
                 }
 
 
-                switch (alt4) {
+                switch (alt7) {
             	case 1 :
             	    // G:\\code\\mybridge\\src\\mybridge\\sql\\parser\\Sql.g:74:4: ',' e= ID
             	    {
-            	    match(input,22,FOLLOW_22_in_columns326); 
-            	    e=(Token)match(input,ID,FOLLOW_ID_in_columns330); 
+            	    match(input,22,FOLLOW_22_in_columns329); 
+            	    e=(Token)match(input,ID,FOLLOW_ID_in_columns333); 
             	    sql.fields.add((e!=null?e.getText():null));
 
             	    }
             	    break;
 
             	default :
-            	    break loop4;
+            	    break loop7;
                 }
             } while (true);
 
@@ -474,38 +525,38 @@ public class SqlParser extends Parser {
             // G:\\code\\mybridge\\src\\mybridge\\sql\\parser\\Sql.g:75:8: ( WHERE ( in | eq ) ( OP ( in | eq ) )* )
             // G:\\code\\mybridge\\src\\mybridge\\sql\\parser\\Sql.g:75:10: WHERE ( in | eq ) ( OP ( in | eq ) )*
             {
-            match(input,WHERE,FOLLOW_WHERE_in_where342); 
+            match(input,WHERE,FOLLOW_WHERE_in_where345); 
             // G:\\code\\mybridge\\src\\mybridge\\sql\\parser\\Sql.g:75:16: ( in | eq )
-            int alt5=2;
-            int LA5_0 = input.LA(1);
+            int alt8=2;
+            int LA8_0 = input.LA(1);
 
-            if ( (LA5_0==ID) ) {
-                int LA5_1 = input.LA(2);
+            if ( (LA8_0==ID) ) {
+                int LA8_1 = input.LA(2);
 
-                if ( (LA5_1==IN) ) {
-                    alt5=1;
+                if ( (LA8_1==IN) ) {
+                    alt8=1;
                 }
-                else if ( (LA5_1==23) ) {
-                    alt5=2;
+                else if ( (LA8_1==23) ) {
+                    alt8=2;
                 }
                 else {
                     NoViableAltException nvae =
-                        new NoViableAltException("", 5, 1, input);
+                        new NoViableAltException("", 8, 1, input);
 
                     throw nvae;
                 }
             }
             else {
                 NoViableAltException nvae =
-                    new NoViableAltException("", 5, 0, input);
+                    new NoViableAltException("", 8, 0, input);
 
                 throw nvae;
             }
-            switch (alt5) {
+            switch (alt8) {
                 case 1 :
                     // G:\\code\\mybridge\\src\\mybridge\\sql\\parser\\Sql.g:75:18: in
                     {
-                    pushFollow(FOLLOW_in_in_where346);
+                    pushFollow(FOLLOW_in_in_where349);
                     in();
 
                     state._fsp--;
@@ -516,7 +567,7 @@ public class SqlParser extends Parser {
                 case 2 :
                     // G:\\code\\mybridge\\src\\mybridge\\sql\\parser\\Sql.g:75:23: eq
                     {
-                    pushFollow(FOLLOW_eq_in_where350);
+                    pushFollow(FOLLOW_eq_in_where353);
                     eq();
 
                     state._fsp--;
@@ -528,52 +579,52 @@ public class SqlParser extends Parser {
             }
 
             // G:\\code\\mybridge\\src\\mybridge\\sql\\parser\\Sql.g:75:28: ( OP ( in | eq ) )*
-            loop7:
+            loop10:
             do {
-                int alt7=2;
-                int LA7_0 = input.LA(1);
+                int alt10=2;
+                int LA10_0 = input.LA(1);
 
-                if ( (LA7_0==OP) ) {
-                    alt7=1;
+                if ( (LA10_0==OP) ) {
+                    alt10=1;
                 }
 
 
-                switch (alt7) {
+                switch (alt10) {
             	case 1 :
             	    // G:\\code\\mybridge\\src\\mybridge\\sql\\parser\\Sql.g:75:29: OP ( in | eq )
             	    {
-            	    match(input,OP,FOLLOW_OP_in_where355); 
+            	    match(input,OP,FOLLOW_OP_in_where358); 
             	    // G:\\code\\mybridge\\src\\mybridge\\sql\\parser\\Sql.g:75:32: ( in | eq )
-            	    int alt6=2;
-            	    int LA6_0 = input.LA(1);
+            	    int alt9=2;
+            	    int LA9_0 = input.LA(1);
 
-            	    if ( (LA6_0==ID) ) {
-            	        int LA6_1 = input.LA(2);
+            	    if ( (LA9_0==ID) ) {
+            	        int LA9_1 = input.LA(2);
 
-            	        if ( (LA6_1==IN) ) {
-            	            alt6=1;
+            	        if ( (LA9_1==IN) ) {
+            	            alt9=1;
             	        }
-            	        else if ( (LA6_1==23) ) {
-            	            alt6=2;
+            	        else if ( (LA9_1==23) ) {
+            	            alt9=2;
             	        }
             	        else {
             	            NoViableAltException nvae =
-            	                new NoViableAltException("", 6, 1, input);
+            	                new NoViableAltException("", 9, 1, input);
 
             	            throw nvae;
             	        }
             	    }
             	    else {
             	        NoViableAltException nvae =
-            	            new NoViableAltException("", 6, 0, input);
+            	            new NoViableAltException("", 9, 0, input);
 
             	        throw nvae;
             	    }
-            	    switch (alt6) {
+            	    switch (alt9) {
             	        case 1 :
             	            // G:\\code\\mybridge\\src\\mybridge\\sql\\parser\\Sql.g:75:33: in
             	            {
-            	            pushFollow(FOLLOW_in_in_where358);
+            	            pushFollow(FOLLOW_in_in_where361);
             	            in();
 
             	            state._fsp--;
@@ -584,7 +635,7 @@ public class SqlParser extends Parser {
             	        case 2 :
             	            // G:\\code\\mybridge\\src\\mybridge\\sql\\parser\\Sql.g:75:38: eq
             	            {
-            	            pushFollow(FOLLOW_eq_in_where362);
+            	            pushFollow(FOLLOW_eq_in_where365);
             	            eq();
 
             	            state._fsp--;
@@ -600,7 +651,7 @@ public class SqlParser extends Parser {
             	    break;
 
             	default :
-            	    break loop7;
+            	    break loop10;
                 }
             } while (true);
 
@@ -629,44 +680,44 @@ public class SqlParser extends Parser {
             // G:\\code\\mybridge\\src\\mybridge\\sql\\parser\\Sql.g:76:4: ( ID IN '(' e= VALUE ( ',' e= VALUE )* ')' )
             // G:\\code\\mybridge\\src\\mybridge\\sql\\parser\\Sql.g:76:6: ID IN '(' e= VALUE ( ',' e= VALUE )* ')'
             {
-            ID1=(Token)match(input,ID,FOLLOW_ID_in_in374); 
+            ID1=(Token)match(input,ID,FOLLOW_ID_in_in377); 
 
             		if (sql.where.get((ID1!=null?ID1.getText():null)) == null) {
             		  sql.where.put((ID1!=null?ID1.getText():null),new ArrayList<String>());
             		}
             	
-            match(input,IN,FOLLOW_IN_in_in381); 
-            match(input,20,FOLLOW_20_in_in383); 
-            e=(Token)match(input,VALUE,FOLLOW_VALUE_in_in389); 
+            match(input,IN,FOLLOW_IN_in_in384); 
+            match(input,20,FOLLOW_20_in_in386); 
+            e=(Token)match(input,VALUE,FOLLOW_VALUE_in_in392); 
             sql.where.get((ID1!=null?ID1.getText():null)).add((e!=null?e.getText():null));
             // G:\\code\\mybridge\\src\\mybridge\\sql\\parser\\Sql.g:84:2: ( ',' e= VALUE )*
-            loop8:
+            loop11:
             do {
-                int alt8=2;
-                int LA8_0 = input.LA(1);
+                int alt11=2;
+                int LA11_0 = input.LA(1);
 
-                if ( (LA8_0==22) ) {
-                    alt8=1;
+                if ( (LA11_0==22) ) {
+                    alt11=1;
                 }
 
 
-                switch (alt8) {
+                switch (alt11) {
             	case 1 :
             	    // G:\\code\\mybridge\\src\\mybridge\\sql\\parser\\Sql.g:84:3: ',' e= VALUE
             	    {
-            	    match(input,22,FOLLOW_22_in_in396); 
-            	    e=(Token)match(input,VALUE,FOLLOW_VALUE_in_in399); 
+            	    match(input,22,FOLLOW_22_in_in399); 
+            	    e=(Token)match(input,VALUE,FOLLOW_VALUE_in_in402); 
             	    sql.where.get((ID1!=null?ID1.getText():null)).add((e!=null?e.getText():null));
 
             	    }
             	    break;
 
             	default :
-            	    break loop8;
+            	    break loop11;
                 }
             } while (true);
 
-            match(input,21,FOLLOW_21_in_in404); 
+            match(input,21,FOLLOW_21_in_in407); 
 
             }
 
@@ -692,14 +743,14 @@ public class SqlParser extends Parser {
             // G:\\code\\mybridge\\src\\mybridge\\sql\\parser\\Sql.g:85:4: ( ID '=' e= VALUE )
             // G:\\code\\mybridge\\src\\mybridge\\sql\\parser\\Sql.g:85:9: ID '=' e= VALUE
             {
-            ID2=(Token)match(input,ID,FOLLOW_ID_in_eq414); 
+            ID2=(Token)match(input,ID,FOLLOW_ID_in_eq417); 
 
             		if (sql.where.get((ID2!=null?ID2.getText():null)) == null) {
             		  sql.where.put((ID2!=null?ID2.getText():null),new ArrayList<String>());
             		}
             	
-            match(input,23,FOLLOW_23_in_eq422); 
-            e=(Token)match(input,VALUE,FOLLOW_VALUE_in_eq429); 
+            match(input,23,FOLLOW_23_in_eq425); 
+            e=(Token)match(input,VALUE,FOLLOW_VALUE_in_eq432); 
             sql.where.get((ID2!=null?ID2.getText():null)).add((e!=null?e.getText():null));
 
             }
@@ -728,53 +779,53 @@ public class SqlParser extends Parser {
     public static final BitSet FOLLOW_SELECT_in_select62 = new BitSet(new long[]{0x0000000000000040L});
     public static final BitSet FOLLOW_columns_in_select70 = new BitSet(new long[]{0x0000000000000020L});
     public static final BitSet FOLLOW_FROM_in_select75 = new BitSet(new long[]{0x0000000000000040L});
-    public static final BitSet FOLLOW_ID_in_select83 = new BitSet(new long[]{0x0000000000004000L});
+    public static final BitSet FOLLOW_ID_in_select83 = new BitSet(new long[]{0x0000000000004002L});
     public static final BitSet FOLLOW_where_in_select91 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_INSERT_in_insert99 = new BitSet(new long[]{0x0000000000000100L});
-    public static final BitSet FOLLOW_INTO_in_insert111 = new BitSet(new long[]{0x0000000000000040L});
-    public static final BitSet FOLLOW_ID_in_insert119 = new BitSet(new long[]{0x0000000000100000L});
-    public static final BitSet FOLLOW_20_in_insert127 = new BitSet(new long[]{0x0000000000000040L});
-    public static final BitSet FOLLOW_columns_in_insert132 = new BitSet(new long[]{0x0000000000200000L});
-    public static final BitSet FOLLOW_21_in_insert139 = new BitSet(new long[]{0x0000000000000200L});
-    public static final BitSet FOLLOW_VALUES_in_insert145 = new BitSet(new long[]{0x0000000000100000L});
-    public static final BitSet FOLLOW_20_in_insert150 = new BitSet(new long[]{0x0000000000000400L});
-    public static final BitSet FOLLOW_VALUE_in_insert159 = new BitSet(new long[]{0x0000000000600000L});
-    public static final BitSet FOLLOW_22_in_insert171 = new BitSet(new long[]{0x0000000000000400L});
-    public static final BitSet FOLLOW_VALUE_in_insert180 = new BitSet(new long[]{0x0000000000600000L});
-    public static final BitSet FOLLOW_21_in_insert202 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_DELETE_in_delete210 = new BitSet(new long[]{0x0000000000000020L});
-    public static final BitSet FOLLOW_FROM_in_delete218 = new BitSet(new long[]{0x0000000000000040L});
-    public static final BitSet FOLLOW_ID_in_delete225 = new BitSet(new long[]{0x0000000000004000L});
-    public static final BitSet FOLLOW_where_in_delete233 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_UPDATE_in_update242 = new BitSet(new long[]{0x0000000000000040L});
-    public static final BitSet FOLLOW_ID_in_update252 = new BitSet(new long[]{0x0000000000002000L});
-    public static final BitSet FOLLOW_SET_in_update260 = new BitSet(new long[]{0x0000000000000040L});
-    public static final BitSet FOLLOW_ID_in_update264 = new BitSet(new long[]{0x0000000000800000L});
-    public static final BitSet FOLLOW_23_in_update266 = new BitSet(new long[]{0x0000000000000400L});
-    public static final BitSet FOLLOW_VALUE_in_update270 = new BitSet(new long[]{0x0000000000404000L});
-    public static final BitSet FOLLOW_22_in_update284 = new BitSet(new long[]{0x0000000000000040L});
-    public static final BitSet FOLLOW_ID_in_update288 = new BitSet(new long[]{0x0000000000800000L});
-    public static final BitSet FOLLOW_23_in_update290 = new BitSet(new long[]{0x0000000000000400L});
-    public static final BitSet FOLLOW_VALUE_in_update294 = new BitSet(new long[]{0x0000000000404000L});
-    public static final BitSet FOLLOW_where_in_update305 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_ID_in_columns315 = new BitSet(new long[]{0x0000000000400002L});
-    public static final BitSet FOLLOW_22_in_columns326 = new BitSet(new long[]{0x0000000000000040L});
-    public static final BitSet FOLLOW_ID_in_columns330 = new BitSet(new long[]{0x0000000000400002L});
-    public static final BitSet FOLLOW_WHERE_in_where342 = new BitSet(new long[]{0x0000000000000040L});
-    public static final BitSet FOLLOW_in_in_where346 = new BitSet(new long[]{0x0000000000008002L});
-    public static final BitSet FOLLOW_eq_in_where350 = new BitSet(new long[]{0x0000000000008002L});
-    public static final BitSet FOLLOW_OP_in_where355 = new BitSet(new long[]{0x0000000000000040L});
-    public static final BitSet FOLLOW_in_in_where358 = new BitSet(new long[]{0x0000000000008002L});
-    public static final BitSet FOLLOW_eq_in_where362 = new BitSet(new long[]{0x0000000000008002L});
-    public static final BitSet FOLLOW_ID_in_in374 = new BitSet(new long[]{0x0000000000010000L});
-    public static final BitSet FOLLOW_IN_in_in381 = new BitSet(new long[]{0x0000000000100000L});
-    public static final BitSet FOLLOW_20_in_in383 = new BitSet(new long[]{0x0000000000000400L});
-    public static final BitSet FOLLOW_VALUE_in_in389 = new BitSet(new long[]{0x0000000000600000L});
-    public static final BitSet FOLLOW_22_in_in396 = new BitSet(new long[]{0x0000000000000400L});
-    public static final BitSet FOLLOW_VALUE_in_in399 = new BitSet(new long[]{0x0000000000600000L});
-    public static final BitSet FOLLOW_21_in_in404 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_ID_in_eq414 = new BitSet(new long[]{0x0000000000800000L});
-    public static final BitSet FOLLOW_23_in_eq422 = new BitSet(new long[]{0x0000000000000400L});
-    public static final BitSet FOLLOW_VALUE_in_eq429 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_INSERT_in_insert100 = new BitSet(new long[]{0x0000000000000100L});
+    public static final BitSet FOLLOW_INTO_in_insert112 = new BitSet(new long[]{0x0000000000000040L});
+    public static final BitSet FOLLOW_ID_in_insert120 = new BitSet(new long[]{0x0000000000100000L});
+    public static final BitSet FOLLOW_20_in_insert128 = new BitSet(new long[]{0x0000000000000040L});
+    public static final BitSet FOLLOW_columns_in_insert133 = new BitSet(new long[]{0x0000000000200000L});
+    public static final BitSet FOLLOW_21_in_insert140 = new BitSet(new long[]{0x0000000000000200L});
+    public static final BitSet FOLLOW_VALUES_in_insert146 = new BitSet(new long[]{0x0000000000100000L});
+    public static final BitSet FOLLOW_20_in_insert151 = new BitSet(new long[]{0x0000000000000400L});
+    public static final BitSet FOLLOW_VALUE_in_insert160 = new BitSet(new long[]{0x0000000000600000L});
+    public static final BitSet FOLLOW_22_in_insert172 = new BitSet(new long[]{0x0000000000000400L});
+    public static final BitSet FOLLOW_VALUE_in_insert181 = new BitSet(new long[]{0x0000000000600000L});
+    public static final BitSet FOLLOW_21_in_insert203 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_DELETE_in_delete211 = new BitSet(new long[]{0x0000000000000020L});
+    public static final BitSet FOLLOW_FROM_in_delete219 = new BitSet(new long[]{0x0000000000000040L});
+    public static final BitSet FOLLOW_ID_in_delete226 = new BitSet(new long[]{0x0000000000004002L});
+    public static final BitSet FOLLOW_where_in_delete234 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_UPDATE_in_update244 = new BitSet(new long[]{0x0000000000000040L});
+    public static final BitSet FOLLOW_ID_in_update254 = new BitSet(new long[]{0x0000000000002000L});
+    public static final BitSet FOLLOW_SET_in_update262 = new BitSet(new long[]{0x0000000000000040L});
+    public static final BitSet FOLLOW_ID_in_update266 = new BitSet(new long[]{0x0000000000800000L});
+    public static final BitSet FOLLOW_23_in_update268 = new BitSet(new long[]{0x0000000000000400L});
+    public static final BitSet FOLLOW_VALUE_in_update272 = new BitSet(new long[]{0x0000000000404002L});
+    public static final BitSet FOLLOW_22_in_update286 = new BitSet(new long[]{0x0000000000000040L});
+    public static final BitSet FOLLOW_ID_in_update290 = new BitSet(new long[]{0x0000000000800000L});
+    public static final BitSet FOLLOW_23_in_update292 = new BitSet(new long[]{0x0000000000000400L});
+    public static final BitSet FOLLOW_VALUE_in_update296 = new BitSet(new long[]{0x0000000000404002L});
+    public static final BitSet FOLLOW_where_in_update307 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_ID_in_columns318 = new BitSet(new long[]{0x0000000000400002L});
+    public static final BitSet FOLLOW_22_in_columns329 = new BitSet(new long[]{0x0000000000000040L});
+    public static final BitSet FOLLOW_ID_in_columns333 = new BitSet(new long[]{0x0000000000400002L});
+    public static final BitSet FOLLOW_WHERE_in_where345 = new BitSet(new long[]{0x0000000000000040L});
+    public static final BitSet FOLLOW_in_in_where349 = new BitSet(new long[]{0x0000000000008002L});
+    public static final BitSet FOLLOW_eq_in_where353 = new BitSet(new long[]{0x0000000000008002L});
+    public static final BitSet FOLLOW_OP_in_where358 = new BitSet(new long[]{0x0000000000000040L});
+    public static final BitSet FOLLOW_in_in_where361 = new BitSet(new long[]{0x0000000000008002L});
+    public static final BitSet FOLLOW_eq_in_where365 = new BitSet(new long[]{0x0000000000008002L});
+    public static final BitSet FOLLOW_ID_in_in377 = new BitSet(new long[]{0x0000000000010000L});
+    public static final BitSet FOLLOW_IN_in_in384 = new BitSet(new long[]{0x0000000000100000L});
+    public static final BitSet FOLLOW_20_in_in386 = new BitSet(new long[]{0x0000000000000400L});
+    public static final BitSet FOLLOW_VALUE_in_in392 = new BitSet(new long[]{0x0000000000600000L});
+    public static final BitSet FOLLOW_22_in_in399 = new BitSet(new long[]{0x0000000000000400L});
+    public static final BitSet FOLLOW_VALUE_in_in402 = new BitSet(new long[]{0x0000000000600000L});
+    public static final BitSet FOLLOW_21_in_in407 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_ID_in_eq417 = new BitSet(new long[]{0x0000000000800000L});
+    public static final BitSet FOLLOW_23_in_eq425 = new BitSet(new long[]{0x0000000000000400L});
+    public static final BitSet FOLLOW_VALUE_in_eq432 = new BitSet(new long[]{0x0000000000000002L});
 
 }

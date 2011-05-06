@@ -6,6 +6,8 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import org.antlr.runtime.ANTLRStringStream;
+import org.antlr.runtime.CommonTokenStream;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
@@ -14,6 +16,8 @@ import com.mchange.v2.c3p0.PoolConfig;
 
 import mybridge.protocal.impl.Protocal;
 import mybridge.protocal.packet.*;
+import mybridge.sql.parser.SqlLexer;
+import mybridge.sql.parser.SqlParser;
 import mybridge.storyge.Handle;
 import mybridge.util.MysqlDefs;
 import mybridge.util.MysqlTool;
@@ -25,6 +29,7 @@ public class MysqlHandle implements Handle {
 	Connection slave = null;
 	String charset = "ASCII";
 	List<ComboPooledDataSource> dsList = new ArrayList<ComboPooledDataSource>();
+	
 
 	public List<Packet> doCommand(PacketCommand cmd) throws Exception {
 		List<Packet> packetList = new ArrayList<Packet>();
@@ -58,6 +63,11 @@ public class MysqlHandle implements Handle {
 		if (conn == null) {
 			throw new Exception("connect error");
 		}
+		SqlLexer lex = new SqlLexer(new ANTLRStringStream(sql));
+		CommonTokenStream tokens = new CommonTokenStream(lex);
+		SqlParser g = new SqlParser(tokens);
+		g.sql();
+		System.out.println(g.sql);
 		try {
 			packetList = MysqlTool.query(conn, sql,charset);			 
 		} catch (SQLException e) {

@@ -1,8 +1,6 @@
 package mybridge.sql.statement;
 
 import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Iterator;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
@@ -28,7 +26,6 @@ public class SqlStatement {
 		out += "fields:" + fields.toString() + "\n";
 		out += "where:" + where.toString() + "\n";
 		out += "values:" + values.toString() + "\n";
-		Iterator<String> it = fields.iterator();
 		return out;
 	}
 	
