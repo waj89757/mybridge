@@ -3,6 +3,7 @@ package mybridge.sql.statement;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -18,7 +19,7 @@ public class SqlStatement {
 	public String table = "";
 	public Map<String, String> values = new HashMap<String, String>();
 	public Map<String, List<String>> where = new HashMap<String, List<String>>();
-	public Set<String> fields = new HashSet<String>();
+	public Set<String> fields = new LinkedHashSet<String>();
 	
 	public String toString() {
 		String out = "";
