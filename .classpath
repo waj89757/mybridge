@@ -11,5 +11,7 @@
 	<classpathentry kind="lib" path="lib/c3p0-0.9.1.2.jar"/>
 	<classpathentry kind="lib" path="lib/xnet.jar"/>
 	<classpathentry kind="lib" path="lib/antlr-3.2.jar"/>
+	<classpathentry kind="lib" path="lib/gsp.jar"/>
+	<classpathentry kind="lib" path="lib/jsqlparser.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
