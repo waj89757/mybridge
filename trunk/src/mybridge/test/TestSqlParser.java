@@ -26,6 +26,7 @@ public class TestSqlParser extends TestCase {
 		parseSql("insert into aaa ( a,b,c,d)values(1,\"222\",2,3)");
 		parseSql("update aaa set a=111 , b=\"222\" where a=1 and b=\"222\" and c in(1,2,3)");
 		parseSql("delete from table1 where a=111 and b=\"222\" and c in(1,2,3)");
+		parseSql("dsdfdsf111 and b=\"222\" and c in(1,2,3)");
 	}
 
 	protected void analyzeStmt(TCustomSqlStatement stmt) {

@@ -25,7 +25,7 @@ select	: SELECT {sql.type=SqlStatement.SELECT;}
 	  columns
 	  FROM 
 	  e=ID {sql.table = $e.text;} 
-	  where;
+	  where?;
 insert 	: INSERT 
 	  {sql.type=SqlStatement.INSERT;} 
 	  INTO 
@@ -62,13 +62,13 @@ insert 	: INSERT
 delete 	: DELETE {sql.type=SqlStatement.DELETE;} 
 	  FROM
 	  e=ID {sql.table = $e.text;} 
-	  where; 
+	  where?; 
 update 	: UPDATE {sql.type=SqlStatement.UPDATE;} 
 	  e=ID {sql.table = $e.text;} 
 	  SET e=ID '=' f=VALUE {sql.values.put($e.text,$f.text);}
 	   (
 	   ',' e=ID '=' f=VALUE {sql.values.put($e.text,$f.text);}
-	   )* where; 
+	   )* where?; 
 columns: (e=ID)
 	 {sql.fields.add($e.text);} 
 	 (',' e=ID {sql.fields.add($e.text);})*;
