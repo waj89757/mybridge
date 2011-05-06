@@ -22,42 +22,22 @@ import junit.framework.TestCase;
 
 public class TestSqlParser extends TestCase {
 	public void testSqlParser() throws Exception {
-		//parseSql("select a,b,c,d from aaa where a=111 and b=\"222\" and c in(1,2,3)");
-		//parseSql("insert into( a,b,c,d)values(111,\"222\")");
-		//parseSql("update table1 set a=111 , b=\"222\" where a=111 and b=\"222\"");
-		//parseSql("delete from table1 where a=111 and b=\"222\"");
-
-		String sql = "select a,b,c,d from aaa where a=111 and b=\"222\" and c in(1,2,3)";
-		CCJSqlParserManager parser = new CCJSqlParserManager();
-		Statement stat = parser.parse(new StringReader(sql));
-		Select select = (Select)stat;
-		select.getSelectBody().accept(arg0);
-		
-
-		TGSqlParser sqlparser = new TGSqlParser(EDbVendor.dbvoracle);
-		sqlparser.sqltext = "select a,b,c,d from aaa where a=111 and b=\"222\" and c in(1,2,3)";
-		int ret = sqlparser.parse();
-		if (ret == 0) {
-			for (int i = 0; i < sqlparser.sqlstatements.size(); i++) {
-				analyzeStmt(sqlparser.sqlstatements.get(i));
-				System.out.println("");
-			}
-		} else {
-			System.out.println(sqlparser.getErrormessage());
-		}
-
+		parseSql("select a,b,c,d from aaa where a=2.23 and b=\"222\" and c in(1,2,3)");
+		parseSql("insert into aaa ( a,b,c,d)values(1,\"222\",2,3)");
+		parseSql("update aaa set a=111 , b=\"222\" where a=1 and b=\"222\" and c in(1,2,3)");
+		parseSql("delete from table1 where a=111 and b=\"222\" and c in(1,2,3)");
 	}
 
 	protected void analyzeStmt(TCustomSqlStatement stmt) {
 		System.out.println(stmt);
-
 	}
 
 	void parseSql(String sql) throws RecognitionException {
 		SqlLexer lex = new SqlLexer(new ANTLRStringStream(sql));
 		CommonTokenStream tokens = new CommonTokenStream(lex);
 		SqlParser g = new SqlParser(tokens);
-		g.statement();
+		g.sql();
+		System.out.println(g.parseOk);
 		System.out.println(g.sql);
 	}
 }
