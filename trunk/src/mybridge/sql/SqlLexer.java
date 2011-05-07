@@ -4,9 +4,6 @@ package mybridge.sql;
 
 
 import org.antlr.runtime.*;
-import java.util.Stack;
-import java.util.List;
-import java.util.ArrayList;
 
 public class SqlLexer extends Lexer {
     public static final int WHERE=14;
