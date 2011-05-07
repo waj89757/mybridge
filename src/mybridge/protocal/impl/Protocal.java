@@ -7,15 +7,15 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 import xnet.core.util.IOBuffer;
+import mybridge.engine.Engine;
 import mybridge.protocal.packet.*;
 import mybridge.server.MyBridgeSession;
-import mybridge.storyge.Commond;
 
 public class Protocal {
 	static Log logger = LogFactory.getLog(Protocal.class);
 	public static Class<?> handleClass;
 
-	Commond handle;
+	Engine handle;
 	MyBridgeSession session;//链接对应的session
 	State state;//当前协议交互状态
 	public byte packetNum = 0;//下一个packet的序列号
@@ -24,7 +24,7 @@ public class Protocal {
 	public Protocal(MyBridgeSession session) throws InstantiationException, IllegalAccessException {
 		this.session = session;
 		state = State.WRITE_INIT;
-		handle = (Commond) handleClass.newInstance();
+		handle = (Engine) handleClass.newInstance();
 		handle.init();
 	}
 
