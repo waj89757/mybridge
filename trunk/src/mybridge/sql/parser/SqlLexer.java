@@ -1,4 +1,4 @@
-// $ANTLR 3.3 Nov 30, 2010 12:45:30 G:\\code\\mybridge\\src\\mybridge\\sql\\parser\\Sql.g 2011-05-06 21:05:30
+// $ANTLR 3.2 Sep 23, 2009 12:02:23 /home/quanwei/workspace_java/mybridge/src/mybridge/sql/parser/Sql.g 2011-05-07 11:47:15
 
 package mybridge.sql.parser;
 
@@ -9,27 +9,29 @@ import java.util.List;
 import java.util.ArrayList;
 
 public class SqlLexer extends Lexer {
-    public static final int EOF=-1;
-    public static final int T__20=20;
-    public static final int T__21=21;
-    public static final int T__22=22;
-    public static final int T__23=23;
-    public static final int SELECT=4;
-    public static final int FROM=5;
-    public static final int ID=6;
-    public static final int INSERT=7;
-    public static final int INTO=8;
-    public static final int VALUES=9;
-    public static final int VALUE=10;
-    public static final int DELETE=11;
-    public static final int UPDATE=12;
-    public static final int SET=13;
     public static final int WHERE=14;
-    public static final int OP=15;
-    public static final int IN=16;
-    public static final int WS=17;
-    public static final int STRING=18;
+    public static final int T__25=25;
+    public static final int T__24=24;
+    public static final int T__23=23;
+    public static final int T__22=22;
+    public static final int T__21=21;
+    public static final int T__20=20;
+    public static final int VALUES=8;
+    public static final int UPDATE=11;
+    public static final int SET=12;
+    public static final int DELETE=10;
+    public static final int VALUE=9;
+    public static final int ID=13;
+    public static final int EOF=-1;
     public static final int NUM=19;
+    public static final int WS=17;
+    public static final int IN=16;
+    public static final int INSERT=6;
+    public static final int OP=15;
+    public static final int FROM=5;
+    public static final int SELECT=4;
+    public static final int INTO=7;
+    public static final int STRING=18;
 
     // delegates
     // delegators
@@ -42,15 +44,15 @@ public class SqlLexer extends Lexer {
         super(input,state);
 
     }
-    public String getGrammarFileName() { return "G:\\code\\mybridge\\src\\mybridge\\sql\\parser\\Sql.g"; }
+    public String getGrammarFileName() { return "/home/quanwei/workspace_java/mybridge/src/mybridge/sql/parser/Sql.g"; }
 
     // $ANTLR start "T__20"
     public final void mT__20() throws RecognitionException {
         try {
             int _type = T__20;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // G:\\code\\mybridge\\src\\mybridge\\sql\\parser\\Sql.g:7:7: ( '(' )
-            // G:\\code\\mybridge\\src\\mybridge\\sql\\parser\\Sql.g:7:9: '('
+            // /home/quanwei/workspace_java/mybridge/src/mybridge/sql/parser/Sql.g:7:7: ( '(' )
+            // /home/quanwei/workspace_java/mybridge/src/mybridge/sql/parser/Sql.g:7:9: '('
             {
             match('('); 
 
@@ -69,8 +71,8 @@ public class SqlLexer extends Lexer {
         try {
             int _type = T__21;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // G:\\code\\mybridge\\src\\mybridge\\sql\\parser\\Sql.g:8:7: ( ')' )
-            // G:\\code\\mybridge\\src\\mybridge\\sql\\parser\\Sql.g:8:9: ')'
+            // /home/quanwei/workspace_java/mybridge/src/mybridge/sql/parser/Sql.g:8:7: ( ')' )
+            // /home/quanwei/workspace_java/mybridge/src/mybridge/sql/parser/Sql.g:8:9: ')'
             {
             match(')'); 
 
@@ -89,8 +91,8 @@ public class SqlLexer extends Lexer {
         try {
             int _type = T__22;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // G:\\code\\mybridge\\src\\mybridge\\sql\\parser\\Sql.g:9:7: ( ',' )
-            // G:\\code\\mybridge\\src\\mybridge\\sql\\parser\\Sql.g:9:9: ','
+            // /home/quanwei/workspace_java/mybridge/src/mybridge/sql/parser/Sql.g:9:7: ( ',' )
+            // /home/quanwei/workspace_java/mybridge/src/mybridge/sql/parser/Sql.g:9:9: ','
             {
             match(','); 
 
@@ -109,8 +111,8 @@ public class SqlLexer extends Lexer {
         try {
             int _type = T__23;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // G:\\code\\mybridge\\src\\mybridge\\sql\\parser\\Sql.g:10:7: ( '=' )
-            // G:\\code\\mybridge\\src\\mybridge\\sql\\parser\\Sql.g:10:9: '='
+            // /home/quanwei/workspace_java/mybridge/src/mybridge/sql/parser/Sql.g:10:7: ( '=' )
+            // /home/quanwei/workspace_java/mybridge/src/mybridge/sql/parser/Sql.g:10:9: '='
             {
             match('='); 
 
@@ -124,13 +126,53 @@ public class SqlLexer extends Lexer {
     }
     // $ANTLR end "T__23"
 
+    // $ANTLR start "T__24"
+    public final void mT__24() throws RecognitionException {
+        try {
+            int _type = T__24;
+            int _channel = DEFAULT_TOKEN_CHANNEL;
+            // /home/quanwei/workspace_java/mybridge/src/mybridge/sql/parser/Sql.g:11:7: ( '`' )
+            // /home/quanwei/workspace_java/mybridge/src/mybridge/sql/parser/Sql.g:11:9: '`'
+            {
+            match('`'); 
+
+            }
+
+            state.type = _type;
+            state.channel = _channel;
+        }
+        finally {
+        }
+    }
+    // $ANTLR end "T__24"
+
+    // $ANTLR start "T__25"
+    public final void mT__25() throws RecognitionException {
+        try {
+            int _type = T__25;
+            int _channel = DEFAULT_TOKEN_CHANNEL;
+            // /home/quanwei/workspace_java/mybridge/src/mybridge/sql/parser/Sql.g:12:7: ( '.' )
+            // /home/quanwei/workspace_java/mybridge/src/mybridge/sql/parser/Sql.g:12:9: '.'
+            {
+            match('.'); 
+
+            }
+
+            state.type = _type;
+            state.channel = _channel;
+        }
+        finally {
+        }
+    }
+    // $ANTLR end "T__25"
+
     // $ANTLR start "WS"
     public final void mWS() throws RecognitionException {
         try {
             int _type = WS;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // G:\\code\\mybridge\\src\\mybridge\\sql\\parser\\Sql.g:94:5: ( ( ' ' | '\\t' | '\\r' | '\\n' ) )
-            // G:\\code\\mybridge\\src\\mybridge\\sql\\parser\\Sql.g:94:9: ( ' ' | '\\t' | '\\r' | '\\n' )
+            // /home/quanwei/workspace_java/mybridge/src/mybridge/sql/parser/Sql.g:95:5: ( ( ' ' | '\\t' | '\\r' | '\\n' ) )
+            // /home/quanwei/workspace_java/mybridge/src/mybridge/sql/parser/Sql.g:95:9: ( ' ' | '\\t' | '\\r' | '\\n' )
             {
             if ( (input.LA(1)>='\t' && input.LA(1)<='\n')||input.LA(1)=='\r'||input.LA(1)==' ' ) {
                 input.consume();
@@ -158,7 +200,7 @@ public class SqlLexer extends Lexer {
         try {
             int _type = VALUE;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // G:\\code\\mybridge\\src\\mybridge\\sql\\parser\\Sql.g:101:7: ( STRING | NUM )
+            // /home/quanwei/workspace_java/mybridge/src/mybridge/sql/parser/Sql.g:102:7: ( STRING | NUM )
             int alt1=2;
             int LA1_0 = input.LA(1);
 
@@ -176,14 +218,14 @@ public class SqlLexer extends Lexer {
             }
             switch (alt1) {
                 case 1 :
-                    // G:\\code\\mybridge\\src\\mybridge\\sql\\parser\\Sql.g:101:9: STRING
+                    // /home/quanwei/workspace_java/mybridge/src/mybridge/sql/parser/Sql.g:102:9: STRING
                     {
                     mSTRING(); 
 
                     }
                     break;
                 case 2 :
-                    // G:\\code\\mybridge\\src\\mybridge\\sql\\parser\\Sql.g:101:18: NUM
+                    // /home/quanwei/workspace_java/mybridge/src/mybridge/sql/parser/Sql.g:102:18: NUM
                     {
                     mNUM(); 
 
@@ -204,8 +246,8 @@ public class SqlLexer extends Lexer {
         try {
             int _type = SET;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // G:\\code\\mybridge\\src\\mybridge\\sql\\parser\\Sql.g:102:5: ( ( 'S' | 's' ) ( 'E' | 'e' ) ( 'T' | 't' ) )
-            // G:\\code\\mybridge\\src\\mybridge\\sql\\parser\\Sql.g:102:7: ( 'S' | 's' ) ( 'E' | 'e' ) ( 'T' | 't' )
+            // /home/quanwei/workspace_java/mybridge/src/mybridge/sql/parser/Sql.g:103:5: ( ( 'S' | 's' ) ( 'E' | 'e' ) ( 'T' | 't' ) )
+            // /home/quanwei/workspace_java/mybridge/src/mybridge/sql/parser/Sql.g:103:7: ( 'S' | 's' ) ( 'E' | 'e' ) ( 'T' | 't' )
             {
             if ( input.LA(1)=='S'||input.LA(1)=='s' ) {
                 input.consume();
@@ -250,8 +292,8 @@ public class SqlLexer extends Lexer {
         try {
             int _type = VALUES;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // G:\\code\\mybridge\\src\\mybridge\\sql\\parser\\Sql.g:103:8: ( ( 'V' | 'v' ) ( 'A' | 'a' ) ( 'L' | 'l' ) ( 'U' | 'u' ) ( 'E' | 'e' ) ( 'S' | 's' ) )
-            // G:\\code\\mybridge\\src\\mybridge\\sql\\parser\\Sql.g:103:10: ( 'V' | 'v' ) ( 'A' | 'a' ) ( 'L' | 'l' ) ( 'U' | 'u' ) ( 'E' | 'e' ) ( 'S' | 's' )
+            // /home/quanwei/workspace_java/mybridge/src/mybridge/sql/parser/Sql.g:104:8: ( ( 'V' | 'v' ) ( 'A' | 'a' ) ( 'L' | 'l' ) ( 'U' | 'u' ) ( 'E' | 'e' ) ( 'S' | 's' ) )
+            // /home/quanwei/workspace_java/mybridge/src/mybridge/sql/parser/Sql.g:104:10: ( 'V' | 'v' ) ( 'A' | 'a' ) ( 'L' | 'l' ) ( 'U' | 'u' ) ( 'E' | 'e' ) ( 'S' | 's' )
             {
             if ( input.LA(1)=='V'||input.LA(1)=='v' ) {
                 input.consume();
@@ -323,8 +365,8 @@ public class SqlLexer extends Lexer {
         try {
             int _type = IN;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // G:\\code\\mybridge\\src\\mybridge\\sql\\parser\\Sql.g:104:5: ( ( 'I' | 'i' ) ( 'N' | 'n' ) )
-            // G:\\code\\mybridge\\src\\mybridge\\sql\\parser\\Sql.g:104:7: ( 'I' | 'i' ) ( 'N' | 'n' )
+            // /home/quanwei/workspace_java/mybridge/src/mybridge/sql/parser/Sql.g:105:5: ( ( 'I' | 'i' ) ( 'N' | 'n' ) )
+            // /home/quanwei/workspace_java/mybridge/src/mybridge/sql/parser/Sql.g:105:7: ( 'I' | 'i' ) ( 'N' | 'n' )
             {
             if ( input.LA(1)=='I'||input.LA(1)=='i' ) {
                 input.consume();
@@ -360,8 +402,8 @@ public class SqlLexer extends Lexer {
         try {
             int _type = INTO;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // G:\\code\\mybridge\\src\\mybridge\\sql\\parser\\Sql.g:105:6: ( ( 'I' | 'i' ) ( 'N' | 'n' ) ( 'T' | 't' ) ( 'O' | 'o' ) )
-            // G:\\code\\mybridge\\src\\mybridge\\sql\\parser\\Sql.g:105:8: ( 'I' | 'i' ) ( 'N' | 'n' ) ( 'T' | 't' ) ( 'O' | 'o' )
+            // /home/quanwei/workspace_java/mybridge/src/mybridge/sql/parser/Sql.g:106:6: ( ( 'I' | 'i' ) ( 'N' | 'n' ) ( 'T' | 't' ) ( 'O' | 'o' ) )
+            // /home/quanwei/workspace_java/mybridge/src/mybridge/sql/parser/Sql.g:106:8: ( 'I' | 'i' ) ( 'N' | 'n' ) ( 'T' | 't' ) ( 'O' | 'o' )
             {
             if ( input.LA(1)=='I'||input.LA(1)=='i' ) {
                 input.consume();
@@ -415,8 +457,8 @@ public class SqlLexer extends Lexer {
         try {
             int _type = INSERT;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // G:\\code\\mybridge\\src\\mybridge\\sql\\parser\\Sql.g:106:8: ( ( 'I' | 'i' ) ( 'N' | 'n' ) ( 'S' | 's' ) ( 'E' | 'e' ) ( 'R' | 'r' ) ( 'T' | 't' ) )
-            // G:\\code\\mybridge\\src\\mybridge\\sql\\parser\\Sql.g:106:10: ( 'I' | 'i' ) ( 'N' | 'n' ) ( 'S' | 's' ) ( 'E' | 'e' ) ( 'R' | 'r' ) ( 'T' | 't' )
+            // /home/quanwei/workspace_java/mybridge/src/mybridge/sql/parser/Sql.g:107:8: ( ( 'I' | 'i' ) ( 'N' | 'n' ) ( 'S' | 's' ) ( 'E' | 'e' ) ( 'R' | 'r' ) ( 'T' | 't' ) )
+            // /home/quanwei/workspace_java/mybridge/src/mybridge/sql/parser/Sql.g:107:10: ( 'I' | 'i' ) ( 'N' | 'n' ) ( 'S' | 's' ) ( 'E' | 'e' ) ( 'R' | 'r' ) ( 'T' | 't' )
             {
             if ( input.LA(1)=='I'||input.LA(1)=='i' ) {
                 input.consume();
@@ -488,8 +530,8 @@ public class SqlLexer extends Lexer {
         try {
             int _type = UPDATE;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // G:\\code\\mybridge\\src\\mybridge\\sql\\parser\\Sql.g:107:8: ( ( 'U' | 'u' ) ( 'P' | 'p' ) ( 'D' | 'd' ) ( 'A' | 'a' ) ( 'T' | 't' ) ( 'E' | 'e' ) )
-            // G:\\code\\mybridge\\src\\mybridge\\sql\\parser\\Sql.g:107:10: ( 'U' | 'u' ) ( 'P' | 'p' ) ( 'D' | 'd' ) ( 'A' | 'a' ) ( 'T' | 't' ) ( 'E' | 'e' )
+            // /home/quanwei/workspace_java/mybridge/src/mybridge/sql/parser/Sql.g:108:8: ( ( 'U' | 'u' ) ( 'P' | 'p' ) ( 'D' | 'd' ) ( 'A' | 'a' ) ( 'T' | 't' ) ( 'E' | 'e' ) )
+            // /home/quanwei/workspace_java/mybridge/src/mybridge/sql/parser/Sql.g:108:10: ( 'U' | 'u' ) ( 'P' | 'p' ) ( 'D' | 'd' ) ( 'A' | 'a' ) ( 'T' | 't' ) ( 'E' | 'e' )
             {
             if ( input.LA(1)=='U'||input.LA(1)=='u' ) {
                 input.consume();
@@ -561,8 +603,8 @@ public class SqlLexer extends Lexer {
         try {
             int _type = DELETE;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // G:\\code\\mybridge\\src\\mybridge\\sql\\parser\\Sql.g:108:8: ( ( 'D' | 'd' ) ( 'E' | 'e' ) ( 'L' | 'l' ) ( 'E' | 'e' ) ( 'T' | 't' ) ( 'E' | 'e' ) )
-            // G:\\code\\mybridge\\src\\mybridge\\sql\\parser\\Sql.g:108:10: ( 'D' | 'd' ) ( 'E' | 'e' ) ( 'L' | 'l' ) ( 'E' | 'e' ) ( 'T' | 't' ) ( 'E' | 'e' )
+            // /home/quanwei/workspace_java/mybridge/src/mybridge/sql/parser/Sql.g:109:8: ( ( 'D' | 'd' ) ( 'E' | 'e' ) ( 'L' | 'l' ) ( 'E' | 'e' ) ( 'T' | 't' ) ( 'E' | 'e' ) )
+            // /home/quanwei/workspace_java/mybridge/src/mybridge/sql/parser/Sql.g:109:10: ( 'D' | 'd' ) ( 'E' | 'e' ) ( 'L' | 'l' ) ( 'E' | 'e' ) ( 'T' | 't' ) ( 'E' | 'e' )
             {
             if ( input.LA(1)=='D'||input.LA(1)=='d' ) {
                 input.consume();
@@ -634,7 +676,7 @@ public class SqlLexer extends Lexer {
         try {
             int _type = OP;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // G:\\code\\mybridge\\src\\mybridge\\sql\\parser\\Sql.g:109:4: ( ( ( 'O' | 'o' ) ( 'R' | 'r' ) ) | ( ( 'A' | 'a' ) ( 'N' | 'n' ) ( 'D' | 'd' ) ) )
+            // /home/quanwei/workspace_java/mybridge/src/mybridge/sql/parser/Sql.g:110:4: ( ( ( 'O' | 'o' ) ( 'R' | 'r' ) ) | ( ( 'A' | 'a' ) ( 'N' | 'n' ) ( 'D' | 'd' ) ) )
             int alt2=2;
             int LA2_0 = input.LA(1);
 
@@ -652,10 +694,10 @@ public class SqlLexer extends Lexer {
             }
             switch (alt2) {
                 case 1 :
-                    // G:\\code\\mybridge\\src\\mybridge\\sql\\parser\\Sql.g:109:6: ( ( 'O' | 'o' ) ( 'R' | 'r' ) )
+                    // /home/quanwei/workspace_java/mybridge/src/mybridge/sql/parser/Sql.g:110:6: ( ( 'O' | 'o' ) ( 'R' | 'r' ) )
                     {
-                    // G:\\code\\mybridge\\src\\mybridge\\sql\\parser\\Sql.g:109:6: ( ( 'O' | 'o' ) ( 'R' | 'r' ) )
-                    // G:\\code\\mybridge\\src\\mybridge\\sql\\parser\\Sql.g:109:7: ( 'O' | 'o' ) ( 'R' | 'r' )
+                    // /home/quanwei/workspace_java/mybridge/src/mybridge/sql/parser/Sql.g:110:6: ( ( 'O' | 'o' ) ( 'R' | 'r' ) )
+                    // /home/quanwei/workspace_java/mybridge/src/mybridge/sql/parser/Sql.g:110:7: ( 'O' | 'o' ) ( 'R' | 'r' )
                     {
                     if ( input.LA(1)=='O'||input.LA(1)=='o' ) {
                         input.consume();
@@ -682,10 +724,10 @@ public class SqlLexer extends Lexer {
                     }
                     break;
                 case 2 :
-                    // G:\\code\\mybridge\\src\\mybridge\\sql\\parser\\Sql.g:109:30: ( ( 'A' | 'a' ) ( 'N' | 'n' ) ( 'D' | 'd' ) )
+                    // /home/quanwei/workspace_java/mybridge/src/mybridge/sql/parser/Sql.g:110:30: ( ( 'A' | 'a' ) ( 'N' | 'n' ) ( 'D' | 'd' ) )
                     {
-                    // G:\\code\\mybridge\\src\\mybridge\\sql\\parser\\Sql.g:109:30: ( ( 'A' | 'a' ) ( 'N' | 'n' ) ( 'D' | 'd' ) )
-                    // G:\\code\\mybridge\\src\\mybridge\\sql\\parser\\Sql.g:109:31: ( 'A' | 'a' ) ( 'N' | 'n' ) ( 'D' | 'd' )
+                    // /home/quanwei/workspace_java/mybridge/src/mybridge/sql/parser/Sql.g:110:30: ( ( 'A' | 'a' ) ( 'N' | 'n' ) ( 'D' | 'd' ) )
+                    // /home/quanwei/workspace_java/mybridge/src/mybridge/sql/parser/Sql.g:110:31: ( 'A' | 'a' ) ( 'N' | 'n' ) ( 'D' | 'd' )
                     {
                     if ( input.LA(1)=='A'||input.LA(1)=='a' ) {
                         input.consume();
@@ -735,8 +777,8 @@ public class SqlLexer extends Lexer {
         try {
             int _type = SELECT;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // G:\\code\\mybridge\\src\\mybridge\\sql\\parser\\Sql.g:110:8: ( ( 'S' | 's' ) ( 'E' | 'e' ) ( 'L' | 'l' ) ( 'E' | 'e' ) ( 'C' | 'c' ) ( 'T' | 't' ) )
-            // G:\\code\\mybridge\\src\\mybridge\\sql\\parser\\Sql.g:110:10: ( 'S' | 's' ) ( 'E' | 'e' ) ( 'L' | 'l' ) ( 'E' | 'e' ) ( 'C' | 'c' ) ( 'T' | 't' )
+            // /home/quanwei/workspace_java/mybridge/src/mybridge/sql/parser/Sql.g:111:8: ( ( 'S' | 's' ) ( 'E' | 'e' ) ( 'L' | 'l' ) ( 'E' | 'e' ) ( 'C' | 'c' ) ( 'T' | 't' ) )
+            // /home/quanwei/workspace_java/mybridge/src/mybridge/sql/parser/Sql.g:111:10: ( 'S' | 's' ) ( 'E' | 'e' ) ( 'L' | 'l' ) ( 'E' | 'e' ) ( 'C' | 'c' ) ( 'T' | 't' )
             {
             if ( input.LA(1)=='S'||input.LA(1)=='s' ) {
                 input.consume();
@@ -808,8 +850,8 @@ public class SqlLexer extends Lexer {
         try {
             int _type = WHERE;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // G:\\code\\mybridge\\src\\mybridge\\sql\\parser\\Sql.g:111:8: ( ( 'W' | 'w' ) ( 'H' | 'h' ) ( 'E' | 'e' ) ( 'R' | 'r' ) ( 'E' | 'e' ) )
-            // G:\\code\\mybridge\\src\\mybridge\\sql\\parser\\Sql.g:111:11: ( 'W' | 'w' ) ( 'H' | 'h' ) ( 'E' | 'e' ) ( 'R' | 'r' ) ( 'E' | 'e' )
+            // /home/quanwei/workspace_java/mybridge/src/mybridge/sql/parser/Sql.g:112:8: ( ( 'W' | 'w' ) ( 'H' | 'h' ) ( 'E' | 'e' ) ( 'R' | 'r' ) ( 'E' | 'e' ) )
+            // /home/quanwei/workspace_java/mybridge/src/mybridge/sql/parser/Sql.g:112:11: ( 'W' | 'w' ) ( 'H' | 'h' ) ( 'E' | 'e' ) ( 'R' | 'r' ) ( 'E' | 'e' )
             {
             if ( input.LA(1)=='W'||input.LA(1)=='w' ) {
                 input.consume();
@@ -872,8 +914,8 @@ public class SqlLexer extends Lexer {
         try {
             int _type = FROM;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // G:\\code\\mybridge\\src\\mybridge\\sql\\parser\\Sql.g:112:6: ( ( 'F' | 'f' ) ( 'R' | 'r' ) ( 'O' | 'o' ) ( 'M' | 'm' ) )
-            // G:\\code\\mybridge\\src\\mybridge\\sql\\parser\\Sql.g:112:8: ( 'F' | 'f' ) ( 'R' | 'r' ) ( 'O' | 'o' ) ( 'M' | 'm' )
+            // /home/quanwei/workspace_java/mybridge/src/mybridge/sql/parser/Sql.g:113:6: ( ( 'F' | 'f' ) ( 'R' | 'r' ) ( 'O' | 'o' ) ( 'M' | 'm' ) )
+            // /home/quanwei/workspace_java/mybridge/src/mybridge/sql/parser/Sql.g:113:8: ( 'F' | 'f' ) ( 'R' | 'r' ) ( 'O' | 'o' ) ( 'M' | 'm' )
             {
             if ( input.LA(1)=='F'||input.LA(1)=='f' ) {
                 input.consume();
@@ -927,8 +969,8 @@ public class SqlLexer extends Lexer {
         try {
             int _type = ID;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // G:\\code\\mybridge\\src\\mybridge\\sql\\parser\\Sql.g:113:4: ( ( 'a' .. 'z' | 'A' .. 'Z' | '_' ) ( '0' .. '9' | 'a' .. 'z' | 'A' .. 'Z' | '_' )* )
-            // G:\\code\\mybridge\\src\\mybridge\\sql\\parser\\Sql.g:113:6: ( 'a' .. 'z' | 'A' .. 'Z' | '_' ) ( '0' .. '9' | 'a' .. 'z' | 'A' .. 'Z' | '_' )*
+            // /home/quanwei/workspace_java/mybridge/src/mybridge/sql/parser/Sql.g:114:4: ( ( 'a' .. 'z' | 'A' .. 'Z' | '_' ) ( '0' .. '9' | 'a' .. 'z' | 'A' .. 'Z' | '_' )* )
+            // /home/quanwei/workspace_java/mybridge/src/mybridge/sql/parser/Sql.g:114:6: ( 'a' .. 'z' | 'A' .. 'Z' | '_' ) ( '0' .. '9' | 'a' .. 'z' | 'A' .. 'Z' | '_' )*
             {
             if ( (input.LA(1)>='A' && input.LA(1)<='Z')||input.LA(1)=='_'||(input.LA(1)>='a' && input.LA(1)<='z') ) {
                 input.consume();
@@ -939,7 +981,7 @@ public class SqlLexer extends Lexer {
                 recover(mse);
                 throw mse;}
 
-            // G:\\code\\mybridge\\src\\mybridge\\sql\\parser\\Sql.g:113:30: ( '0' .. '9' | 'a' .. 'z' | 'A' .. 'Z' | '_' )*
+            // /home/quanwei/workspace_java/mybridge/src/mybridge/sql/parser/Sql.g:114:30: ( '0' .. '9' | 'a' .. 'z' | 'A' .. 'Z' | '_' )*
             loop3:
             do {
                 int alt3=2;
@@ -952,7 +994,7 @@ public class SqlLexer extends Lexer {
 
                 switch (alt3) {
             	case 1 :
-            	    // G:\\code\\mybridge\\src\\mybridge\\sql\\parser\\Sql.g:
+            	    // /home/quanwei/workspace_java/mybridge/src/mybridge/sql/parser/Sql.g:
             	    {
             	    if ( (input.LA(1)>='0' && input.LA(1)<='9')||(input.LA(1)>='A' && input.LA(1)<='Z')||input.LA(1)=='_'||(input.LA(1)>='a' && input.LA(1)<='z') ) {
             	        input.consume();
@@ -986,7 +1028,7 @@ public class SqlLexer extends Lexer {
     // $ANTLR start "STRING"
     public final void mSTRING() throws RecognitionException {
         try {
-            // G:\\code\\mybridge\\src\\mybridge\\sql\\parser\\Sql.g:115:18: ( '\"' (~ ( '\\\\' | '\"' ) )* '\"' | '\\'' (~ ( '\\\\' | '\"' ) )* '\\'' )
+            // /home/quanwei/workspace_java/mybridge/src/mybridge/sql/parser/Sql.g:116:18: ( '\"' (~ ( '\\\\' | '\"' ) )* '\"' | '\\'' (~ ( '\\\\' | '\"' ) )* '\\'' )
             int alt6=2;
             int LA6_0 = input.LA(1);
 
@@ -1004,10 +1046,10 @@ public class SqlLexer extends Lexer {
             }
             switch (alt6) {
                 case 1 :
-                    // G:\\code\\mybridge\\src\\mybridge\\sql\\parser\\Sql.g:115:21: '\"' (~ ( '\\\\' | '\"' ) )* '\"'
+                    // /home/quanwei/workspace_java/mybridge/src/mybridge/sql/parser/Sql.g:116:21: '\"' (~ ( '\\\\' | '\"' ) )* '\"'
                     {
                     match('\"'); 
-                    // G:\\code\\mybridge\\src\\mybridge\\sql\\parser\\Sql.g:115:25: (~ ( '\\\\' | '\"' ) )*
+                    // /home/quanwei/workspace_java/mybridge/src/mybridge/sql/parser/Sql.g:116:25: (~ ( '\\\\' | '\"' ) )*
                     loop4:
                     do {
                         int alt4=2;
@@ -1020,7 +1062,7 @@ public class SqlLexer extends Lexer {
 
                         switch (alt4) {
                     	case 1 :
-                    	    // G:\\code\\mybridge\\src\\mybridge\\sql\\parser\\Sql.g:115:26: ~ ( '\\\\' | '\"' )
+                    	    // /home/quanwei/workspace_java/mybridge/src/mybridge/sql/parser/Sql.g:116:26: ~ ( '\\\\' | '\"' )
                     	    {
                     	    if ( (input.LA(1)>='\u0000' && input.LA(1)<='!')||(input.LA(1)>='#' && input.LA(1)<='[')||(input.LA(1)>=']' && input.LA(1)<='\uFFFF') ) {
                     	        input.consume();
@@ -1045,10 +1087,10 @@ public class SqlLexer extends Lexer {
                     }
                     break;
                 case 2 :
-                    // G:\\code\\mybridge\\src\\mybridge\\sql\\parser\\Sql.g:115:47: '\\'' (~ ( '\\\\' | '\"' ) )* '\\''
+                    // /home/quanwei/workspace_java/mybridge/src/mybridge/sql/parser/Sql.g:116:47: '\\'' (~ ( '\\\\' | '\"' ) )* '\\''
                     {
                     match('\''); 
-                    // G:\\code\\mybridge\\src\\mybridge\\sql\\parser\\Sql.g:115:52: (~ ( '\\\\' | '\"' ) )*
+                    // /home/quanwei/workspace_java/mybridge/src/mybridge/sql/parser/Sql.g:116:52: (~ ( '\\\\' | '\"' ) )*
                     loop5:
                     do {
                         int alt5=2;
@@ -1070,7 +1112,7 @@ public class SqlLexer extends Lexer {
 
                         switch (alt5) {
                     	case 1 :
-                    	    // G:\\code\\mybridge\\src\\mybridge\\sql\\parser\\Sql.g:115:53: ~ ( '\\\\' | '\"' )
+                    	    // /home/quanwei/workspace_java/mybridge/src/mybridge/sql/parser/Sql.g:116:53: ~ ( '\\\\' | '\"' )
                     	    {
                     	    if ( (input.LA(1)>='\u0000' && input.LA(1)<='!')||(input.LA(1)>='#' && input.LA(1)<='[')||(input.LA(1)>=']' && input.LA(1)<='\uFFFF') ) {
                     	        input.consume();
@@ -1105,10 +1147,10 @@ public class SqlLexer extends Lexer {
     // $ANTLR start "NUM"
     public final void mNUM() throws RecognitionException {
         try {
-            // G:\\code\\mybridge\\src\\mybridge\\sql\\parser\\Sql.g:116:16: ( ( '0' .. '9' )+ ( '.' ( '0' .. '9' )+ )? )
-            // G:\\code\\mybridge\\src\\mybridge\\sql\\parser\\Sql.g:116:18: ( '0' .. '9' )+ ( '.' ( '0' .. '9' )+ )?
+            // /home/quanwei/workspace_java/mybridge/src/mybridge/sql/parser/Sql.g:117:16: ( ( '0' .. '9' )+ ( '.' ( '0' .. '9' )+ )? )
+            // /home/quanwei/workspace_java/mybridge/src/mybridge/sql/parser/Sql.g:117:18: ( '0' .. '9' )+ ( '.' ( '0' .. '9' )+ )?
             {
-            // G:\\code\\mybridge\\src\\mybridge\\sql\\parser\\Sql.g:116:18: ( '0' .. '9' )+
+            // /home/quanwei/workspace_java/mybridge/src/mybridge/sql/parser/Sql.g:117:18: ( '0' .. '9' )+
             int cnt7=0;
             loop7:
             do {
@@ -1122,7 +1164,7 @@ public class SqlLexer extends Lexer {
 
                 switch (alt7) {
             	case 1 :
-            	    // G:\\code\\mybridge\\src\\mybridge\\sql\\parser\\Sql.g:116:19: '0' .. '9'
+            	    // /home/quanwei/workspace_java/mybridge/src/mybridge/sql/parser/Sql.g:117:19: '0' .. '9'
             	    {
             	    matchRange('0','9'); 
 
@@ -1138,7 +1180,7 @@ public class SqlLexer extends Lexer {
                 cnt7++;
             } while (true);
 
-            // G:\\code\\mybridge\\src\\mybridge\\sql\\parser\\Sql.g:116:29: ( '.' ( '0' .. '9' )+ )?
+            // /home/quanwei/workspace_java/mybridge/src/mybridge/sql/parser/Sql.g:117:29: ( '.' ( '0' .. '9' )+ )?
             int alt9=2;
             int LA9_0 = input.LA(1);
 
@@ -1147,10 +1189,10 @@ public class SqlLexer extends Lexer {
             }
             switch (alt9) {
                 case 1 :
-                    // G:\\code\\mybridge\\src\\mybridge\\sql\\parser\\Sql.g:116:30: '.' ( '0' .. '9' )+
+                    // /home/quanwei/workspace_java/mybridge/src/mybridge/sql/parser/Sql.g:117:30: '.' ( '0' .. '9' )+
                     {
                     match('.'); 
-                    // G:\\code\\mybridge\\src\\mybridge\\sql\\parser\\Sql.g:116:34: ( '0' .. '9' )+
+                    // /home/quanwei/workspace_java/mybridge/src/mybridge/sql/parser/Sql.g:117:34: ( '0' .. '9' )+
                     int cnt8=0;
                     loop8:
                     do {
@@ -1164,7 +1206,7 @@ public class SqlLexer extends Lexer {
 
                         switch (alt8) {
                     	case 1 :
-                    	    // G:\\code\\mybridge\\src\\mybridge\\sql\\parser\\Sql.g:116:35: '0' .. '9'
+                    	    // /home/quanwei/workspace_java/mybridge/src/mybridge/sql/parser/Sql.g:117:35: '0' .. '9'
                     	    {
                     	    matchRange('0','9'); 
 
@@ -1196,131 +1238,145 @@ public class SqlLexer extends Lexer {
     // $ANTLR end "NUM"
 
     public void mTokens() throws RecognitionException {
-        // G:\\code\\mybridge\\src\\mybridge\\sql\\parser\\Sql.g:1:8: ( T__20 | T__21 | T__22 | T__23 | WS | VALUE | SET | VALUES | IN | INTO | INSERT | UPDATE | DELETE | OP | SELECT | WHERE | FROM | ID )
-        int alt10=18;
+        // /home/quanwei/workspace_java/mybridge/src/mybridge/sql/parser/Sql.g:1:8: ( T__20 | T__21 | T__22 | T__23 | T__24 | T__25 | WS | VALUE | SET | VALUES | IN | INTO | INSERT | UPDATE | DELETE | OP | SELECT | WHERE | FROM | ID )
+        int alt10=20;
         alt10 = dfa10.predict(input);
         switch (alt10) {
             case 1 :
-                // G:\\code\\mybridge\\src\\mybridge\\sql\\parser\\Sql.g:1:10: T__20
+                // /home/quanwei/workspace_java/mybridge/src/mybridge/sql/parser/Sql.g:1:10: T__20
                 {
                 mT__20(); 
 
                 }
                 break;
             case 2 :
-                // G:\\code\\mybridge\\src\\mybridge\\sql\\parser\\Sql.g:1:16: T__21
+                // /home/quanwei/workspace_java/mybridge/src/mybridge/sql/parser/Sql.g:1:16: T__21
                 {
                 mT__21(); 
 
                 }
                 break;
             case 3 :
-                // G:\\code\\mybridge\\src\\mybridge\\sql\\parser\\Sql.g:1:22: T__22
+                // /home/quanwei/workspace_java/mybridge/src/mybridge/sql/parser/Sql.g:1:22: T__22
                 {
                 mT__22(); 
 
                 }
                 break;
             case 4 :
-                // G:\\code\\mybridge\\src\\mybridge\\sql\\parser\\Sql.g:1:28: T__23
+                // /home/quanwei/workspace_java/mybridge/src/mybridge/sql/parser/Sql.g:1:28: T__23
                 {
                 mT__23(); 
 
                 }
                 break;
             case 5 :
-                // G:\\code\\mybridge\\src\\mybridge\\sql\\parser\\Sql.g:1:34: WS
+                // /home/quanwei/workspace_java/mybridge/src/mybridge/sql/parser/Sql.g:1:34: T__24
+                {
+                mT__24(); 
+
+                }
+                break;
+            case 6 :
+                // /home/quanwei/workspace_java/mybridge/src/mybridge/sql/parser/Sql.g:1:40: T__25
+                {
+                mT__25(); 
+
+                }
+                break;
+            case 7 :
+                // /home/quanwei/workspace_java/mybridge/src/mybridge/sql/parser/Sql.g:1:46: WS
                 {
                 mWS(); 
 
                 }
                 break;
-            case 6 :
-                // G:\\code\\mybridge\\src\\mybridge\\sql\\parser\\Sql.g:1:37: VALUE
+            case 8 :
+                // /home/quanwei/workspace_java/mybridge/src/mybridge/sql/parser/Sql.g:1:49: VALUE
                 {
                 mVALUE(); 
 
                 }
                 break;
-            case 7 :
-                // G:\\code\\mybridge\\src\\mybridge\\sql\\parser\\Sql.g:1:43: SET
+            case 9 :
+                // /home/quanwei/workspace_java/mybridge/src/mybridge/sql/parser/Sql.g:1:55: SET
                 {
                 mSET(); 
 
                 }
                 break;
-            case 8 :
-                // G:\\code\\mybridge\\src\\mybridge\\sql\\parser\\Sql.g:1:47: VALUES
+            case 10 :
+                // /home/quanwei/workspace_java/mybridge/src/mybridge/sql/parser/Sql.g:1:59: VALUES
                 {
                 mVALUES(); 
 
                 }
                 break;
-            case 9 :
-                // G:\\code\\mybridge\\src\\mybridge\\sql\\parser\\Sql.g:1:54: IN
+            case 11 :
+                // /home/quanwei/workspace_java/mybridge/src/mybridge/sql/parser/Sql.g:1:66: IN
                 {
                 mIN(); 
 
                 }
                 break;
-            case 10 :
-                // G:\\code\\mybridge\\src\\mybridge\\sql\\parser\\Sql.g:1:57: INTO
+            case 12 :
+                // /home/quanwei/workspace_java/mybridge/src/mybridge/sql/parser/Sql.g:1:69: INTO
                 {
                 mINTO(); 
 
                 }
                 break;
-            case 11 :
-                // G:\\code\\mybridge\\src\\mybridge\\sql\\parser\\Sql.g:1:62: INSERT
+            case 13 :
+                // /home/quanwei/workspace_java/mybridge/src/mybridge/sql/parser/Sql.g:1:74: INSERT
                 {
                 mINSERT(); 
 
                 }
                 break;
-            case 12 :
-                // G:\\code\\mybridge\\src\\mybridge\\sql\\parser\\Sql.g:1:69: UPDATE
+            case 14 :
+                // /home/quanwei/workspace_java/mybridge/src/mybridge/sql/parser/Sql.g:1:81: UPDATE
                 {
                 mUPDATE(); 
 
                 }
                 break;
-            case 13 :
-                // G:\\code\\mybridge\\src\\mybridge\\sql\\parser\\Sql.g:1:76: DELETE
+            case 15 :
+                // /home/quanwei/workspace_java/mybridge/src/mybridge/sql/parser/Sql.g:1:88: DELETE
                 {
                 mDELETE(); 
 
                 }
                 break;
-            case 14 :
-                // G:\\code\\mybridge\\src\\mybridge\\sql\\parser\\Sql.g:1:83: OP
+            case 16 :
+                // /home/quanwei/workspace_java/mybridge/src/mybridge/sql/parser/Sql.g:1:95: OP
                 {
                 mOP(); 
 
                 }
                 break;
-            case 15 :
-                // G:\\code\\mybridge\\src\\mybridge\\sql\\parser\\Sql.g:1:86: SELECT
+            case 17 :
+                // /home/quanwei/workspace_java/mybridge/src/mybridge/sql/parser/Sql.g:1:98: SELECT
                 {
                 mSELECT(); 
 
                 }
                 break;
-            case 16 :
-                // G:\\code\\mybridge\\src\\mybridge\\sql\\parser\\Sql.g:1:93: WHERE
+            case 18 :
+                // /home/quanwei/workspace_java/mybridge/src/mybridge/sql/parser/Sql.g:1:105: WHERE
                 {
                 mWHERE(); 
 
                 }
                 break;
-            case 17 :
-                // G:\\code\\mybridge\\src\\mybridge\\sql\\parser\\Sql.g:1:99: FROM
+            case 19 :
+                // /home/quanwei/workspace_java/mybridge/src/mybridge/sql/parser/Sql.g:1:111: FROM
                 {
                 mFROM(); 
 
                 }
                 break;
-            case 18 :
-                // G:\\code\\mybridge\\src\\mybridge\\sql\\parser\\Sql.g:1:104: ID
+            case 20 :
+                // /home/quanwei/workspace_java/mybridge/src/mybridge/sql/parser/Sql.g:1:116: ID
                 {
                 mID(); 
 
@@ -1334,43 +1390,43 @@ public class SqlLexer extends Lexer {
 
     protected DFA10 dfa10 = new DFA10(this);
     static final String DFA10_eotS =
-        "\7\uffff\11\20\1\uffff\2\20\1\37\2\20\1\42\3\20\1\46\4\20\1\uffff"+
-        "\2\20\1\uffff\1\42\2\20\1\uffff\2\20\1\61\4\20\1\66\2\20\1\uffff"+
-        "\3\20\1\74\1\uffff\1\75\1\76\1\77\1\100\1\101\6\uffff";
+        "\11\uffff\11\22\1\uffff\2\22\1\41\2\22\1\44\3\22\1\50\4\22\1\uffff"+
+        "\2\22\1\uffff\1\44\2\22\1\uffff\2\22\1\63\4\22\1\70\2\22\1\uffff"+
+        "\3\22\1\76\1\uffff\1\77\1\100\1\101\1\102\1\103\6\uffff";
     static final String DFA10_eofS =
-        "\102\uffff";
+        "\104\uffff";
     static final String DFA10_minS =
-        "\1\11\6\uffff\1\105\1\101\1\116\1\120\1\105\1\122\1\116\1\110\1"+
+        "\1\11\10\uffff\1\105\1\101\1\116\1\120\1\105\1\122\1\116\1\110\1"+
         "\122\1\uffff\2\114\1\60\1\104\1\114\1\60\1\104\1\105\1\117\1\60"+
         "\1\105\1\125\1\117\1\105\1\uffff\1\101\1\105\1\uffff\1\60\1\122"+
         "\1\115\1\uffff\1\103\1\105\1\60\1\122\2\124\1\105\1\60\1\124\1\123"+
         "\1\uffff\1\124\2\105\1\60\1\uffff\5\60\6\uffff";
     static final String DFA10_maxS =
-        "\1\172\6\uffff\1\145\1\141\1\156\1\160\1\145\1\162\1\156\1\150"+
+        "\1\172\10\uffff\1\145\1\141\1\156\1\160\1\145\1\162\1\156\1\150"+
         "\1\162\1\uffff\1\164\1\154\1\172\1\144\1\154\1\172\1\144\1\145\1"+
         "\157\1\172\1\145\1\165\1\157\1\145\1\uffff\1\141\1\145\1\uffff\1"+
         "\172\1\162\1\155\1\uffff\1\143\1\145\1\172\1\162\2\164\1\145\1\172"+
         "\1\164\1\163\1\uffff\1\164\2\145\1\172\1\uffff\5\172\6\uffff";
     static final String DFA10_acceptS =
-        "\1\uffff\1\1\1\2\1\3\1\4\1\5\1\6\11\uffff\1\22\16\uffff\1\11\2"+
-        "\uffff\1\16\3\uffff\1\7\12\uffff\1\12\4\uffff\1\21\5\uffff\1\20"+
-        "\1\17\1\10\1\13\1\14\1\15";
+        "\1\uffff\1\1\1\2\1\3\1\4\1\5\1\6\1\7\1\10\11\uffff\1\24\16\uffff"+
+        "\1\13\2\uffff\1\20\3\uffff\1\11\12\uffff\1\14\4\uffff\1\23\5\uffff"+
+        "\1\22\1\21\1\12\1\15\1\16\1\17";
     static final String DFA10_specialS =
-        "\102\uffff}>";
+        "\104\uffff}>";
     static final String[] DFA10_transitionS = {
-            "\2\5\2\uffff\1\5\22\uffff\1\5\1\uffff\1\6\4\uffff\1\6\1\1\1"+
-            "\2\2\uffff\1\3\3\uffff\12\6\3\uffff\1\4\3\uffff\1\15\2\20\1"+
-            "\13\1\20\1\17\2\20\1\11\5\20\1\14\3\20\1\7\1\20\1\12\1\10\1"+
-            "\16\3\20\4\uffff\1\20\1\uffff\1\15\2\20\1\13\1\20\1\17\2\20"+
-            "\1\11\5\20\1\14\3\20\1\7\1\20\1\12\1\10\1\16\3\20",
+            "\2\7\2\uffff\1\7\22\uffff\1\7\1\uffff\1\10\4\uffff\1\10\1\1"+
+            "\1\2\2\uffff\1\3\1\uffff\1\6\1\uffff\12\10\3\uffff\1\4\3\uffff"+
+            "\1\17\2\22\1\15\1\22\1\21\2\22\1\13\5\22\1\16\3\22\1\11\1\22"+
+            "\1\14\1\12\1\20\3\22\4\uffff\1\22\1\5\1\17\2\22\1\15\1\22\1"+
+            "\21\2\22\1\13\5\22\1\16\3\22\1\11\1\22\1\14\1\12\1\20\3\22",
             "",
             "",
             "",
             "",
             "",
             "",
-            "\1\21\37\uffff\1\21",
-            "\1\22\37\uffff\1\22",
+            "",
+            "",
             "\1\23\37\uffff\1\23",
             "\1\24\37\uffff\1\24",
             "\1\25\37\uffff\1\25",
@@ -1378,51 +1434,53 @@ public class SqlLexer extends Lexer {
             "\1\27\37\uffff\1\27",
             "\1\30\37\uffff\1\30",
             "\1\31\37\uffff\1\31",
+            "\1\32\37\uffff\1\32",
+            "\1\33\37\uffff\1\33",
             "",
-            "\1\33\7\uffff\1\32\27\uffff\1\33\7\uffff\1\32",
-            "\1\34\37\uffff\1\34",
-            "\12\20\7\uffff\22\20\1\36\1\35\6\20\4\uffff\1\20\1\uffff\22"+
-            "\20\1\36\1\35\6\20",
-            "\1\40\37\uffff\1\40",
-            "\1\41\37\uffff\1\41",
-            "\12\20\7\uffff\32\20\4\uffff\1\20\1\uffff\32\20",
+            "\1\35\7\uffff\1\34\27\uffff\1\35\7\uffff\1\34",
+            "\1\36\37\uffff\1\36",
+            "\12\22\7\uffff\22\22\1\40\1\37\6\22\4\uffff\1\22\1\uffff\22"+
+            "\22\1\40\1\37\6\22",
+            "\1\42\37\uffff\1\42",
             "\1\43\37\uffff\1\43",
-            "\1\44\37\uffff\1\44",
+            "\12\22\7\uffff\32\22\4\uffff\1\22\1\uffff\32\22",
             "\1\45\37\uffff\1\45",
-            "\12\20\7\uffff\32\20\4\uffff\1\20\1\uffff\32\20",
+            "\1\46\37\uffff\1\46",
             "\1\47\37\uffff\1\47",
-            "\1\50\37\uffff\1\50",
+            "\12\22\7\uffff\32\22\4\uffff\1\22\1\uffff\32\22",
             "\1\51\37\uffff\1\51",
             "\1\52\37\uffff\1\52",
-            "",
             "\1\53\37\uffff\1\53",
             "\1\54\37\uffff\1\54",
             "",
-            "\12\20\7\uffff\32\20\4\uffff\1\20\1\uffff\32\20",
             "\1\55\37\uffff\1\55",
             "\1\56\37\uffff\1\56",
             "",
+            "\12\22\7\uffff\32\22\4\uffff\1\22\1\uffff\32\22",
             "\1\57\37\uffff\1\57",
             "\1\60\37\uffff\1\60",
-            "\12\20\7\uffff\32\20\4\uffff\1\20\1\uffff\32\20",
+            "",
+            "\1\61\37\uffff\1\61",
             "\1\62\37\uffff\1\62",
-            "\1\63\37\uffff\1\63",
+            "\12\22\7\uffff\32\22\4\uffff\1\22\1\uffff\32\22",
             "\1\64\37\uffff\1\64",
             "\1\65\37\uffff\1\65",
-            "\12\20\7\uffff\32\20\4\uffff\1\20\1\uffff\32\20",
+            "\1\66\37\uffff\1\66",
             "\1\67\37\uffff\1\67",
-            "\1\70\37\uffff\1\70",
-            "",
+            "\12\22\7\uffff\32\22\4\uffff\1\22\1\uffff\32\22",
             "\1\71\37\uffff\1\71",
             "\1\72\37\uffff\1\72",
-            "\1\73\37\uffff\1\73",
-            "\12\20\7\uffff\32\20\4\uffff\1\20\1\uffff\32\20",
             "",
-            "\12\20\7\uffff\32\20\4\uffff\1\20\1\uffff\32\20",
-            "\12\20\7\uffff\32\20\4\uffff\1\20\1\uffff\32\20",
-            "\12\20\7\uffff\32\20\4\uffff\1\20\1\uffff\32\20",
-            "\12\20\7\uffff\32\20\4\uffff\1\20\1\uffff\32\20",
-            "\12\20\7\uffff\32\20\4\uffff\1\20\1\uffff\32\20",
+            "\1\73\37\uffff\1\73",
+            "\1\74\37\uffff\1\74",
+            "\1\75\37\uffff\1\75",
+            "\12\22\7\uffff\32\22\4\uffff\1\22\1\uffff\32\22",
+            "",
+            "\12\22\7\uffff\32\22\4\uffff\1\22\1\uffff\32\22",
+            "\12\22\7\uffff\32\22\4\uffff\1\22\1\uffff\32\22",
+            "\12\22\7\uffff\32\22\4\uffff\1\22\1\uffff\32\22",
+            "\12\22\7\uffff\32\22\4\uffff\1\22\1\uffff\32\22",
+            "\12\22\7\uffff\32\22\4\uffff\1\22\1\uffff\32\22",
             "",
             "",
             "",
@@ -1461,7 +1519,7 @@ public class SqlLexer extends Lexer {
             this.transition = DFA10_transition;
         }
         public String getDescription() {
-            return "1:1: Tokens : ( T__20 | T__21 | T__22 | T__23 | WS | VALUE | SET | VALUES | IN | INTO | INSERT | UPDATE | DELETE | OP | SELECT | WHERE | FROM | ID );";
+            return "1:1: Tokens : ( T__20 | T__21 | T__22 | T__23 | T__24 | T__25 | WS | VALUE | SET | VALUES | IN | INTO | INSERT | UPDATE | DELETE | OP | SELECT | WHERE | FROM | ID );";
         }
     }
  

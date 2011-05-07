@@ -24,12 +24,12 @@ statement:select | insert | delete | update;
 select	: SELECT {sql.type=SqlStatement.SELECT;} 
 	  columns
 	  FROM 
-	  e=ID {sql.table = $e.text;} 
+	  table
 	  where?;
 insert 	: INSERT 
 	  {sql.type=SqlStatement.INSERT;} 
 	  INTO 
-	  e=ID {sql.table = $e.text;} 
+	  table
 	  '('
 	  columns {Iterator<String> it = sql.fields.iterator();}
 	  ')' 
@@ -61,10 +61,10 @@ insert 	: INSERT
 	  ')';
 delete 	: DELETE {sql.type=SqlStatement.DELETE;} 
 	  FROM
-	  e=ID {sql.table = $e.text;} 
+	  table
 	  where?; 
 update 	: UPDATE {sql.type=SqlStatement.UPDATE;} 
-	  e=ID {sql.table = $e.text;} 
+	  table
 	  SET e=ID '=' f=VALUE {sql.values.put($e.text,$f.text);}
 	   (
 	   ',' e=ID '=' f=VALUE {sql.values.put($e.text,$f.text);}
@@ -73,6 +73,7 @@ columns: (e=ID)
 	 {sql.fields.add($e.text);} 
 	 (',' e=ID {sql.fields.add($e.text);})*;
 where 	: WHERE ( in | eq ) (OP (in | eq ) )*;
+table	: ('`')? e=ID ('`')?  {sql.table = $e.text;}  ('.' ('`')? f=ID  {sql.db = $e.text;sql.table = $f.text;} ('`')?)?;
 in :	ID 
 	{
 		if (sql.where.get($ID.text) == null) {

@@ -1,7 +1,7 @@
 package mybridge.server;
 
 import mybridge.protocal.impl.Protocal;
-import mybridge.storyge.mysql.MysqlHandle;
+import mybridge.storyge.DefaultCmdManager;
 
 import org.apache.log4j.PropertyConfigurator;
 import xnet.core.server.*;
@@ -24,7 +24,7 @@ public class MyBridgeServer {
 		config.keepalive = true;
 		config.maxConnection = 1000;
 		Server server = new Server(config);
-		Protocal.handleClass = MysqlHandle.class;
+		Protocal.handleClass = DefaultCmdManager.class;
 		server.run();
 	}
 
