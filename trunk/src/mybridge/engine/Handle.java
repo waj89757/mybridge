@@ -13,7 +13,7 @@ import mybridge.protocal.packet.PacketField;
 import mybridge.protocal.packet.PacketOk;
 import mybridge.protocal.packet.PacketResultSet;
 import mybridge.protocal.packet.PacketRow;
-import mybridge.sql.statement.SqlStatement;
+import mybridge.sql.SqlStatement;
 
 public abstract class Handle {
 	public String table;

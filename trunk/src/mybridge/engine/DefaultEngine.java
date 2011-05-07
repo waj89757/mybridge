@@ -17,9 +17,9 @@ import com.mchange.v2.c3p0.ComboPooledDataSource;
 import mybridge.handle.memcache.McHandle;
 import mybridge.protocal.impl.Protocal;
 import mybridge.protocal.packet.*;
-import mybridge.sql.parser.SqlLexer;
-import mybridge.sql.parser.SqlParser;
-import mybridge.sql.statement.SqlStatement;
+import mybridge.sql.SqlLexer;
+import mybridge.sql.SqlParser;
+import mybridge.sql.SqlStatement;
 import mybridge.util.MysqlDefs;
 
 public class DefaultEngine implements Engine {
