@@ -3,7 +3,7 @@ grammar Sql;
 @header{
 package mybridge.sql.parser;
 
-import mybridge.sql.statement.*;
+import mybridge.sql.*;
 import java.util.Iterator;
 }
 @lexer::header{
