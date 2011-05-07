@@ -2,8 +2,7 @@ package mybridge.sql.statement;
 
 import java.util.HashMap;
 import java.util.LinkedHashSet;
-import java.util.List;
-import java.util.Map;
+import java.util.List; 
 import java.util.Set;
 
 public class SqlStatement {
@@ -15,13 +14,15 @@ public class SqlStatement {
 
 	public int type = INVALID;
 	public String table = "";
-	public Map<String, String> values = new HashMap<String, String>();
-	public Map<String, List<String>> where = new HashMap<String, List<String>>();
+	public HashMap<String, String> values = new HashMap<String, String>();
+	public HashMap<String, List<String>> where = new HashMap<String, List<String>>();
 	public Set<String> fields = new LinkedHashSet<String>();
+	public String db = "";
 	
 	public String toString() {
 		String out = "";
 		out += "type:" + type + "\n";
+		out += "db:" + db + "\n";
 		out += "table:" + table + "\n";
 		out += "fields:" + fields.toString() + "\n";
 		out += "where:" + where.toString() + "\n";
