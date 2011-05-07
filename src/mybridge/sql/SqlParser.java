@@ -1,6 +1,6 @@
 // $ANTLR 3.2 Sep 23, 2009 12:02:23 /home/quanwei/workspace_java/mybridge/src/mybridge/sql/parser/Sql.g 2011-05-07 11:47:15
 
-package mybridge.sql.parser;
+package mybridge.sql;
 
 import mybridge.sql.statement.*;
 import java.util.Iterator;
