@@ -6,11 +6,8 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-import java.util.concurrent.Future;
 
 import net.spy.memcached.MemcachedClient;
-
-import mybridge.engine.Field;
 import mybridge.engine.Handle;
 
 /**
