@@ -1,7 +1,12 @@
-package mybridge.server;
+package mybridge.core.server;
 
+<<<<<<< .working
+import mybridge.core.protocal.Protocal;
+import mybridge.engine.DefaultEngine;
+=======
 import mybridge.engine.DefaultEngine;
 import mybridge.protocal.impl.Protocal;
+>>>>>>> .merge-right.r43
 
 import org.apache.log4j.PropertyConfigurator;
 import xnet.core.server.*;

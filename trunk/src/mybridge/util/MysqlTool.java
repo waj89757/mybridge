@@ -7,7 +7,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
-import mybridge.protocal.packet.*;
+import mybridge.core.packet.*;
 
 public class MysqlTool {
 	public static List<Packet> query(Connection conn, String sql, String charset)

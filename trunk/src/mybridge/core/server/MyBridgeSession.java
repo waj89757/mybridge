@@ -1,7 +1,7 @@
-package mybridge.server;
+package mybridge.core.server;
 
-import mybridge.protocal.impl.Protocal;
-import mybridge.protocal.packet.*;
+import mybridge.core.packet.*;
+import mybridge.core.protocal.Protocal;
 import xnet.core.server.Session;
 import xnet.core.util.IOBuffer;
 

@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.Set;
 
 import net.spy.memcached.MemcachedClient;
-import mybridge.engine.Handle;
+import mybridge.core.protocal.Handle;
 
 /**
  * @author quanwei

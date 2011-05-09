@@ -1,6 +1,6 @@
 package mybridge.test;
 
-import mybridge.protocal.packet.PacketInit;
+import mybridge.core.packet.PacketInit;
 import junit.framework.TestCase;
 
 public class TestPacketInit extends TestCase {

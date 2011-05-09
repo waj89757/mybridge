@@ -1,4 +1,6 @@
-package mybridge.engine;
+package mybridge.core.protocal;
+
+import gudusoft.gsqlparser.TStatementList;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -7,13 +9,15 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import mybridge.protocal.packet.Packet;
-import mybridge.protocal.packet.PacketEof;
-import mybridge.protocal.packet.PacketField;
-import mybridge.protocal.packet.PacketOk;
-import mybridge.protocal.packet.PacketResultSet;
-import mybridge.protocal.packet.PacketRow;
-import mybridge.sql.SqlStatement;
+import mybridge.core.packet.Packet;
+import mybridge.core.packet.PacketEof;
+import mybridge.core.packet.PacketField;
+import mybridge.core.packet.PacketOk;
+import mybridge.core.packet.PacketResultSet;
+import mybridge.core.packet.PacketRow;
+import mybridge.core.sqlparser.SqlStatement;
+import mybridge.engine.Field;
+import mybridge.engine.MysqlHelper;
 
 public abstract class Handle {
 	public String table;
@@ -24,6 +28,20 @@ public abstract class Handle {
 		this.table = table;
 		this.db = db;
 		fieldMap = MysqlHelper.getField(db, table);
+	}
+
+	public boolean canAccept(TStatementList stat) {
+		if (stat.size() != 1) {
+			return false;
+		}
+		if (stat.get(0).tables.size() != 1) {
+			return false;
+		}
+		if (stat.get(0).sqlstatementtype) {
+			
+		}
+
+		return true;
 	}
 
 	public List<Packet> execute(SqlStatement stat) throws Exception {
