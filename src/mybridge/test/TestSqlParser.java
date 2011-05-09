@@ -16,8 +16,8 @@ import org.antlr.runtime.ANTLRStringStream;
 import org.antlr.runtime.CommonTokenStream;
 import org.antlr.runtime.RecognitionException;
 
-import mybridge.sql.SqlLexer;
-import mybridge.sql.SqlParser;
+import mybridge.core.sqlparser.SqlLexer;
+import mybridge.core.sqlparser.SqlParser;
 import junit.framework.TestCase;
 
 public class TestSqlParser extends TestCase {

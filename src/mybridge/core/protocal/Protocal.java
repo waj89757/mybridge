@@ -1,4 +1,4 @@
-package mybridge.protocal.impl;
+package mybridge.core.protocal;
 
 import java.util.Iterator;
 import java.util.List;
@@ -7,9 +7,8 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 import xnet.core.util.IOBuffer;
-import mybridge.engine.Engine;
-import mybridge.protocal.packet.*;
-import mybridge.server.MyBridgeSession;
+import mybridge.core.packet.*;
+import mybridge.core.server.MyBridgeSession;
 
 public class Protocal {
 	static Log logger = LogFactory.getLog(Protocal.class);

@@ -6,8 +6,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import mybridge.core.packet.PacketRow;
 import mybridge.engine.Field;
-import mybridge.protocal.packet.PacketRow;
 import net.spy.memcached.MemcachedClient;
 
 public class McHelper {

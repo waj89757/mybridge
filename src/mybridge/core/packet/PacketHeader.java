@@ -1,4 +1,5 @@
-package mybridge.protocal.packet;
+package mybridge.core.packet;
+
 
 /*
  The Packet Header

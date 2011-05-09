@@ -1,4 +1,4 @@
-package mybridge.sql;
+package mybridge.core.sqlparser;
 
 import java.util.HashMap;
 import java.util.LinkedHashSet;

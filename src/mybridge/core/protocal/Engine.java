@@ -1,9 +1,9 @@
-package mybridge.engine;
+package mybridge.core.protocal;
  
  
 import java.util.List;
 
-import mybridge.protocal.packet.*;
+import mybridge.core.packet.*;
 
 public interface Engine {
 	/**

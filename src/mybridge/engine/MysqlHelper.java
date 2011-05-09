@@ -11,12 +11,12 @@ import java.util.List;
 
 import com.mchange.v2.c3p0.ComboPooledDataSource;
 
-import mybridge.protocal.packet.Packet;
-import mybridge.protocal.packet.PacketEof;
-import mybridge.protocal.packet.PacketField;
-import mybridge.protocal.packet.PacketOk;
-import mybridge.protocal.packet.PacketResultSet;
-import mybridge.protocal.packet.PacketRow;
+import mybridge.core.packet.Packet;
+import mybridge.core.packet.PacketEof;
+import mybridge.core.packet.PacketField;
+import mybridge.core.packet.PacketOk;
+import mybridge.core.packet.PacketResultSet;
+import mybridge.core.packet.PacketRow;
 import mybridge.util.MysqlDefs;
 
 public class MysqlHelper {
