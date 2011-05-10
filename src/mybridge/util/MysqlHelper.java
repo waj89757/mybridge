@@ -1,12 +1,11 @@
-package mybridge.engine;
+package mybridge.util;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.ArrayList; 
 import java.util.List;
 
 import com.mchange.v2.c3p0.ComboPooledDataSource;
@@ -16,8 +15,7 @@ import mybridge.core.packet.PacketEof;
 import mybridge.core.packet.PacketField;
 import mybridge.core.packet.PacketOk;
 import mybridge.core.packet.PacketResultSet;
-import mybridge.core.packet.PacketRow;
-import mybridge.util.MysqlDefs;
+import mybridge.core.packet.PacketRow; 
 
 public class MysqlHelper {
 	/**
@@ -46,35 +44,7 @@ public class MysqlHelper {
 		ComboPooledDataSource cpds = new ComboPooledDataSource("db1");
 		return cpds.getConnection();
 	}
-
-	/**
-	 * 获取指定表结构
-	 * @param conn
-	 * @param table
-	 * @return
-	 * @throws SQLException
-	 */
-	public static HashMap<String, Field> getField(String db, String table) throws SQLException {
-		HashMap<String, Field> fieldMap = new HashMap<String, Field>();
-		String sql = "select * from `" + db + "`.`" + table + "` limit 1";
-		Connection conn = getSlaveConnection();
-		Statement stat = conn.createStatement();
-		ResultSet rs = stat.executeQuery(sql);
-		ResultSetMetaData meta = rs.getMetaData();
-
-		for (int i = 1; i <= meta.getColumnCount(); i++) {
-			Field field = new Field();
-			field.db = meta.getCatalogName(i);
-			field.table = meta.getTableName(i);
-			field.orgTable = meta.getTableName(i);
-			field.name = meta.getColumnName(i);
-			field.orgName = meta.getColumnName(i);
-			field.type = (byte) MysqlDefs.javaTypeToMysql(meta.getColumnType(i));
-			field.length = meta.getColumnDisplaySize(i);
-			fieldMap.put(field.name, field);
-		}
-		return fieldMap;
-	}
+ 
 
 	/**
 	 * 在mysql中执行sql，并返回resultset packet

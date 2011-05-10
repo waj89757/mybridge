@@ -1,116 +1,184 @@
 grammar Sql;
 
 @header{
-package mybridge.sql.parser;
-
-import java.util.Iterator;
+package mybridge.core.sqlparser;
 }
 @lexer::header{
-package mybridge.sql.parser;
+package mybridge.core.sqlparser;
 }
 @members {
-    public SqlStatement sql;
-    public boolean parseOk = false;
+public SelectStatement select;
+public InsertStatement insert;
+public UpdateStatement update;
+public DeleteStatement delete; 
+public Statement getStatement() {
+    	if (select != null) {
+    		return select;
+    	}
+    	if (insert != null) {
+    		return insert;
+    	}
+    	if (delete != null) {
+    		return delete;
+    	}
+    	if (update != null) {
+    		return update;
+    	}
+    	return null;
 }
-
-sql	:
-	{sql = new SqlStatement();parseOk = false;}
-	statement 
-	{parseOk = true;};
+}
+@rulecatch {
+catch (RecognitionException exception) {
+throw exception;
+}
+}
 	
-statement:select | insert | delete | update;
+parse	:
+	select | insert | delete | update
+	;
 
-select	: SELECT {sql.type=SqlStatement.SELECT;} 
-	  columns
-	  FROM 
-	  table
-	  where?;
-insert 	: INSERT 
-	  {sql.type=SqlStatement.INSERT;} 
-	  INTO 
-	  table
-	  '('
-	  columns {Iterator<String> it = sql.fields.iterator();}
-	  ')' 
-	  VALUES
-	  '('  
-	  e=VALUE 
-	  {
-	  	if (!it.hasNext())
-	  	{
-	  	    throw new RecognitionException();
-	  	}
-	  	sql.values.put(it.next(),$e.text);
-	  }
-	  (','  
-	  e=VALUE
-	  {
-	  	if (!it.hasNext())
-	  	{
-	  	    throw new RecognitionException();
-	  	}
-	  	sql.values.put(it.next(),$e.text);
-	  }
-	  )* 
-	  {
-	  	if (it.hasNext()) {
-	  	    throw new RecognitionException();
-	  	}
-	  }
-	  ')';
-delete 	: DELETE {sql.type=SqlStatement.DELETE;} 
-	  FROM
-	  table
-	  where?; 
-update 	: UPDATE {sql.type=SqlStatement.UPDATE;} 
-	  table
-	  SET e=ID '=' f=VALUE {sql.values.put($e.text,$f.text);}
-	   (
-	   ',' e=ID '=' f=VALUE {sql.values.put($e.text,$f.text);}
-	   )* where?; 
-columns: (e=ID)
-	 {sql.fields.add($e.text);} 
-	 (',' e=ID {sql.fields.add($e.text);})*;
-where 	: WHERE ( in | eq ) (OP (in | eq ) )*;
-table	: ('`')? e=ID ('`')?  {sql.table = $e.text;}  ('.' ('`')? f=ID  {sql.db = $e.text;sql.table = $f.text;} ('`')?)?;
-in :	ID 
-	{
-		if (sql.where.get($ID.text) == null) {
-		  sql.where.put($ID.text,new ArrayList<String>());
-		}
-	}
-	IN '(' 
-	e=VALUE {sql.where.get($ID.text).add($e.text);} 
-	(','e=VALUE {sql.where.get($ID.text).add($e.text);})*')';
-eq :    ID 
-	{
-		if (sql.where.get($ID.text) == null) {
-		  sql.where.put($ID.text,new ArrayList<String>());
-		}
-	}
-	 '=' 
-	 e=VALUE {sql.where.get($ID.text).add($e.text);} ;
+select	:
+ 	SELECT 	{select = new SelectStatement();} 
+	colList {select.setColList($colList.value);}
+	FROM 	 
+	table	{select.db = $table.db;select.table = $table.table;} 
+	where?  {select.setWhere($where.value);}
+	order?  {select.setOrder($order.value);}
+	limit?  {select.setLimit($limit.value);}
+	;
+	
+insert 	:
+ 	INSERT INTO 		{insert = new InsertStatement();} 
+	table 			{insert.db = $table.db;insert.table = $table.table;}
+	'('	colList ')' 	{insert.setColList($colList.value);}
+	VALUES
+	'(' valueList ')'	{insert.setValueList($valueList.value);}
+	;
+	
+delete 	: 
+	DELETE 	{delete = new DeleteStatement();} 
+	FROM   
+	table 	{delete.db = $table.db;delete.table = $table.table;}
+	where? 	{delete.setWhere($where.value);}
+	;
+	
+update 	: 
+	UPDATE 	{update = new UpdateStatement();} 
+	table	{update.db = $table.db;update.table = $table.table;}
+	SET 
+	values  {update.setValues($values.value);}
+	where?	{update.setWhere($where.value);}
+	;
+
+colList 
+returns [ColList value] 
+@init{value = new ColList();}: 			 
+	'*' 		{value.add("*");}
+	|
+	e=ID 		{value.add($e.text);}
+	(',' e=ID 	{value.add($e.text);} )* 
+	;
+	
+where 	
+returns [Where value]	:
+	WHERE {value = new Where();}
+	id=ID 
+	op=('=' |  GE | LE | '<' | '>' ) v=value {value.add($id.text,$op.text,$v.value);}
+	(
+	  AND id=ID  op=('=' |  GE | LE | '<' | '>' ) v=value {value.add($id.text,$op.text,$v.value);}
+	)*
+	;
+
+order	
+returns [Order value]:
+	ORDER BY		 	{value = new Order();}
+	ID 	(e=DESC | e=ASC {value.setFlag($e.text);})?
+	;
+	
+limit	
+returns [Limit value]:
+	LIMIT e1=NUM ',' e2=NUM  	{value = new Limit(Integer.parseInt($e1.text),Integer.parseInt($e2.text));}
+	;
+
+table	
+returns [String db,String table] : 
+	 e=ID {$table = $e.text;} 	 
+	 ( '.'
+	  e=ID {$db = $table;$table=$e.text;} 
+	 )?
+	 ;
+
+valueList	
+returns [ValueList value] :
+	{value = new ValueList();}
+	e=value		  {value.add($e.text);}
+	(',' e=value  {value.add($e.text);})*
+	;
+
+values	
+returns [Values value] :
+			{value = new Values();}
+	id=ID '=' v=value {value.add($id.text,$v.value);}
+	( ',' id=ID '=' v=value {value.add($id.text,$v.value);})*
+	;
+	
+value
+returns [String value] : 
+	e=(STRING | NUM) {$value = $e.text;}
+	;
 
 WS  :   ( ' '
         | '\t'
         | '\r'
         | '\n'
         ) {$channel=HIDDEN;}
-    ;
+    ; 
 
-VALUE	: STRING | NUM;
-SET	: ('S'|'s') ('E'|'e') ('T'|'t');
-VALUES	: ('V'|'v') ('A'|'a') ('L'|'l') ('U'|'u') ('E'|'e') ('S'|'s');
-IN 	: ('I'|'i') ('N'|'n');
-INTO	: ('I'|'i') ('N'|'n') ('T'|'t') ('O'|'o');
-INSERT : ('I'|'i') ('N'|'n') ('S'|'s') ('E'|'e') ('R'|'r') ('T'|'t');
-UPDATE : ('U'|'u') ('P'|'p') ('D'|'d') ('A'|'a') ('T'|'t') ('E'|'e');
-DELETE : ('D'|'d') ('E'|'e') ('L'|'l') ('E'|'e') ('T'|'t') ('E'|'e');
-OP : (('O'|'o') ('R'|'r')) | (('A'|'a') ('N'|'n') ('D'|'d'));
-SELECT	: ('S'|'s') ('E'|'e') ('L'|'l') ('E'|'e') ('C'|'c') ('T'|'t');
-WHERE 	:  ('W'|'w') ('H'|'h') ('E'|'e') ('R'|'r') ('E'|'e') ;
-FROM	: ('F'|'f') ('R'|'r') ('O'|'o') ('M'|'m');
-ID : ('a'..'z'|'A'..'Z'|'_') ('0'..'9'|'a'..'z'|'A'..'Z'|'_')* ;
+GE	: '>' '=';
+LE	: '<' '=';
+AND 	: A N D;
+LIMIT 	: L I M I T;
+DESC	: D E S C;
+ASC	: A S C;
+ORDER	: O R D E R;
+BY	: B Y;
+SET	: S E T;
+VALUES	: V A L U E S;
+IN 	: I N;
+INTO	: I N T O;
+INSERT  : I N S E R T;
+UPDATE 	: U P D A T E;
+DELETE  : D E L E T E;
+SELECT	: S E L E C T;
+WHERE 	: W H E R E ;
+FROM	: F R O M;
+ID 	: ('a'..'z'|'A'..'Z'|'_') ('0'..'9'|'a'..'z'|'A'..'Z'|'_')* ;
+STRING  :  '"' (~('\\'|'"'))* '"' |  '\'' (~('\\'|'"'))* '\''  ;
+NUM	: ('0'..'9')+('.' ('0'..'9')+)?;
 
-fragment STRING  :  '"' (~('\\'|'"'))* '"' |  '\'' (~('\\'|'"'))* '\''  ;
-fragment NUM	  : ('0'..'9')+('.' ('0'..'9')+)?;
+fragment A : 'A'|'a';
+fragment B : 'B'|'b';
+fragment C : 'C'|'c';
+fragment D : 'D'|'d';
+fragment E : 'E'|'e';
+fragment F : 'F'|'f';
+fragment G : 'G'|'g';
+fragment H : 'H'|'h';
+fragment I : 'I'|'i';
+fragment J : 'J'|'j';
+fragment K : 'K'|'k';
+fragment L : 'L'|'l';
+fragment M : 'M'|'m';
+fragment N : 'N'|'n';
+fragment O : 'O'|'o';
+fragment P : 'P'|'p';
+fragment Q : 'Q'|'q';
+fragment R : 'R'|'r';
+fragment S : 'S'|'s';
+fragment T : 'T'|'t';
+fragment U : 'U'|'u';
+fragment V : 'V'|'v';
+fragment W : 'W'|'w';
+fragment X : 'X'|'x';
+fragment Y : 'Y'|'y';
+fragment Z : 'Z'|'z';  
