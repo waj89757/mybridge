@@ -1,13 +1,5 @@
 package mybridge.core.server;
 
-<<<<<<< .working
-import mybridge.core.protocal.Protocal;
-import mybridge.engine.DefaultEngine;
-=======
-import mybridge.engine.DefaultEngine;
-import mybridge.protocal.impl.Protocal;
->>>>>>> .merge-right.r43
-
 import org.apache.log4j.PropertyConfigurator;
 import xnet.core.server.*;
 
@@ -15,7 +7,7 @@ public class MyBridgeServer {
 
 	/**
 	 * @param args
-	 * @throws Exception 
+	 * @throws Exception
 	 */
 	public static void main(String[] args) throws Exception {
 		Config config = new Config();
@@ -29,7 +21,6 @@ public class MyBridgeServer {
 		config.keepalive = true;
 		config.maxConnection = 1000;
 		Server server = new Server(config);
-		Protocal.handleClass = DefaultEngine.class;
 		server.run();
 	}
 

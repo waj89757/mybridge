@@ -1,4 +1,4 @@
-package mybridge.core.protocal;
+package mybridge.core.server;
 
 import java.util.Iterator;
 import java.util.List;
@@ -8,27 +8,30 @@ import org.apache.commons.logging.LogFactory;
 
 import xnet.core.util.IOBuffer;
 import mybridge.core.packet.*;
-import mybridge.core.server.MyBridgeSession;
+import mybridge.core.protocal.Connection;
 
-public class Protocal {
-	static Log logger = LogFactory.getLog(Protocal.class);
-	public static Class<?> handleClass;
+public class MyBridgeProtocal {
+	static Log logger = LogFactory.getLog(MyBridgeProtocal.class);
+	static Class<?> tableClass;
 
-	Engine handle;
-	MyBridgeSession session;//链接对应的session
-	State state;//当前协议交互状态
-	public byte packetNum = 0;//下一个packet的序列号
-	Iterator<Packet> resultIter = null;//要写的packet迭代器，只要不为空就会一直写状态直到为空
+	Connection conn;// 连接
+	MyBridgeSession session;// 链接对应的session
+	State state;// 当前协议交互状态
+	public byte packetNum = 0;// 下一个packet的序列号
+	Iterator<Packet> resultIter = null;// 要写的packet迭代器，只要不为空就会一直写状态直到为空
 
-	public Protocal(MyBridgeSession session) throws InstantiationException, IllegalAccessException {
+	public MyBridgeProtocal(MyBridgeSession session) throws InstantiationException,
+			IllegalAccessException {
 		this.session = session;
 		state = State.WRITE_INIT;
-		handle = (Engine) handleClass.newInstance();
-		handle.init();
+		
+		conn = new Connection();
+		conn.init();
 	}
 
 	/**
 	 * 链接建立事件
+	 * 
 	 * @param readBuf
 	 * @param writeBuf
 	 */
@@ -37,15 +40,17 @@ public class Protocal {
 		init.putBytes(PacketInit.defaultPacket);
 		writePacket(writeBuf, init);
 	}
+
 	/**
 	 * session关闭事件
 	 */
 	public void onSessionClose() {
-		handle.destrory();
+		conn.destrory();
 	}
 
 	/**
 	 * 读完一个packet事件
+	 * 
 	 * @param readBuf
 	 * @param writeBuf
 	 */
@@ -68,7 +73,7 @@ public class Protocal {
 			PacketCommand cmd = new PacketCommand();
 			cmd.putBytes(readBuf.getBytes(0, readBuf.limit()));
 			try {
-				List<Packet> resultList = handle.doCommand(cmd);
+				List<Packet> resultList = conn.doCommand(cmd);
 				if (resultList == null || resultList.size() == 0) {
 					session.setNextState(MyBridgeSession.STATE_CLOSE);
 					return;
@@ -91,6 +96,7 @@ public class Protocal {
 
 	/**
 	 * 写完一个packet事件
+	 * 
 	 * @param readBuf
 	 * @param writeBuf
 	 */
@@ -118,6 +124,7 @@ public class Protocal {
 
 	/**
 	 * 写一个packet
+	 * 
 	 * @param writeBuf
 	 * @param packet
 	 */
@@ -140,6 +147,7 @@ public class Protocal {
 
 	/**
 	 * 读一个packet
+	 * 
 	 * @param readBuf
 	 */
 	public void readPacket(IOBuffer readBuf) {
@@ -152,8 +160,9 @@ public class Protocal {
 
 	/**
 	 * 状态
+	 * 
 	 * @author quanwei
-	 *
+	 * 
 	 */
 	static enum State {
 		WRITE_INIT, READ_AUTH, WRITE_RESULT, READ_COMMOND
