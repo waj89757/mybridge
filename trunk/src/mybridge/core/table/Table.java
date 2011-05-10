@@ -1,11 +1,18 @@
 package mybridge.core.table;
 
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.antlr.runtime.ANTLRStringStream;
+import org.antlr.runtime.CommonTokenStream;
+import org.antlr.runtime.RecognitionException;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+
 import mybridge.core.packet.Packet;
+import mybridge.core.packet.PacketCommand;
 import mybridge.core.packet.PacketEof;
+import mybridge.core.packet.PacketError;
 import mybridge.core.packet.PacketField;
 import mybridge.core.packet.PacketOk;
 import mybridge.core.packet.PacketResultSet;
@@ -16,29 +23,21 @@ import mybridge.core.sqlparser.InsertStatement;
 import mybridge.core.sqlparser.Limit;
 import mybridge.core.sqlparser.Order;
 import mybridge.core.sqlparser.SelectStatement;
+import mybridge.core.sqlparser.SqlLexer;
+import mybridge.core.sqlparser.SqlParser;
+import mybridge.core.sqlparser.Statement;
 import mybridge.core.sqlparser.UpdateStatement;
 import mybridge.core.sqlparser.Values;
 import mybridge.core.sqlparser.Where;
 
 public abstract class Table {
-	public String db;
-	public String name;
+	static Log logger = LogFactory.getLog(Table.class);
+
 	public List<Field> fieldList;
 
 	/**
-	 * 构造函数
-	 * 
-	 * @param db
-	 * @param table
-	 * @throws SQLException
-	 */
-	protected Table(String db, String table) {
-		this.db = db;
-		this.name = table;
-	}
-
-	/**
 	 * 获取field的索引
+	 * 
 	 * @param name
 	 * @return
 	 * @throws Exception
@@ -86,9 +85,9 @@ public abstract class Table {
 		for (int i : indexs) {
 			Field field = fieldList.get(i);
 			PacketField fieldPacket = new PacketField();
-			fieldPacket.db = db;
-			fieldPacket.table = name;
-			fieldPacket.orgTable = name;
+			fieldPacket.db = "mybridge";
+			fieldPacket.table = select.getTable();
+			fieldPacket.orgTable = select.getTable();
 			fieldPacket.name = field.name;
 			fieldPacket.orgName = field.name;
 			fieldPacket.type = field.type;
@@ -200,4 +199,69 @@ public abstract class Table {
 	 * @throws Exception
 	 */
 	public abstract int doDelete(Where where) throws Exception;
+
+	/**
+	 * 初始化
+	 */
+	public void open() {
+	}
+
+	/**
+	 * 
+	 */
+	public void close() {
+	}
+
+	public List<Packet> executeCommand(PacketCommand cmd) {
+		List<Packet> packetList = new ArrayList<Packet>();
+
+		logger.info("command:" + cmd.type);
+		String sql = null;
+
+		if (cmd.type != 3) {
+			if (cmd.type == 0x1) {
+				return null;
+			}
+			PacketOk ok = new PacketOk();
+			ok.affectedRows = 0;
+			packetList.add(ok);
+			return packetList;
+		}
+
+		if (sql == null) {
+			sql = cmd.value;
+		}
+		logger.info("sql:" + sql);
+		try {
+			Statement stat = parseSql(sql);
+			fieldList = TableManeger.getTableFields("mybridge", stat.getTable());
+			if (stat instanceof SelectStatement) {
+				packetList = select((SelectStatement) stat);
+			} else if (stat instanceof InsertStatement) {
+				packetList = insert((InsertStatement) stat);
+			} else if (stat instanceof UpdateStatement) {
+				packetList = update((UpdateStatement) stat);
+			} else if (stat instanceof DeleteStatement) {
+				packetList = delete((DeleteStatement) stat);
+			} else {
+				PacketError error = new PacketError();
+				error.message = "invalid statment";
+				packetList.add(error);
+			}
+		} catch (Exception e) {
+			PacketError error = new PacketError();
+			error.message = e.getMessage();
+			packetList.add(error);
+		}
+
+		return packetList;
+	}
+
+	Statement parseSql(String sql) throws RecognitionException {
+		SqlLexer lex = new SqlLexer(new ANTLRStringStream(sql));
+		CommonTokenStream tokens = new CommonTokenStream(lex);
+		SqlParser parser = new SqlParser(tokens);
+		parser.parse();
+		return parser.getStatement();
+	}
 }

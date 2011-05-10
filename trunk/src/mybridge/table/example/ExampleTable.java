@@ -14,10 +14,6 @@ import mybridge.core.table.Table;
 
 public class ExampleTable extends Table {
 
-	public ExampleTable(String db, String table) {
-		super(db, table);
-	}
-
 	@Override
 	public int doDelete(Where where) throws Exception {
 		return 0;
