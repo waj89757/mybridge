@@ -2,7 +2,6 @@ package mybridge.core.table;
 
 public class Field {
 	public String name = "";
-	public Table table;
 
 	public long length;// 字段长度
 	public byte type;// 字段类型

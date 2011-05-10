@@ -8,25 +8,25 @@ import org.apache.commons.logging.LogFactory;
 
 import xnet.core.util.IOBuffer;
 import mybridge.core.packet.*;
-import mybridge.core.protocal.Connection;
+import mybridge.core.table.Table;
+import mybridge.core.table.TableManeger;
 
 public class MyBridgeProtocal {
 	static Log logger = LogFactory.getLog(MyBridgeProtocal.class);
-	static Class<?> tableClass;
 
-	Connection conn;// 连接
+	Table table;// 连接
 	MyBridgeSession session;// 链接对应的session
 	State state;// 当前协议交互状态
 	public byte packetNum = 0;// 下一个packet的序列号
 	Iterator<Packet> resultIter = null;// 要写的packet迭代器，只要不为空就会一直写状态直到为空
 
-	public MyBridgeProtocal(MyBridgeSession session) throws InstantiationException,
-			IllegalAccessException {
+	public MyBridgeProtocal(MyBridgeSession session)
+			throws InstantiationException, IllegalAccessException {
 		this.session = session;
 		state = State.WRITE_INIT;
-		
-		conn = new Connection();
-		conn.init();
+
+		table = TableManeger.getTable();
+		table.open();
 	}
 
 	/**
@@ -45,7 +45,7 @@ public class MyBridgeProtocal {
 	 * session关闭事件
 	 */
 	public void onSessionClose() {
-		conn.destrory();
+		table.close();
 	}
 
 	/**
@@ -73,7 +73,7 @@ public class MyBridgeProtocal {
 			PacketCommand cmd = new PacketCommand();
 			cmd.putBytes(readBuf.getBytes(0, readBuf.limit()));
 			try {
-				List<Packet> resultList = conn.doCommand(cmd);
+				List<Packet> resultList = table.executeCommand(cmd);
 				if (resultList == null || resultList.size() == 0) {
 					session.setNextState(MyBridgeSession.STATE_CLOSE);
 					return;
