@@ -11,14 +11,14 @@ public class TableManeger {
 		List<Field> flist = new ArrayList<Field>();
 		Field f = new Field();
 		f.name = "a";
-		f.defaultValue = "";
+		f.value = "";
 		f.length = 32;
 		f.type = (byte) 253;
 		f.charset = "utf8";
 		flist.add(f);
 		f = new Field();
 		f.name = "b";
-		f.defaultValue = "";
+		f.value = "";
 		f.length = 32;
 		f.type = (byte) 253;
 		f.charset = "utf8";

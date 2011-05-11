@@ -21,6 +21,12 @@ public class InsertStatement extends Statement {
 	}
 
 	public void setValueList(ValueList vl) {
+		if (vl.valueList.size() == colList.cols.size()) {
+			values = new Values();
+			for (int i = 0; i < colList.cols.size(); i++) {
+				values.data.put(colList.cols.get(i), vl.valueList.get(i));
+			}
+		}
 
 	}
 

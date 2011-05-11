@@ -1,47 +1,84 @@
 package mybridge.table.example;
- 
+
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 
-import mybridge.core.sqlparser.ColList;
+import mybridge.core.sqlparser.Cond;
 import mybridge.core.sqlparser.Limit;
 import mybridge.core.sqlparser.Order;
-import mybridge.core.sqlparser.Values;
-import mybridge.core.sqlparser.Where;
 import mybridge.core.table.Field;
-import mybridge.core.table.Row;
+import mybridge.core.table.ResultSet;
 import mybridge.core.table.Table;
 
 public class ExampleTable extends Table {
+	static List<HashMap<String, String>> data = new ArrayList<HashMap<String, String>>();
 
 	@Override
-	public int doDelete(Where where) throws Exception {
-		return 0;
-	}
-
-	@Override
-	public int doInsert(ColList colList, Values values) throws Exception {
-		return 0;
-	}
-
-	@Override
-	public List<Row> doSelect(ColList colList, Where where, Order order,
-			Limit limit) throws Exception {
-		List<Row> rowList = new ArrayList<Row>();
-		int count = 2;
-		for (int i = 0; i < count; i++) {
-			Row row = this.createNewRow();
-			for (Field field : fieldList) {
-				row.add(field.name, "abc");
+	public int doDelete(List<Cond> where) throws Exception {
+		int count = 0;
+		Iterator<HashMap<String, String>> it = data.iterator();
+		while (it.hasNext()) {
+			HashMap<String, String> rowMap = it.next();
+			boolean condResult = true;
+			for (Cond cond : where) {
+				if (cond.op == Cond.EQ && !cond.val.equals(rowMap.get(cond.col))) {
+					condResult = false;
+					break;
+				}
 			}
-			rowList.add(row);
+			if (!condResult) {
+				it.remove();
+				count++;
+			}
 		}
-		return rowList;
+		return count;
 	}
 
 	@Override
-	public int doUpdate(Values values, Where where) throws Exception {
-		return 0;
+	public int doInsert(List<Field> fieldList) throws Exception {
+		HashMap<String, String> rowMap = new HashMap<String, String>();
+		for (Field field : fieldList) {
+			rowMap.put(field.getName(), field.getValue());
+		}
+		data.add(rowMap);
+		return 1;
 	}
 
+	@Override
+	public ResultSet doSelect(List<Field> fieldList, List<Cond> where,
+			Order order, Limit limit) throws Exception {
+		ResultSet rs = new ResultSet();
+		int count = 0;
+		Iterator<HashMap<String, String>> it = data.iterator();
+		while (it.hasNext()) {
+			HashMap<String, String> rowMap = it.next();
+			boolean condResult = true;
+			for (Cond cond : where) {
+				if (cond.op == Cond.EQ && !cond.val.equals(rowMap.get(cond.col))) {
+					condResult = false;
+					break;
+				}
+			}
+			if (!condResult) {
+				continue;
+			}
+
+			rs.addNewRow();
+			for (Field field : fieldList) {
+				if (rowMap.containsKey(field.getName())) {
+					rs.add(field, rowMap.get(field.getName()));
+				}
+			}
+			count++;
+		}
+		return rs;
+	}
+
+	@Override
+	public int doUpdate(List<Field> fieldList, List<Cond> where)
+			throws Exception {
+		throw new Exception("not support update operation for example table");
+	}
 }

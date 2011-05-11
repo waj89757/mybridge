@@ -4,7 +4,7 @@ public class SelectStatement extends Statement {
 	public ColList colList;
 	public Order order;
 	public Limit limit;
-	public Where where;
+	public Where where = new Where();
 
 	public ColList getColList() {
 		return colList;
@@ -19,7 +19,9 @@ public class SelectStatement extends Statement {
 	}
 
 	public void setWhere(Where where) {
-		this.where = where;
+		if (where != null) {
+			this.where = where;
+		}
 	}
 
 	public Order getOrder() {
