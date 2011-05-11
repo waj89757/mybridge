@@ -2,8 +2,9 @@ package mybridge.core.sqlparser;
 
 /**
  * 条件语句
+ * 
  * @author quanwei
- *
+ * 
  */
 public class Cond {
 	public static int GT = 1;
@@ -17,9 +18,13 @@ public class Cond {
 	public String val;
 	public int op;
 
-	public Cond(String col, String op, String val) {
+	public Cond(String col, String op, String value) {
 		this.col = col;
-		this.val = val;
+		if (value.startsWith("\"") || value.startsWith("'")) {
+			value = value.substring(1);
+			value = value.substring(0, value.length() - 1);
+		}
+		this.val = value;
 		if (op.equals(">")) {
 			this.op = GT;
 		} else if (op.equals(">=")) {
@@ -35,5 +40,5 @@ public class Cond {
 		} else {
 			this.op = GE;
 		}
-	} 
+	}
 }
