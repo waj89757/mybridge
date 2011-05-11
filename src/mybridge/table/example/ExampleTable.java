@@ -10,9 +10,9 @@ import mybridge.core.sqlparser.Limit;
 import mybridge.core.sqlparser.Order;
 import mybridge.core.table.Field;
 import mybridge.core.table.ResultSet;
-import mybridge.core.table.Table;
+import mybridge.core.table.Handle;
 
-public class ExampleTable extends Table {
+public class ExampleTable extends Handle {
 	static List<HashMap<String, String>> data = new ArrayList<HashMap<String, String>>();
 
 	@Override
