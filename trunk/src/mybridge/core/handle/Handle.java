@@ -302,11 +302,15 @@ public abstract class Handle {
 		return packetList;
 	}
 
-	Statement parseSql(String sql) throws RecognitionException {
+	Statement parseSql(String sql) throws Exception {
 		SqlLexer lex = new SqlLexer(new ANTLRStringStream(sql));
 		CommonTokenStream tokens = new CommonTokenStream(lex);
 		SqlParser parser = new SqlParser(tokens);
-		parser.parse();
+		try {
+			parser.parse();
+		} catch (RecognitionException e) {
+			throw new Exception("sql syntex error(" + parser.errorMsg + ")");
+		}
 		return parser.getStatement();
 	}
 }
