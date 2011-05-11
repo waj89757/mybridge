@@ -1,5 +1,6 @@
 package mybridge.core.handle;
 
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -24,6 +25,7 @@ import mybridge.core.sqlparser.InsertStatement;
 import mybridge.core.sqlparser.Limit;
 import mybridge.core.sqlparser.Order;
 import mybridge.core.sqlparser.SelectStatement;
+import mybridge.core.sqlparser.SetNamesStatement;
 import mybridge.core.sqlparser.SqlLexer;
 import mybridge.core.sqlparser.SqlParser;
 import mybridge.core.sqlparser.Statement;
@@ -31,7 +33,9 @@ import mybridge.core.sqlparser.UpdateStatement;
 
 public abstract class Handle {
 	static Log logger = LogFactory.getLog(Handle.class);
-	private Table table;
+	protected Table table;
+	String db = "mybridge";
+	String charset = "utf8";
 
 	/**
 	 * 获取field的索引
@@ -111,12 +115,12 @@ public abstract class Handle {
 		packetList.add(new PacketEof());
 
 		for (HashMap<String, String> row : resultSet.data) {
-			PacketRow rowPacket = new PacketRow();
+			PacketRow rowPacket = new PacketRow(charset);
 			for (Field field : fieldList) {
 				if (row.containsKey(field.getName())) {
-					rowPacket.valueList.add(row.get(field.getName()));
+					rowPacket.addValue(row.get(field.getName()));
 				} else {
-					rowPacket.valueList.add(field.getValue());
+					rowPacket.addValue(field.getValue());
 				}
 			}
 			packetList.add(rowPacket);
@@ -241,22 +245,33 @@ public abstract class Handle {
 	public abstract int doDelete(List<Cond> where) throws Exception;
 
 	/**
-	 * 初始化
+	 * open
 	 */
 	public void open() {
 	}
 
 	/**
-	 * 
+	 * close
 	 */
 	public void close() {
 	}
 
+	public void setCharset(String charset) throws Exception {
+		String test = "";
+		try {
+			test.getBytes(charset);
+		} catch (UnsupportedEncodingException e) {
+			throw new Exception("invalid charset " + charset);
+		}
+		this.charset = charset;
+	}
+
+	public void setDb(String db) {
+		this.db = db;
+	}
+
 	public List<Packet> executeCommand(PacketCommand cmd) {
 		List<Packet> packetList = new ArrayList<Packet>();
-
-		logger.info("command:" + cmd.type);
-		String sql = null;
 
 		if (cmd.type != 3) {
 			if (cmd.type == 0x1) {
@@ -268,13 +283,18 @@ public abstract class Handle {
 			return packetList;
 		}
 
-		if (sql == null) {
-			sql = cmd.value;
-		}
-		logger.info("sql:" + sql);
 		try {
+			String sql = new String(cmd.value, charset);
+			logger.info("sql:[" + sql + "]");
 			Statement stat = parseSql(sql);
-			table = TableManeger.getTable("mybridge", stat.getTable());
+			if (stat instanceof SetNamesStatement) {
+				SetNamesStatement setname = (SetNamesStatement) stat;
+				setCharset(setname.getCharset());
+				packetList.add(new PacketOk());
+				return packetList;
+			}
+
+			table = TableManeger.getTable(db, stat.getTable());
 			if (table == null) {
 				throw new Exception("table not exists");
 			}

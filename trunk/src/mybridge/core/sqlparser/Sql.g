@@ -6,11 +6,13 @@ package mybridge.core.sqlparser;
 @lexer::header{
 package mybridge.core.sqlparser;
 }
+
 @members {
 	public SelectStatement select;
 	public InsertStatement insert;
 	public UpdateStatement update;
 	public DeleteStatement delete; 
+	public SetNamesStatement setname;
 	public String errorMsg = "";
 	public Statement getStatement() {
 	    	if (select != null) {
@@ -24,6 +26,9 @@ package mybridge.core.sqlparser;
 	    	}
 	    	if (update != null) {
 	    		return update;
+	    	}
+	    	if (setname != null) {
+	    		return setname;
 	    	}
 	    	return null;
 	}
@@ -40,9 +45,13 @@ throw exception;
 }
 	
 parse	:
-	select | insert | delete | update
+	select | insert | delete | update | setname
 	;
 
+setname :	
+	SET NAMES value {setname = new SetNamesStatement();setname.setCharset($value.value);}
+	;
+	
 select	:
  	SELECT 	{select = new SelectStatement();} 
 	colList {select.setColList($colList.value);}
@@ -142,6 +151,7 @@ WS  :   ( ' '
 
 GE	: '>' '=';
 LE	: '<' '=';
+NAMES 	: N A M E S;
 AND 	: A N D;
 LIMIT 	: L I M I T;
 DESC	: D E S C;
