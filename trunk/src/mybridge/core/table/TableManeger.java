@@ -25,7 +25,7 @@ public class TableManeger {
 		flist.add(f);
 		return flist;
 	}
-	public static Table getTable() {
+	public static Handle getTable() {
 		return new ExampleTable();
 	}
 }

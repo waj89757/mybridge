@@ -29,8 +29,8 @@ import mybridge.core.sqlparser.SqlParser;
 import mybridge.core.sqlparser.Statement;
 import mybridge.core.sqlparser.UpdateStatement;
 
-public abstract class Table {
-	static Log logger = LogFactory.getLog(Table.class);
+public abstract class Handle {
+	static Log logger = LogFactory.getLog(Handle.class);
 
 	public List<Field> fieldList;
 
