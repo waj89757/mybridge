@@ -7,25 +7,31 @@ package mybridge.core.sqlparser;
 package mybridge.core.sqlparser;
 }
 @members {
-public SelectStatement select;
-public InsertStatement insert;
-public UpdateStatement update;
-public DeleteStatement delete; 
-public Statement getStatement() {
-    	if (select != null) {
-    		return select;
-    	}
-    	if (insert != null) {
-    		return insert;
-    	}
-    	if (delete != null) {
-    		return delete;
-    	}
-    	if (update != null) {
-    		return update;
-    	}
-    	return null;
-}
+	public SelectStatement select;
+	public InsertStatement insert;
+	public UpdateStatement update;
+	public DeleteStatement delete; 
+	public String errorMsg = "";
+	public Statement getStatement() {
+	    	if (select != null) {
+	    		return select;
+	    	}
+	    	if (insert != null) {
+	    		return insert;
+	    	}
+	    	if (delete != null) {
+	    		return delete;
+	    	}
+	    	if (update != null) {
+	    		return update;
+	    	}
+	    	return null;
+	}
+        public void reportError(RecognitionException e) {
+		String hdr = getErrorHeader(e);
+		String msg = getErrorMessage(e, getTokenNames());
+		errorMsg =hdr + ":" + msg;
+	}
 }
 @rulecatch {
 catch (RecognitionException exception) {
@@ -102,9 +108,9 @@ returns [Limit value]:
 
 table	
 returns [String db,String table] : 
-	 e=ID {$table = $e.text;} 	 
+	 '`'? e=ID {$table = $e.text;} 	'`'?
 	 ( '.'
-	  e=ID {$db = $table;$table=$e.text;} 
+	  '`'? e=ID {$db = $table;$table=$e.text;}  '`'?
 	 )?
 	 ;
 

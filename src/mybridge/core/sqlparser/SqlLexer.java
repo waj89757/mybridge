@@ -1,9 +1,12 @@
-// $ANTLR 3.3 Nov 30, 2010 12:45:30 G:\\code\\mybridge\\src\\mybridge\\core\\sqlparser\\Sql.g 2011-05-10 23:28:53
+// $ANTLR 3.3 Nov 30, 2010 12:45:30 G:\\code\\mybridge\\src\\mybridge\\core\\sqlparser\\Sql.g 2011-05-11 11:39:21
 
 package mybridge.core.sqlparser;
 
 
 import org.antlr.runtime.*;
+import java.util.Stack;
+import java.util.List;
+import java.util.ArrayList;
 
 public class SqlLexer extends Lexer {
     public static final int EOF=-1;
@@ -15,6 +18,7 @@ public class SqlLexer extends Lexer {
     public static final int T__57=57;
     public static final int T__58=58;
     public static final int T__59=59;
+    public static final int T__60=60;
     public static final int SELECT=4;
     public static final int FROM=5;
     public static final int INSERT=6;
@@ -222,10 +226,10 @@ public class SqlLexer extends Lexer {
         try {
             int _type = T__59;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // G:\\code\\mybridge\\src\\mybridge\\core\\sqlparser\\Sql.g:14:7: ( '.' )
-            // G:\\code\\mybridge\\src\\mybridge\\core\\sqlparser\\Sql.g:14:9: '.'
+            // G:\\code\\mybridge\\src\\mybridge\\core\\sqlparser\\Sql.g:14:7: ( '`' )
+            // G:\\code\\mybridge\\src\\mybridge\\core\\sqlparser\\Sql.g:14:9: '`'
             {
-            match('.'); 
+            match('`'); 
 
             }
 
@@ -237,13 +241,33 @@ public class SqlLexer extends Lexer {
     }
     // $ANTLR end "T__59"
 
+    // $ANTLR start "T__60"
+    public final void mT__60() throws RecognitionException {
+        try {
+            int _type = T__60;
+            int _channel = DEFAULT_TOKEN_CHANNEL;
+            // G:\\code\\mybridge\\src\\mybridge\\core\\sqlparser\\Sql.g:15:7: ( '.' )
+            // G:\\code\\mybridge\\src\\mybridge\\core\\sqlparser\\Sql.g:15:9: '.'
+            {
+            match('.'); 
+
+            }
+
+            state.type = _type;
+            state.channel = _channel;
+        }
+        finally {
+        }
+    }
+    // $ANTLR end "T__60"
+
     // $ANTLR start "WS"
     public final void mWS() throws RecognitionException {
         try {
             int _type = WS;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // G:\\code\\mybridge\\src\\mybridge\\core\\sqlparser\\Sql.g:130:5: ( ( ' ' | '\\t' | '\\r' | '\\n' ) )
-            // G:\\code\\mybridge\\src\\mybridge\\core\\sqlparser\\Sql.g:130:9: ( ' ' | '\\t' | '\\r' | '\\n' )
+            // G:\\code\\mybridge\\src\\mybridge\\core\\sqlparser\\Sql.g:136:5: ( ( ' ' | '\\t' | '\\r' | '\\n' ) )
+            // G:\\code\\mybridge\\src\\mybridge\\core\\sqlparser\\Sql.g:136:9: ( ' ' | '\\t' | '\\r' | '\\n' )
             {
             if ( (input.LA(1)>='\t' && input.LA(1)<='\n')||input.LA(1)=='\r'||input.LA(1)==' ' ) {
                 input.consume();
@@ -271,8 +295,8 @@ public class SqlLexer extends Lexer {
         try {
             int _type = GE;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // G:\\code\\mybridge\\src\\mybridge\\core\\sqlparser\\Sql.g:137:4: ( '>' '=' )
-            // G:\\code\\mybridge\\src\\mybridge\\core\\sqlparser\\Sql.g:137:6: '>' '='
+            // G:\\code\\mybridge\\src\\mybridge\\core\\sqlparser\\Sql.g:143:4: ( '>' '=' )
+            // G:\\code\\mybridge\\src\\mybridge\\core\\sqlparser\\Sql.g:143:6: '>' '='
             {
             match('>'); 
             match('='); 
@@ -292,8 +316,8 @@ public class SqlLexer extends Lexer {
         try {
             int _type = LE;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // G:\\code\\mybridge\\src\\mybridge\\core\\sqlparser\\Sql.g:138:4: ( '<' '=' )
-            // G:\\code\\mybridge\\src\\mybridge\\core\\sqlparser\\Sql.g:138:6: '<' '='
+            // G:\\code\\mybridge\\src\\mybridge\\core\\sqlparser\\Sql.g:144:4: ( '<' '=' )
+            // G:\\code\\mybridge\\src\\mybridge\\core\\sqlparser\\Sql.g:144:6: '<' '='
             {
             match('<'); 
             match('='); 
@@ -313,8 +337,8 @@ public class SqlLexer extends Lexer {
         try {
             int _type = AND;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // G:\\code\\mybridge\\src\\mybridge\\core\\sqlparser\\Sql.g:139:6: ( A N D )
-            // G:\\code\\mybridge\\src\\mybridge\\core\\sqlparser\\Sql.g:139:8: A N D
+            // G:\\code\\mybridge\\src\\mybridge\\core\\sqlparser\\Sql.g:145:6: ( A N D )
+            // G:\\code\\mybridge\\src\\mybridge\\core\\sqlparser\\Sql.g:145:8: A N D
             {
             mA(); 
             mN(); 
@@ -335,8 +359,8 @@ public class SqlLexer extends Lexer {
         try {
             int _type = LIMIT;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // G:\\code\\mybridge\\src\\mybridge\\core\\sqlparser\\Sql.g:140:8: ( L I M I T )
-            // G:\\code\\mybridge\\src\\mybridge\\core\\sqlparser\\Sql.g:140:10: L I M I T
+            // G:\\code\\mybridge\\src\\mybridge\\core\\sqlparser\\Sql.g:146:8: ( L I M I T )
+            // G:\\code\\mybridge\\src\\mybridge\\core\\sqlparser\\Sql.g:146:10: L I M I T
             {
             mL(); 
             mI(); 
@@ -359,8 +383,8 @@ public class SqlLexer extends Lexer {
         try {
             int _type = DESC;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // G:\\code\\mybridge\\src\\mybridge\\core\\sqlparser\\Sql.g:141:6: ( D E S C )
-            // G:\\code\\mybridge\\src\\mybridge\\core\\sqlparser\\Sql.g:141:8: D E S C
+            // G:\\code\\mybridge\\src\\mybridge\\core\\sqlparser\\Sql.g:147:6: ( D E S C )
+            // G:\\code\\mybridge\\src\\mybridge\\core\\sqlparser\\Sql.g:147:8: D E S C
             {
             mD(); 
             mE(); 
@@ -382,8 +406,8 @@ public class SqlLexer extends Lexer {
         try {
             int _type = ASC;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // G:\\code\\mybridge\\src\\mybridge\\core\\sqlparser\\Sql.g:142:5: ( A S C )
-            // G:\\code\\mybridge\\src\\mybridge\\core\\sqlparser\\Sql.g:142:7: A S C
+            // G:\\code\\mybridge\\src\\mybridge\\core\\sqlparser\\Sql.g:148:5: ( A S C )
+            // G:\\code\\mybridge\\src\\mybridge\\core\\sqlparser\\Sql.g:148:7: A S C
             {
             mA(); 
             mS(); 
@@ -404,8 +428,8 @@ public class SqlLexer extends Lexer {
         try {
             int _type = ORDER;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // G:\\code\\mybridge\\src\\mybridge\\core\\sqlparser\\Sql.g:143:7: ( O R D E R )
-            // G:\\code\\mybridge\\src\\mybridge\\core\\sqlparser\\Sql.g:143:9: O R D E R
+            // G:\\code\\mybridge\\src\\mybridge\\core\\sqlparser\\Sql.g:149:7: ( O R D E R )
+            // G:\\code\\mybridge\\src\\mybridge\\core\\sqlparser\\Sql.g:149:9: O R D E R
             {
             mO(); 
             mR(); 
@@ -428,8 +452,8 @@ public class SqlLexer extends Lexer {
         try {
             int _type = BY;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // G:\\code\\mybridge\\src\\mybridge\\core\\sqlparser\\Sql.g:144:4: ( B Y )
-            // G:\\code\\mybridge\\src\\mybridge\\core\\sqlparser\\Sql.g:144:6: B Y
+            // G:\\code\\mybridge\\src\\mybridge\\core\\sqlparser\\Sql.g:150:4: ( B Y )
+            // G:\\code\\mybridge\\src\\mybridge\\core\\sqlparser\\Sql.g:150:6: B Y
             {
             mB(); 
             mY(); 
@@ -449,8 +473,8 @@ public class SqlLexer extends Lexer {
         try {
             int _type = SET;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // G:\\code\\mybridge\\src\\mybridge\\core\\sqlparser\\Sql.g:145:5: ( S E T )
-            // G:\\code\\mybridge\\src\\mybridge\\core\\sqlparser\\Sql.g:145:7: S E T
+            // G:\\code\\mybridge\\src\\mybridge\\core\\sqlparser\\Sql.g:151:5: ( S E T )
+            // G:\\code\\mybridge\\src\\mybridge\\core\\sqlparser\\Sql.g:151:7: S E T
             {
             mS(); 
             mE(); 
@@ -471,8 +495,8 @@ public class SqlLexer extends Lexer {
         try {
             int _type = VALUES;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // G:\\code\\mybridge\\src\\mybridge\\core\\sqlparser\\Sql.g:146:8: ( V A L U E S )
-            // G:\\code\\mybridge\\src\\mybridge\\core\\sqlparser\\Sql.g:146:10: V A L U E S
+            // G:\\code\\mybridge\\src\\mybridge\\core\\sqlparser\\Sql.g:152:8: ( V A L U E S )
+            // G:\\code\\mybridge\\src\\mybridge\\core\\sqlparser\\Sql.g:152:10: V A L U E S
             {
             mV(); 
             mA(); 
@@ -496,8 +520,8 @@ public class SqlLexer extends Lexer {
         try {
             int _type = IN;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // G:\\code\\mybridge\\src\\mybridge\\core\\sqlparser\\Sql.g:147:5: ( I N )
-            // G:\\code\\mybridge\\src\\mybridge\\core\\sqlparser\\Sql.g:147:7: I N
+            // G:\\code\\mybridge\\src\\mybridge\\core\\sqlparser\\Sql.g:153:5: ( I N )
+            // G:\\code\\mybridge\\src\\mybridge\\core\\sqlparser\\Sql.g:153:7: I N
             {
             mI(); 
             mN(); 
@@ -517,8 +541,8 @@ public class SqlLexer extends Lexer {
         try {
             int _type = INTO;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // G:\\code\\mybridge\\src\\mybridge\\core\\sqlparser\\Sql.g:148:6: ( I N T O )
-            // G:\\code\\mybridge\\src\\mybridge\\core\\sqlparser\\Sql.g:148:8: I N T O
+            // G:\\code\\mybridge\\src\\mybridge\\core\\sqlparser\\Sql.g:154:6: ( I N T O )
+            // G:\\code\\mybridge\\src\\mybridge\\core\\sqlparser\\Sql.g:154:8: I N T O
             {
             mI(); 
             mN(); 
@@ -540,8 +564,8 @@ public class SqlLexer extends Lexer {
         try {
             int _type = INSERT;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // G:\\code\\mybridge\\src\\mybridge\\core\\sqlparser\\Sql.g:149:9: ( I N S E R T )
-            // G:\\code\\mybridge\\src\\mybridge\\core\\sqlparser\\Sql.g:149:11: I N S E R T
+            // G:\\code\\mybridge\\src\\mybridge\\core\\sqlparser\\Sql.g:155:9: ( I N S E R T )
+            // G:\\code\\mybridge\\src\\mybridge\\core\\sqlparser\\Sql.g:155:11: I N S E R T
             {
             mI(); 
             mN(); 
@@ -565,8 +589,8 @@ public class SqlLexer extends Lexer {
         try {
             int _type = UPDATE;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // G:\\code\\mybridge\\src\\mybridge\\core\\sqlparser\\Sql.g:150:9: ( U P D A T E )
-            // G:\\code\\mybridge\\src\\mybridge\\core\\sqlparser\\Sql.g:150:11: U P D A T E
+            // G:\\code\\mybridge\\src\\mybridge\\core\\sqlparser\\Sql.g:156:9: ( U P D A T E )
+            // G:\\code\\mybridge\\src\\mybridge\\core\\sqlparser\\Sql.g:156:11: U P D A T E
             {
             mU(); 
             mP(); 
@@ -590,8 +614,8 @@ public class SqlLexer extends Lexer {
         try {
             int _type = DELETE;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // G:\\code\\mybridge\\src\\mybridge\\core\\sqlparser\\Sql.g:151:9: ( D E L E T E )
-            // G:\\code\\mybridge\\src\\mybridge\\core\\sqlparser\\Sql.g:151:11: D E L E T E
+            // G:\\code\\mybridge\\src\\mybridge\\core\\sqlparser\\Sql.g:157:9: ( D E L E T E )
+            // G:\\code\\mybridge\\src\\mybridge\\core\\sqlparser\\Sql.g:157:11: D E L E T E
             {
             mD(); 
             mE(); 
@@ -615,8 +639,8 @@ public class SqlLexer extends Lexer {
         try {
             int _type = SELECT;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // G:\\code\\mybridge\\src\\mybridge\\core\\sqlparser\\Sql.g:152:8: ( S E L E C T )
-            // G:\\code\\mybridge\\src\\mybridge\\core\\sqlparser\\Sql.g:152:10: S E L E C T
+            // G:\\code\\mybridge\\src\\mybridge\\core\\sqlparser\\Sql.g:158:8: ( S E L E C T )
+            // G:\\code\\mybridge\\src\\mybridge\\core\\sqlparser\\Sql.g:158:10: S E L E C T
             {
             mS(); 
             mE(); 
@@ -640,8 +664,8 @@ public class SqlLexer extends Lexer {
         try {
             int _type = WHERE;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // G:\\code\\mybridge\\src\\mybridge\\core\\sqlparser\\Sql.g:153:8: ( W H E R E )
-            // G:\\code\\mybridge\\src\\mybridge\\core\\sqlparser\\Sql.g:153:10: W H E R E
+            // G:\\code\\mybridge\\src\\mybridge\\core\\sqlparser\\Sql.g:159:8: ( W H E R E )
+            // G:\\code\\mybridge\\src\\mybridge\\core\\sqlparser\\Sql.g:159:10: W H E R E
             {
             mW(); 
             mH(); 
@@ -664,8 +688,8 @@ public class SqlLexer extends Lexer {
         try {
             int _type = FROM;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // G:\\code\\mybridge\\src\\mybridge\\core\\sqlparser\\Sql.g:154:6: ( F R O M )
-            // G:\\code\\mybridge\\src\\mybridge\\core\\sqlparser\\Sql.g:154:8: F R O M
+            // G:\\code\\mybridge\\src\\mybridge\\core\\sqlparser\\Sql.g:160:6: ( F R O M )
+            // G:\\code\\mybridge\\src\\mybridge\\core\\sqlparser\\Sql.g:160:8: F R O M
             {
             mF(); 
             mR(); 
@@ -687,8 +711,8 @@ public class SqlLexer extends Lexer {
         try {
             int _type = ID;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // G:\\code\\mybridge\\src\\mybridge\\core\\sqlparser\\Sql.g:155:5: ( ( 'a' .. 'z' | 'A' .. 'Z' | '_' ) ( '0' .. '9' | 'a' .. 'z' | 'A' .. 'Z' | '_' )* )
-            // G:\\code\\mybridge\\src\\mybridge\\core\\sqlparser\\Sql.g:155:7: ( 'a' .. 'z' | 'A' .. 'Z' | '_' ) ( '0' .. '9' | 'a' .. 'z' | 'A' .. 'Z' | '_' )*
+            // G:\\code\\mybridge\\src\\mybridge\\core\\sqlparser\\Sql.g:161:5: ( ( 'a' .. 'z' | 'A' .. 'Z' | '_' ) ( '0' .. '9' | 'a' .. 'z' | 'A' .. 'Z' | '_' )* )
+            // G:\\code\\mybridge\\src\\mybridge\\core\\sqlparser\\Sql.g:161:7: ( 'a' .. 'z' | 'A' .. 'Z' | '_' ) ( '0' .. '9' | 'a' .. 'z' | 'A' .. 'Z' | '_' )*
             {
             if ( (input.LA(1)>='A' && input.LA(1)<='Z')||input.LA(1)=='_'||(input.LA(1)>='a' && input.LA(1)<='z') ) {
                 input.consume();
@@ -699,7 +723,7 @@ public class SqlLexer extends Lexer {
                 recover(mse);
                 throw mse;}
 
-            // G:\\code\\mybridge\\src\\mybridge\\core\\sqlparser\\Sql.g:155:31: ( '0' .. '9' | 'a' .. 'z' | 'A' .. 'Z' | '_' )*
+            // G:\\code\\mybridge\\src\\mybridge\\core\\sqlparser\\Sql.g:161:31: ( '0' .. '9' | 'a' .. 'z' | 'A' .. 'Z' | '_' )*
             loop1:
             do {
                 int alt1=2;
@@ -748,7 +772,7 @@ public class SqlLexer extends Lexer {
         try {
             int _type = STRING;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // G:\\code\\mybridge\\src\\mybridge\\core\\sqlparser\\Sql.g:156:9: ( '\"' (~ ( '\\\\' | '\"' ) )* '\"' | '\\'' (~ ( '\\\\' | '\"' ) )* '\\'' )
+            // G:\\code\\mybridge\\src\\mybridge\\core\\sqlparser\\Sql.g:162:9: ( '\"' (~ ( '\\\\' | '\"' ) )* '\"' | '\\'' (~ ( '\\\\' | '\"' ) )* '\\'' )
             int alt4=2;
             int LA4_0 = input.LA(1);
 
@@ -766,10 +790,10 @@ public class SqlLexer extends Lexer {
             }
             switch (alt4) {
                 case 1 :
-                    // G:\\code\\mybridge\\src\\mybridge\\core\\sqlparser\\Sql.g:156:12: '\"' (~ ( '\\\\' | '\"' ) )* '\"'
+                    // G:\\code\\mybridge\\src\\mybridge\\core\\sqlparser\\Sql.g:162:12: '\"' (~ ( '\\\\' | '\"' ) )* '\"'
                     {
                     match('\"'); 
-                    // G:\\code\\mybridge\\src\\mybridge\\core\\sqlparser\\Sql.g:156:16: (~ ( '\\\\' | '\"' ) )*
+                    // G:\\code\\mybridge\\src\\mybridge\\core\\sqlparser\\Sql.g:162:16: (~ ( '\\\\' | '\"' ) )*
                     loop2:
                     do {
                         int alt2=2;
@@ -782,7 +806,7 @@ public class SqlLexer extends Lexer {
 
                         switch (alt2) {
                     	case 1 :
-                    	    // G:\\code\\mybridge\\src\\mybridge\\core\\sqlparser\\Sql.g:156:17: ~ ( '\\\\' | '\"' )
+                    	    // G:\\code\\mybridge\\src\\mybridge\\core\\sqlparser\\Sql.g:162:17: ~ ( '\\\\' | '\"' )
                     	    {
                     	    if ( (input.LA(1)>='\u0000' && input.LA(1)<='!')||(input.LA(1)>='#' && input.LA(1)<='[')||(input.LA(1)>=']' && input.LA(1)<='\uFFFF') ) {
                     	        input.consume();
@@ -807,10 +831,10 @@ public class SqlLexer extends Lexer {
                     }
                     break;
                 case 2 :
-                    // G:\\code\\mybridge\\src\\mybridge\\core\\sqlparser\\Sql.g:156:38: '\\'' (~ ( '\\\\' | '\"' ) )* '\\''
+                    // G:\\code\\mybridge\\src\\mybridge\\core\\sqlparser\\Sql.g:162:38: '\\'' (~ ( '\\\\' | '\"' ) )* '\\''
                     {
                     match('\''); 
-                    // G:\\code\\mybridge\\src\\mybridge\\core\\sqlparser\\Sql.g:156:43: (~ ( '\\\\' | '\"' ) )*
+                    // G:\\code\\mybridge\\src\\mybridge\\core\\sqlparser\\Sql.g:162:43: (~ ( '\\\\' | '\"' ) )*
                     loop3:
                     do {
                         int alt3=2;
@@ -832,7 +856,7 @@ public class SqlLexer extends Lexer {
 
                         switch (alt3) {
                     	case 1 :
-                    	    // G:\\code\\mybridge\\src\\mybridge\\core\\sqlparser\\Sql.g:156:44: ~ ( '\\\\' | '\"' )
+                    	    // G:\\code\\mybridge\\src\\mybridge\\core\\sqlparser\\Sql.g:162:44: ~ ( '\\\\' | '\"' )
                     	    {
                     	    if ( (input.LA(1)>='\u0000' && input.LA(1)<='!')||(input.LA(1)>='#' && input.LA(1)<='[')||(input.LA(1)>=']' && input.LA(1)<='\uFFFF') ) {
                     	        input.consume();
@@ -871,10 +895,10 @@ public class SqlLexer extends Lexer {
         try {
             int _type = NUM;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // G:\\code\\mybridge\\src\\mybridge\\core\\sqlparser\\Sql.g:157:5: ( ( '0' .. '9' )+ ( '.' ( '0' .. '9' )+ )? )
-            // G:\\code\\mybridge\\src\\mybridge\\core\\sqlparser\\Sql.g:157:7: ( '0' .. '9' )+ ( '.' ( '0' .. '9' )+ )?
+            // G:\\code\\mybridge\\src\\mybridge\\core\\sqlparser\\Sql.g:163:5: ( ( '0' .. '9' )+ ( '.' ( '0' .. '9' )+ )? )
+            // G:\\code\\mybridge\\src\\mybridge\\core\\sqlparser\\Sql.g:163:7: ( '0' .. '9' )+ ( '.' ( '0' .. '9' )+ )?
             {
-            // G:\\code\\mybridge\\src\\mybridge\\core\\sqlparser\\Sql.g:157:7: ( '0' .. '9' )+
+            // G:\\code\\mybridge\\src\\mybridge\\core\\sqlparser\\Sql.g:163:7: ( '0' .. '9' )+
             int cnt5=0;
             loop5:
             do {
@@ -888,7 +912,7 @@ public class SqlLexer extends Lexer {
 
                 switch (alt5) {
             	case 1 :
-            	    // G:\\code\\mybridge\\src\\mybridge\\core\\sqlparser\\Sql.g:157:8: '0' .. '9'
+            	    // G:\\code\\mybridge\\src\\mybridge\\core\\sqlparser\\Sql.g:163:8: '0' .. '9'
             	    {
             	    matchRange('0','9'); 
 
@@ -904,7 +928,7 @@ public class SqlLexer extends Lexer {
                 cnt5++;
             } while (true);
 
-            // G:\\code\\mybridge\\src\\mybridge\\core\\sqlparser\\Sql.g:157:18: ( '.' ( '0' .. '9' )+ )?
+            // G:\\code\\mybridge\\src\\mybridge\\core\\sqlparser\\Sql.g:163:18: ( '.' ( '0' .. '9' )+ )?
             int alt7=2;
             int LA7_0 = input.LA(1);
 
@@ -913,10 +937,10 @@ public class SqlLexer extends Lexer {
             }
             switch (alt7) {
                 case 1 :
-                    // G:\\code\\mybridge\\src\\mybridge\\core\\sqlparser\\Sql.g:157:19: '.' ( '0' .. '9' )+
+                    // G:\\code\\mybridge\\src\\mybridge\\core\\sqlparser\\Sql.g:163:19: '.' ( '0' .. '9' )+
                     {
                     match('.'); 
-                    // G:\\code\\mybridge\\src\\mybridge\\core\\sqlparser\\Sql.g:157:23: ( '0' .. '9' )+
+                    // G:\\code\\mybridge\\src\\mybridge\\core\\sqlparser\\Sql.g:163:23: ( '0' .. '9' )+
                     int cnt6=0;
                     loop6:
                     do {
@@ -930,7 +954,7 @@ public class SqlLexer extends Lexer {
 
                         switch (alt6) {
                     	case 1 :
-                    	    // G:\\code\\mybridge\\src\\mybridge\\core\\sqlparser\\Sql.g:157:24: '0' .. '9'
+                    	    // G:\\code\\mybridge\\src\\mybridge\\core\\sqlparser\\Sql.g:163:24: '0' .. '9'
                     	    {
                     	    matchRange('0','9'); 
 
@@ -966,7 +990,7 @@ public class SqlLexer extends Lexer {
     // $ANTLR start "A"
     public final void mA() throws RecognitionException {
         try {
-            // G:\\code\\mybridge\\src\\mybridge\\core\\sqlparser\\Sql.g:159:12: ( 'A' | 'a' )
+            // G:\\code\\mybridge\\src\\mybridge\\core\\sqlparser\\Sql.g:165:12: ( 'A' | 'a' )
             // G:\\code\\mybridge\\src\\mybridge\\core\\sqlparser\\Sql.g:
             {
             if ( input.LA(1)=='A'||input.LA(1)=='a' ) {
@@ -990,7 +1014,7 @@ public class SqlLexer extends Lexer {
     // $ANTLR start "B"
     public final void mB() throws RecognitionException {
         try {
-            // G:\\code\\mybridge\\src\\mybridge\\core\\sqlparser\\Sql.g:160:12: ( 'B' | 'b' )
+            // G:\\code\\mybridge\\src\\mybridge\\core\\sqlparser\\Sql.g:166:12: ( 'B' | 'b' )
             // G:\\code\\mybridge\\src\\mybridge\\core\\sqlparser\\Sql.g:
             {
             if ( input.LA(1)=='B'||input.LA(1)=='b' ) {
@@ -1014,7 +1038,7 @@ public class SqlLexer extends Lexer {
     // $ANTLR start "C"
     public final void mC() throws RecognitionException {
         try {
-            // G:\\code\\mybridge\\src\\mybridge\\core\\sqlparser\\Sql.g:161:12: ( 'C' | 'c' )
+            // G:\\code\\mybridge\\src\\mybridge\\core\\sqlparser\\Sql.g:167:12: ( 'C' | 'c' )
             // G:\\code\\mybridge\\src\\mybridge\\core\\sqlparser\\Sql.g:
             {
             if ( input.LA(1)=='C'||input.LA(1)=='c' ) {
@@ -1038,7 +1062,7 @@ public class SqlLexer extends Lexer {
     // $ANTLR start "D"
     public final void mD() throws RecognitionException {
         try {
-            // G:\\code\\mybridge\\src\\mybridge\\core\\sqlparser\\Sql.g:162:12: ( 'D' | 'd' )
+            // G:\\code\\mybridge\\src\\mybridge\\core\\sqlparser\\Sql.g:168:12: ( 'D' | 'd' )
             // G:\\code\\mybridge\\src\\mybridge\\core\\sqlparser\\Sql.g:
             {
             if ( input.LA(1)=='D'||input.LA(1)=='d' ) {
@@ -1062,7 +1086,7 @@ public class SqlLexer extends Lexer {
     // $ANTLR start "E"
     public final void mE() throws RecognitionException {
         try {
-            // G:\\code\\mybridge\\src\\mybridge\\core\\sqlparser\\Sql.g:163:12: ( 'E' | 'e' )
+            // G:\\code\\mybridge\\src\\mybridge\\core\\sqlparser\\Sql.g:169:12: ( 'E' | 'e' )
             // G:\\code\\mybridge\\src\\mybridge\\core\\sqlparser\\Sql.g:
             {
             if ( input.LA(1)=='E'||input.LA(1)=='e' ) {
@@ -1086,7 +1110,7 @@ public class SqlLexer extends Lexer {
     // $ANTLR start "F"
     public final void mF() throws RecognitionException {
         try {
-            // G:\\code\\mybridge\\src\\mybridge\\core\\sqlparser\\Sql.g:164:12: ( 'F' | 'f' )
+            // G:\\code\\mybridge\\src\\mybridge\\core\\sqlparser\\Sql.g:170:12: ( 'F' | 'f' )
             // G:\\code\\mybridge\\src\\mybridge\\core\\sqlparser\\Sql.g:
             {
             if ( input.LA(1)=='F'||input.LA(1)=='f' ) {
@@ -1110,7 +1134,7 @@ public class SqlLexer extends Lexer {
     // $ANTLR start "G"
     public final void mG() throws RecognitionException {
         try {
-            // G:\\code\\mybridge\\src\\mybridge\\core\\sqlparser\\Sql.g:165:12: ( 'G' | 'g' )
+            // G:\\code\\mybridge\\src\\mybridge\\core\\sqlparser\\Sql.g:171:12: ( 'G' | 'g' )
             // G:\\code\\mybridge\\src\\mybridge\\core\\sqlparser\\Sql.g:
             {
             if ( input.LA(1)=='G'||input.LA(1)=='g' ) {
@@ -1134,7 +1158,7 @@ public class SqlLexer extends Lexer {
     // $ANTLR start "H"
     public final void mH() throws RecognitionException {
         try {
-            // G:\\code\\mybridge\\src\\mybridge\\core\\sqlparser\\Sql.g:166:12: ( 'H' | 'h' )
+            // G:\\code\\mybridge\\src\\mybridge\\core\\sqlparser\\Sql.g:172:12: ( 'H' | 'h' )
             // G:\\code\\mybridge\\src\\mybridge\\core\\sqlparser\\Sql.g:
             {
             if ( input.LA(1)=='H'||input.LA(1)=='h' ) {
@@ -1158,7 +1182,7 @@ public class SqlLexer extends Lexer {
     // $ANTLR start "I"
     public final void mI() throws RecognitionException {
         try {
-            // G:\\code\\mybridge\\src\\mybridge\\core\\sqlparser\\Sql.g:167:12: ( 'I' | 'i' )
+            // G:\\code\\mybridge\\src\\mybridge\\core\\sqlparser\\Sql.g:173:12: ( 'I' | 'i' )
             // G:\\code\\mybridge\\src\\mybridge\\core\\sqlparser\\Sql.g:
             {
             if ( input.LA(1)=='I'||input.LA(1)=='i' ) {
@@ -1182,7 +1206,7 @@ public class SqlLexer extends Lexer {
     // $ANTLR start "J"
     public final void mJ() throws RecognitionException {
         try {
-            // G:\\code\\mybridge\\src\\mybridge\\core\\sqlparser\\Sql.g:168:12: ( 'J' | 'j' )
+            // G:\\code\\mybridge\\src\\mybridge\\core\\sqlparser\\Sql.g:174:12: ( 'J' | 'j' )
             // G:\\code\\mybridge\\src\\mybridge\\core\\sqlparser\\Sql.g:
             {
             if ( input.LA(1)=='J'||input.LA(1)=='j' ) {
@@ -1206,7 +1230,7 @@ public class SqlLexer extends Lexer {
     // $ANTLR start "K"
     public final void mK() throws RecognitionException {
         try {
-            // G:\\code\\mybridge\\src\\mybridge\\core\\sqlparser\\Sql.g:169:12: ( 'K' | 'k' )
+            // G:\\code\\mybridge\\src\\mybridge\\core\\sqlparser\\Sql.g:175:12: ( 'K' | 'k' )
             // G:\\code\\mybridge\\src\\mybridge\\core\\sqlparser\\Sql.g:
             {
             if ( input.LA(1)=='K'||input.LA(1)=='k' ) {
@@ -1230,7 +1254,7 @@ public class SqlLexer extends Lexer {
     // $ANTLR start "L"
     public final void mL() throws RecognitionException {
         try {
-            // G:\\code\\mybridge\\src\\mybridge\\core\\sqlparser\\Sql.g:170:12: ( 'L' | 'l' )
+            // G:\\code\\mybridge\\src\\mybridge\\core\\sqlparser\\Sql.g:176:12: ( 'L' | 'l' )
             // G:\\code\\mybridge\\src\\mybridge\\core\\sqlparser\\Sql.g:
             {
             if ( input.LA(1)=='L'||input.LA(1)=='l' ) {
@@ -1254,7 +1278,7 @@ public class SqlLexer extends Lexer {
     // $ANTLR start "M"
     public final void mM() throws RecognitionException {
         try {
-            // G:\\code\\mybridge\\src\\mybridge\\core\\sqlparser\\Sql.g:171:12: ( 'M' | 'm' )
+            // G:\\code\\mybridge\\src\\mybridge\\core\\sqlparser\\Sql.g:177:12: ( 'M' | 'm' )
             // G:\\code\\mybridge\\src\\mybridge\\core\\sqlparser\\Sql.g:
             {
             if ( input.LA(1)=='M'||input.LA(1)=='m' ) {
@@ -1278,7 +1302,7 @@ public class SqlLexer extends Lexer {
     // $ANTLR start "N"
     public final void mN() throws RecognitionException {
         try {
-            // G:\\code\\mybridge\\src\\mybridge\\core\\sqlparser\\Sql.g:172:12: ( 'N' | 'n' )
+            // G:\\code\\mybridge\\src\\mybridge\\core\\sqlparser\\Sql.g:178:12: ( 'N' | 'n' )
             // G:\\code\\mybridge\\src\\mybridge\\core\\sqlparser\\Sql.g:
             {
             if ( input.LA(1)=='N'||input.LA(1)=='n' ) {
@@ -1302,7 +1326,7 @@ public class SqlLexer extends Lexer {
     // $ANTLR start "O"
     public final void mO() throws RecognitionException {
         try {
-            // G:\\code\\mybridge\\src\\mybridge\\core\\sqlparser\\Sql.g:173:12: ( 'O' | 'o' )
+            // G:\\code\\mybridge\\src\\mybridge\\core\\sqlparser\\Sql.g:179:12: ( 'O' | 'o' )
             // G:\\code\\mybridge\\src\\mybridge\\core\\sqlparser\\Sql.g:
             {
             if ( input.LA(1)=='O'||input.LA(1)=='o' ) {
@@ -1326,7 +1350,7 @@ public class SqlLexer extends Lexer {
     // $ANTLR start "P"
     public final void mP() throws RecognitionException {
         try {
-            // G:\\code\\mybridge\\src\\mybridge\\core\\sqlparser\\Sql.g:174:12: ( 'P' | 'p' )
+            // G:\\code\\mybridge\\src\\mybridge\\core\\sqlparser\\Sql.g:180:12: ( 'P' | 'p' )
             // G:\\code\\mybridge\\src\\mybridge\\core\\sqlparser\\Sql.g:
             {
             if ( input.LA(1)=='P'||input.LA(1)=='p' ) {
@@ -1350,7 +1374,7 @@ public class SqlLexer extends Lexer {
     // $ANTLR start "Q"
     public final void mQ() throws RecognitionException {
         try {
-            // G:\\code\\mybridge\\src\\mybridge\\core\\sqlparser\\Sql.g:175:12: ( 'Q' | 'q' )
+            // G:\\code\\mybridge\\src\\mybridge\\core\\sqlparser\\Sql.g:181:12: ( 'Q' | 'q' )
             // G:\\code\\mybridge\\src\\mybridge\\core\\sqlparser\\Sql.g:
             {
             if ( input.LA(1)=='Q'||input.LA(1)=='q' ) {
@@ -1374,7 +1398,7 @@ public class SqlLexer extends Lexer {
     // $ANTLR start "R"
     public final void mR() throws RecognitionException {
         try {
-            // G:\\code\\mybridge\\src\\mybridge\\core\\sqlparser\\Sql.g:176:12: ( 'R' | 'r' )
+            // G:\\code\\mybridge\\src\\mybridge\\core\\sqlparser\\Sql.g:182:12: ( 'R' | 'r' )
             // G:\\code\\mybridge\\src\\mybridge\\core\\sqlparser\\Sql.g:
             {
             if ( input.LA(1)=='R'||input.LA(1)=='r' ) {
@@ -1398,7 +1422,7 @@ public class SqlLexer extends Lexer {
     // $ANTLR start "S"
     public final void mS() throws RecognitionException {
         try {
-            // G:\\code\\mybridge\\src\\mybridge\\core\\sqlparser\\Sql.g:177:12: ( 'S' | 's' )
+            // G:\\code\\mybridge\\src\\mybridge\\core\\sqlparser\\Sql.g:183:12: ( 'S' | 's' )
             // G:\\code\\mybridge\\src\\mybridge\\core\\sqlparser\\Sql.g:
             {
             if ( input.LA(1)=='S'||input.LA(1)=='s' ) {
@@ -1422,7 +1446,7 @@ public class SqlLexer extends Lexer {
     // $ANTLR start "T"
     public final void mT() throws RecognitionException {
         try {
-            // G:\\code\\mybridge\\src\\mybridge\\core\\sqlparser\\Sql.g:178:12: ( 'T' | 't' )
+            // G:\\code\\mybridge\\src\\mybridge\\core\\sqlparser\\Sql.g:184:12: ( 'T' | 't' )
             // G:\\code\\mybridge\\src\\mybridge\\core\\sqlparser\\Sql.g:
             {
             if ( input.LA(1)=='T'||input.LA(1)=='t' ) {
@@ -1446,7 +1470,7 @@ public class SqlLexer extends Lexer {
     // $ANTLR start "U"
     public final void mU() throws RecognitionException {
         try {
-            // G:\\code\\mybridge\\src\\mybridge\\core\\sqlparser\\Sql.g:179:12: ( 'U' | 'u' )
+            // G:\\code\\mybridge\\src\\mybridge\\core\\sqlparser\\Sql.g:185:12: ( 'U' | 'u' )
             // G:\\code\\mybridge\\src\\mybridge\\core\\sqlparser\\Sql.g:
             {
             if ( input.LA(1)=='U'||input.LA(1)=='u' ) {
@@ -1470,7 +1494,7 @@ public class SqlLexer extends Lexer {
     // $ANTLR start "V"
     public final void mV() throws RecognitionException {
         try {
-            // G:\\code\\mybridge\\src\\mybridge\\core\\sqlparser\\Sql.g:180:12: ( 'V' | 'v' )
+            // G:\\code\\mybridge\\src\\mybridge\\core\\sqlparser\\Sql.g:186:12: ( 'V' | 'v' )
             // G:\\code\\mybridge\\src\\mybridge\\core\\sqlparser\\Sql.g:
             {
             if ( input.LA(1)=='V'||input.LA(1)=='v' ) {
@@ -1494,7 +1518,7 @@ public class SqlLexer extends Lexer {
     // $ANTLR start "W"
     public final void mW() throws RecognitionException {
         try {
-            // G:\\code\\mybridge\\src\\mybridge\\core\\sqlparser\\Sql.g:181:12: ( 'W' | 'w' )
+            // G:\\code\\mybridge\\src\\mybridge\\core\\sqlparser\\Sql.g:187:12: ( 'W' | 'w' )
             // G:\\code\\mybridge\\src\\mybridge\\core\\sqlparser\\Sql.g:
             {
             if ( input.LA(1)=='W'||input.LA(1)=='w' ) {
@@ -1518,7 +1542,7 @@ public class SqlLexer extends Lexer {
     // $ANTLR start "X"
     public final void mX() throws RecognitionException {
         try {
-            // G:\\code\\mybridge\\src\\mybridge\\core\\sqlparser\\Sql.g:182:12: ( 'X' | 'x' )
+            // G:\\code\\mybridge\\src\\mybridge\\core\\sqlparser\\Sql.g:188:12: ( 'X' | 'x' )
             // G:\\code\\mybridge\\src\\mybridge\\core\\sqlparser\\Sql.g:
             {
             if ( input.LA(1)=='X'||input.LA(1)=='x' ) {
@@ -1542,7 +1566,7 @@ public class SqlLexer extends Lexer {
     // $ANTLR start "Y"
     public final void mY() throws RecognitionException {
         try {
-            // G:\\code\\mybridge\\src\\mybridge\\core\\sqlparser\\Sql.g:183:12: ( 'Y' | 'y' )
+            // G:\\code\\mybridge\\src\\mybridge\\core\\sqlparser\\Sql.g:189:12: ( 'Y' | 'y' )
             // G:\\code\\mybridge\\src\\mybridge\\core\\sqlparser\\Sql.g:
             {
             if ( input.LA(1)=='Y'||input.LA(1)=='y' ) {
@@ -1566,7 +1590,7 @@ public class SqlLexer extends Lexer {
     // $ANTLR start "Z"
     public final void mZ() throws RecognitionException {
         try {
-            // G:\\code\\mybridge\\src\\mybridge\\core\\sqlparser\\Sql.g:184:12: ( 'Z' | 'z' )
+            // G:\\code\\mybridge\\src\\mybridge\\core\\sqlparser\\Sql.g:190:12: ( 'Z' | 'z' )
             // G:\\code\\mybridge\\src\\mybridge\\core\\sqlparser\\Sql.g:
             {
             if ( input.LA(1)=='Z'||input.LA(1)=='z' ) {
@@ -1588,8 +1612,8 @@ public class SqlLexer extends Lexer {
     // $ANTLR end "Z"
 
     public void mTokens() throws RecognitionException {
-        // G:\\code\\mybridge\\src\\mybridge\\core\\sqlparser\\Sql.g:1:8: ( T__52 | T__53 | T__54 | T__55 | T__56 | T__57 | T__58 | T__59 | WS | GE | LE | AND | LIMIT | DESC | ASC | ORDER | BY | SET | VALUES | IN | INTO | INSERT | UPDATE | DELETE | SELECT | WHERE | FROM | ID | STRING | NUM )
-        int alt8=30;
+        // G:\\code\\mybridge\\src\\mybridge\\core\\sqlparser\\Sql.g:1:8: ( T__52 | T__53 | T__54 | T__55 | T__56 | T__57 | T__58 | T__59 | T__60 | WS | GE | LE | AND | LIMIT | DESC | ASC | ORDER | BY | SET | VALUES | IN | INTO | INSERT | UPDATE | DELETE | SELECT | WHERE | FROM | ID | STRING | NUM )
+        int alt8=31;
         alt8 = dfa8.predict(input);
         switch (alt8) {
             case 1 :
@@ -1649,154 +1673,161 @@ public class SqlLexer extends Lexer {
                 }
                 break;
             case 9 :
-                // G:\\code\\mybridge\\src\\mybridge\\core\\sqlparser\\Sql.g:1:58: WS
+                // G:\\code\\mybridge\\src\\mybridge\\core\\sqlparser\\Sql.g:1:58: T__60
+                {
+                mT__60(); 
+
+                }
+                break;
+            case 10 :
+                // G:\\code\\mybridge\\src\\mybridge\\core\\sqlparser\\Sql.g:1:64: WS
                 {
                 mWS(); 
 
                 }
                 break;
-            case 10 :
-                // G:\\code\\mybridge\\src\\mybridge\\core\\sqlparser\\Sql.g:1:61: GE
+            case 11 :
+                // G:\\code\\mybridge\\src\\mybridge\\core\\sqlparser\\Sql.g:1:67: GE
                 {
                 mGE(); 
 
                 }
                 break;
-            case 11 :
-                // G:\\code\\mybridge\\src\\mybridge\\core\\sqlparser\\Sql.g:1:64: LE
+            case 12 :
+                // G:\\code\\mybridge\\src\\mybridge\\core\\sqlparser\\Sql.g:1:70: LE
                 {
                 mLE(); 
 
                 }
                 break;
-            case 12 :
-                // G:\\code\\mybridge\\src\\mybridge\\core\\sqlparser\\Sql.g:1:67: AND
+            case 13 :
+                // G:\\code\\mybridge\\src\\mybridge\\core\\sqlparser\\Sql.g:1:73: AND
                 {
                 mAND(); 
 
                 }
                 break;
-            case 13 :
-                // G:\\code\\mybridge\\src\\mybridge\\core\\sqlparser\\Sql.g:1:71: LIMIT
+            case 14 :
+                // G:\\code\\mybridge\\src\\mybridge\\core\\sqlparser\\Sql.g:1:77: LIMIT
                 {
                 mLIMIT(); 
 
                 }
                 break;
-            case 14 :
-                // G:\\code\\mybridge\\src\\mybridge\\core\\sqlparser\\Sql.g:1:77: DESC
+            case 15 :
+                // G:\\code\\mybridge\\src\\mybridge\\core\\sqlparser\\Sql.g:1:83: DESC
                 {
                 mDESC(); 
 
                 }
                 break;
-            case 15 :
-                // G:\\code\\mybridge\\src\\mybridge\\core\\sqlparser\\Sql.g:1:82: ASC
+            case 16 :
+                // G:\\code\\mybridge\\src\\mybridge\\core\\sqlparser\\Sql.g:1:88: ASC
                 {
                 mASC(); 
 
                 }
                 break;
-            case 16 :
-                // G:\\code\\mybridge\\src\\mybridge\\core\\sqlparser\\Sql.g:1:86: ORDER
+            case 17 :
+                // G:\\code\\mybridge\\src\\mybridge\\core\\sqlparser\\Sql.g:1:92: ORDER
                 {
                 mORDER(); 
 
                 }
                 break;
-            case 17 :
-                // G:\\code\\mybridge\\src\\mybridge\\core\\sqlparser\\Sql.g:1:92: BY
+            case 18 :
+                // G:\\code\\mybridge\\src\\mybridge\\core\\sqlparser\\Sql.g:1:98: BY
                 {
                 mBY(); 
 
                 }
                 break;
-            case 18 :
-                // G:\\code\\mybridge\\src\\mybridge\\core\\sqlparser\\Sql.g:1:95: SET
+            case 19 :
+                // G:\\code\\mybridge\\src\\mybridge\\core\\sqlparser\\Sql.g:1:101: SET
                 {
                 mSET(); 
 
                 }
                 break;
-            case 19 :
-                // G:\\code\\mybridge\\src\\mybridge\\core\\sqlparser\\Sql.g:1:99: VALUES
+            case 20 :
+                // G:\\code\\mybridge\\src\\mybridge\\core\\sqlparser\\Sql.g:1:105: VALUES
                 {
                 mVALUES(); 
 
                 }
                 break;
-            case 20 :
-                // G:\\code\\mybridge\\src\\mybridge\\core\\sqlparser\\Sql.g:1:106: IN
+            case 21 :
+                // G:\\code\\mybridge\\src\\mybridge\\core\\sqlparser\\Sql.g:1:112: IN
                 {
                 mIN(); 
 
                 }
                 break;
-            case 21 :
-                // G:\\code\\mybridge\\src\\mybridge\\core\\sqlparser\\Sql.g:1:109: INTO
+            case 22 :
+                // G:\\code\\mybridge\\src\\mybridge\\core\\sqlparser\\Sql.g:1:115: INTO
                 {
                 mINTO(); 
 
                 }
                 break;
-            case 22 :
-                // G:\\code\\mybridge\\src\\mybridge\\core\\sqlparser\\Sql.g:1:114: INSERT
+            case 23 :
+                // G:\\code\\mybridge\\src\\mybridge\\core\\sqlparser\\Sql.g:1:120: INSERT
                 {
                 mINSERT(); 
 
                 }
                 break;
-            case 23 :
-                // G:\\code\\mybridge\\src\\mybridge\\core\\sqlparser\\Sql.g:1:121: UPDATE
+            case 24 :
+                // G:\\code\\mybridge\\src\\mybridge\\core\\sqlparser\\Sql.g:1:127: UPDATE
                 {
                 mUPDATE(); 
 
                 }
                 break;
-            case 24 :
-                // G:\\code\\mybridge\\src\\mybridge\\core\\sqlparser\\Sql.g:1:128: DELETE
+            case 25 :
+                // G:\\code\\mybridge\\src\\mybridge\\core\\sqlparser\\Sql.g:1:134: DELETE
                 {
                 mDELETE(); 
 
                 }
                 break;
-            case 25 :
-                // G:\\code\\mybridge\\src\\mybridge\\core\\sqlparser\\Sql.g:1:135: SELECT
+            case 26 :
+                // G:\\code\\mybridge\\src\\mybridge\\core\\sqlparser\\Sql.g:1:141: SELECT
                 {
                 mSELECT(); 
 
                 }
                 break;
-            case 26 :
-                // G:\\code\\mybridge\\src\\mybridge\\core\\sqlparser\\Sql.g:1:142: WHERE
+            case 27 :
+                // G:\\code\\mybridge\\src\\mybridge\\core\\sqlparser\\Sql.g:1:148: WHERE
                 {
                 mWHERE(); 
 
                 }
                 break;
-            case 27 :
-                // G:\\code\\mybridge\\src\\mybridge\\core\\sqlparser\\Sql.g:1:148: FROM
+            case 28 :
+                // G:\\code\\mybridge\\src\\mybridge\\core\\sqlparser\\Sql.g:1:154: FROM
                 {
                 mFROM(); 
 
                 }
                 break;
-            case 28 :
-                // G:\\code\\mybridge\\src\\mybridge\\core\\sqlparser\\Sql.g:1:153: ID
+            case 29 :
+                // G:\\code\\mybridge\\src\\mybridge\\core\\sqlparser\\Sql.g:1:159: ID
                 {
                 mID(); 
 
                 }
                 break;
-            case 29 :
-                // G:\\code\\mybridge\\src\\mybridge\\core\\sqlparser\\Sql.g:1:156: STRING
+            case 30 :
+                // G:\\code\\mybridge\\src\\mybridge\\core\\sqlparser\\Sql.g:1:162: STRING
                 {
                 mSTRING(); 
 
                 }
                 break;
-            case 30 :
-                // G:\\code\\mybridge\\src\\mybridge\\core\\sqlparser\\Sql.g:1:163: NUM
+            case 31 :
+                // G:\\code\\mybridge\\src\\mybridge\\core\\sqlparser\\Sql.g:1:169: NUM
                 {
                 mNUM(); 
 
@@ -1810,15 +1841,15 @@ public class SqlLexer extends Lexer {
 
     protected DFA8 dfa8 = new DFA8(this);
     static final String DFA8_eotS =
-        "\6\uffff\1\31\1\33\2\uffff\13\25\7\uffff\5\25\1\56\2\25\1\62\3"+
-        "\25\1\70\1\71\4\25\1\uffff\1\76\2\25\1\uffff\5\25\2\uffff\1\25\1"+
-        "\107\2\25\1\uffff\2\25\1\114\3\25\1\120\1\121\1\uffff\1\25\1\123"+
-        "\2\25\1\uffff\2\25\1\130\2\uffff\1\131\1\uffff\1\132\1\133\1\134"+
-        "\1\135\6\uffff";
+        "\6\uffff\1\32\1\34\3\uffff\13\26\7\uffff\5\26\1\57\2\26\1\63\3"+
+        "\26\1\71\1\72\4\26\1\uffff\1\77\2\26\1\uffff\5\26\2\uffff\1\26\1"+
+        "\110\2\26\1\uffff\2\26\1\115\3\26\1\121\1\122\1\uffff\1\26\1\124"+
+        "\2\26\1\uffff\2\26\1\131\2\uffff\1\132\1\uffff\1\133\1\134\1\135"+
+        "\1\136\6\uffff";
     static final String DFA8_eofS =
-        "\136\uffff";
+        "\137\uffff";
     static final String DFA8_minS =
-        "\1\11\5\uffff\2\75\2\uffff\1\116\1\111\1\105\1\122\1\131\1\105"+
+        "\1\11\5\uffff\2\75\3\uffff\1\116\1\111\1\105\1\122\1\131\1\105"+
         "\1\101\1\116\1\120\1\110\1\122\7\uffff\1\104\1\103\1\115\1\114\1"+
         "\104\1\60\2\114\1\60\1\104\1\105\1\117\2\60\1\111\1\103\2\105\1"+
         "\uffff\1\60\1\105\1\125\1\uffff\1\117\1\105\1\101\1\122\1\115\2"+
@@ -1826,7 +1857,7 @@ public class SqlLexer extends Lexer {
         "\1\105\2\60\1\uffff\1\105\1\60\1\124\1\123\1\uffff\1\124\1\105\1"+
         "\60\2\uffff\1\60\1\uffff\4\60\6\uffff";
     static final String DFA8_maxS =
-        "\1\172\5\uffff\2\75\2\uffff\1\163\1\151\1\145\1\162\1\171\1\145"+
+        "\1\172\5\uffff\2\75\3\uffff\1\163\1\151\1\145\1\162\1\171\1\145"+
         "\1\141\1\156\1\160\1\150\1\162\7\uffff\1\144\1\143\1\155\1\163\1"+
         "\144\1\172\1\164\1\154\1\172\1\144\1\145\1\157\2\172\1\151\1\143"+
         "\2\145\1\uffff\1\172\1\145\1\165\1\uffff\1\157\1\145\1\141\1\162"+
@@ -1834,30 +1865,30 @@ public class SqlLexer extends Lexer {
         "\1\162\1\164\1\145\2\172\1\uffff\1\145\1\172\1\164\1\163\1\uffff"+
         "\1\164\1\145\1\172\2\uffff\1\172\1\uffff\4\172\6\uffff";
     static final String DFA8_acceptS =
-        "\1\uffff\1\1\1\2\1\3\1\4\1\5\2\uffff\1\10\1\11\13\uffff\1\34\1"+
-        "\35\1\36\1\13\1\6\1\12\1\7\22\uffff\1\21\3\uffff\1\24\5\uffff\1"+
-        "\14\1\17\4\uffff\1\22\10\uffff\1\16\4\uffff\1\25\3\uffff\1\33\1"+
-        "\15\1\uffff\1\20\4\uffff\1\32\1\30\1\31\1\23\1\26\1\27";
+        "\1\uffff\1\1\1\2\1\3\1\4\1\5\2\uffff\1\10\1\11\1\12\13\uffff\1"+
+        "\35\1\36\1\37\1\14\1\6\1\13\1\7\22\uffff\1\22\3\uffff\1\25\5\uffff"+
+        "\1\15\1\20\4\uffff\1\23\10\uffff\1\17\4\uffff\1\26\3\uffff\1\34"+
+        "\1\16\1\uffff\1\21\4\uffff\1\33\1\31\1\32\1\24\1\27\1\30";
     static final String DFA8_specialS =
-        "\136\uffff}>";
+        "\137\uffff}>";
     static final String[] DFA8_transitionS = {
-            "\2\11\2\uffff\1\11\22\uffff\1\11\1\uffff\1\26\4\uffff\1\26"+
-            "\1\1\1\2\1\3\1\uffff\1\4\1\uffff\1\10\1\uffff\12\27\2\uffff"+
-            "\1\6\1\5\1\7\2\uffff\1\12\1\16\1\25\1\14\1\25\1\24\2\25\1\21"+
-            "\2\25\1\13\2\25\1\15\3\25\1\17\1\25\1\22\1\20\1\23\3\25\4\uffff"+
-            "\1\25\1\uffff\1\12\1\16\1\25\1\14\1\25\1\24\2\25\1\21\2\25\1"+
-            "\13\2\25\1\15\3\25\1\17\1\25\1\22\1\20\1\23\3\25",
+            "\2\12\2\uffff\1\12\22\uffff\1\12\1\uffff\1\27\4\uffff\1\27"+
+            "\1\1\1\2\1\3\1\uffff\1\4\1\uffff\1\11\1\uffff\12\30\2\uffff"+
+            "\1\6\1\5\1\7\2\uffff\1\13\1\17\1\26\1\15\1\26\1\25\2\26\1\22"+
+            "\2\26\1\14\2\26\1\16\3\26\1\20\1\26\1\23\1\21\1\24\3\26\4\uffff"+
+            "\1\26\1\10\1\13\1\17\1\26\1\15\1\26\1\25\2\26\1\22\2\26\1\14"+
+            "\2\26\1\16\3\26\1\20\1\26\1\23\1\21\1\24\3\26",
             "",
             "",
             "",
             "",
             "",
-            "\1\30",
-            "\1\32",
+            "\1\31",
+            "\1\33",
             "",
             "",
-            "\1\34\4\uffff\1\35\32\uffff\1\34\4\uffff\1\35",
-            "\1\36\37\uffff\1\36",
+            "",
+            "\1\35\4\uffff\1\36\32\uffff\1\35\4\uffff\1\36",
             "\1\37\37\uffff\1\37",
             "\1\40\37\uffff\1\40",
             "\1\41\37\uffff\1\41",
@@ -1867,74 +1898,75 @@ public class SqlLexer extends Lexer {
             "\1\45\37\uffff\1\45",
             "\1\46\37\uffff\1\46",
             "\1\47\37\uffff\1\47",
-            "",
-            "",
-            "",
-            "",
-            "",
-            "",
-            "",
             "\1\50\37\uffff\1\50",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
             "\1\51\37\uffff\1\51",
             "\1\52\37\uffff\1\52",
-            "\1\54\6\uffff\1\53\30\uffff\1\54\6\uffff\1\53",
-            "\1\55\37\uffff\1\55",
-            "\12\25\7\uffff\32\25\4\uffff\1\25\1\uffff\32\25",
-            "\1\60\7\uffff\1\57\27\uffff\1\60\7\uffff\1\57",
-            "\1\61\37\uffff\1\61",
-            "\12\25\7\uffff\22\25\1\64\1\63\6\25\4\uffff\1\25\1\uffff\22"+
-            "\25\1\64\1\63\6\25",
-            "\1\65\37\uffff\1\65",
+            "\1\53\37\uffff\1\53",
+            "\1\55\6\uffff\1\54\30\uffff\1\55\6\uffff\1\54",
+            "\1\56\37\uffff\1\56",
+            "\12\26\7\uffff\32\26\4\uffff\1\26\1\uffff\32\26",
+            "\1\61\7\uffff\1\60\27\uffff\1\61\7\uffff\1\60",
+            "\1\62\37\uffff\1\62",
+            "\12\26\7\uffff\22\26\1\65\1\64\6\26\4\uffff\1\26\1\uffff\22"+
+            "\26\1\65\1\64\6\26",
             "\1\66\37\uffff\1\66",
             "\1\67\37\uffff\1\67",
-            "\12\25\7\uffff\32\25\4\uffff\1\25\1\uffff\32\25",
-            "\12\25\7\uffff\32\25\4\uffff\1\25\1\uffff\32\25",
-            "\1\72\37\uffff\1\72",
+            "\1\70\37\uffff\1\70",
+            "\12\26\7\uffff\32\26\4\uffff\1\26\1\uffff\32\26",
+            "\12\26\7\uffff\32\26\4\uffff\1\26\1\uffff\32\26",
             "\1\73\37\uffff\1\73",
             "\1\74\37\uffff\1\74",
             "\1\75\37\uffff\1\75",
+            "\1\76\37\uffff\1\76",
             "",
-            "\12\25\7\uffff\32\25\4\uffff\1\25\1\uffff\32\25",
-            "\1\77\37\uffff\1\77",
+            "\12\26\7\uffff\32\26\4\uffff\1\26\1\uffff\32\26",
             "\1\100\37\uffff\1\100",
-            "",
             "\1\101\37\uffff\1\101",
+            "",
             "\1\102\37\uffff\1\102",
             "\1\103\37\uffff\1\103",
             "\1\104\37\uffff\1\104",
             "\1\105\37\uffff\1\105",
-            "",
-            "",
             "\1\106\37\uffff\1\106",
-            "\12\25\7\uffff\32\25\4\uffff\1\25\1\uffff\32\25",
-            "\1\110\37\uffff\1\110",
-            "\1\111\37\uffff\1\111",
             "",
+            "",
+            "\1\107\37\uffff\1\107",
+            "\12\26\7\uffff\32\26\4\uffff\1\26\1\uffff\32\26",
+            "\1\111\37\uffff\1\111",
             "\1\112\37\uffff\1\112",
+            "",
             "\1\113\37\uffff\1\113",
-            "\12\25\7\uffff\32\25\4\uffff\1\25\1\uffff\32\25",
-            "\1\115\37\uffff\1\115",
+            "\1\114\37\uffff\1\114",
+            "\12\26\7\uffff\32\26\4\uffff\1\26\1\uffff\32\26",
             "\1\116\37\uffff\1\116",
             "\1\117\37\uffff\1\117",
-            "\12\25\7\uffff\32\25\4\uffff\1\25\1\uffff\32\25",
-            "\12\25\7\uffff\32\25\4\uffff\1\25\1\uffff\32\25",
+            "\1\120\37\uffff\1\120",
+            "\12\26\7\uffff\32\26\4\uffff\1\26\1\uffff\32\26",
+            "\12\26\7\uffff\32\26\4\uffff\1\26\1\uffff\32\26",
             "",
-            "\1\122\37\uffff\1\122",
-            "\12\25\7\uffff\32\25\4\uffff\1\25\1\uffff\32\25",
-            "\1\124\37\uffff\1\124",
+            "\1\123\37\uffff\1\123",
+            "\12\26\7\uffff\32\26\4\uffff\1\26\1\uffff\32\26",
             "\1\125\37\uffff\1\125",
-            "",
             "\1\126\37\uffff\1\126",
+            "",
             "\1\127\37\uffff\1\127",
-            "\12\25\7\uffff\32\25\4\uffff\1\25\1\uffff\32\25",
+            "\1\130\37\uffff\1\130",
+            "\12\26\7\uffff\32\26\4\uffff\1\26\1\uffff\32\26",
             "",
             "",
-            "\12\25\7\uffff\32\25\4\uffff\1\25\1\uffff\32\25",
+            "\12\26\7\uffff\32\26\4\uffff\1\26\1\uffff\32\26",
             "",
-            "\12\25\7\uffff\32\25\4\uffff\1\25\1\uffff\32\25",
-            "\12\25\7\uffff\32\25\4\uffff\1\25\1\uffff\32\25",
-            "\12\25\7\uffff\32\25\4\uffff\1\25\1\uffff\32\25",
-            "\12\25\7\uffff\32\25\4\uffff\1\25\1\uffff\32\25",
+            "\12\26\7\uffff\32\26\4\uffff\1\26\1\uffff\32\26",
+            "\12\26\7\uffff\32\26\4\uffff\1\26\1\uffff\32\26",
+            "\12\26\7\uffff\32\26\4\uffff\1\26\1\uffff\32\26",
+            "\12\26\7\uffff\32\26\4\uffff\1\26\1\uffff\32\26",
             "",
             "",
             "",
@@ -1973,7 +2005,7 @@ public class SqlLexer extends Lexer {
             this.transition = DFA8_transition;
         }
         public String getDescription() {
-            return "1:1: Tokens : ( T__52 | T__53 | T__54 | T__55 | T__56 | T__57 | T__58 | T__59 | WS | GE | LE | AND | LIMIT | DESC | ASC | ORDER | BY | SET | VALUES | IN | INTO | INSERT | UPDATE | DELETE | SELECT | WHERE | FROM | ID | STRING | NUM );";
+            return "1:1: Tokens : ( T__52 | T__53 | T__54 | T__55 | T__56 | T__57 | T__58 | T__59 | T__60 | WS | GE | LE | AND | LIMIT | DESC | ASC | ORDER | BY | SET | VALUES | IN | INTO | INSERT | UPDATE | DELETE | SELECT | WHERE | FROM | ID | STRING | NUM );";
         }
     }
  
