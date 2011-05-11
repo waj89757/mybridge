@@ -1,16 +1,16 @@
-package mybridge.table.example;
+package mybridge.handle.example;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 
+import mybridge.core.handle.Field;
+import mybridge.core.handle.Handle;
+import mybridge.core.handle.ResultSet;
 import mybridge.core.sqlparser.Cond;
 import mybridge.core.sqlparser.Limit;
 import mybridge.core.sqlparser.Order;
-import mybridge.core.table.Field;
-import mybridge.core.table.ResultSet;
-import mybridge.core.table.Handle;
 
 public class ExampleTable extends Handle {
 	static List<HashMap<String, String>> data = new ArrayList<HashMap<String, String>>();
@@ -29,9 +29,10 @@ public class ExampleTable extends Handle {
 				}
 			}
 			if (!condResult) {
-				it.remove();
-				count++;
+				continue;
 			}
+			it.remove();
+			count++;
 		}
 		return count;
 	}

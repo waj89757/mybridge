@@ -3,7 +3,8 @@ package mybridge.test;
 import java.io.File;
 import java.io.IOException;
 
-import mybridge.core.table.FieldList;
+import mybridge.core.handle.Table;
+import mybridge.core.handle.TableSet;
 
 import org.apache.commons.digester.Digester;
 import org.xml.sax.SAXException;
@@ -11,17 +12,20 @@ import org.xml.sax.SAXException;
 public class TestXml {
 	public static void main(String[] args) throws IOException, SAXException {
 		Digester digester = new Digester();
-		digester.setValidating(false);
-		digester.addObjectCreate("xml/table", "mybridge.core.table.FieldList");
-		digester.addSetProperties("xml/table");
+		digester.setValidating(true);
+		digester.addObjectCreate("tableset", "mybridge.core.table.TableSet");
+		digester.addSetProperties("tableset");
 
-		digester.addObjectCreate("xml/table/field", "mybridge.core.table.Field");
-		digester.addSetProperties("xml/table/field");
-		digester.addSetNext("xml/table/field", "addField", "mybridge.core.table.Field");
+		digester.addObjectCreate("tableset/table", "mybridge.core.table.Table");
+		digester.addSetProperties("tableset/table");
+		digester.addSetNext("tableset/table", "addTable", "mybridge.core.table.Table");
 
-		FieldList fl = (FieldList) digester.parse(new File("./src/table.xml"));
+		digester.addObjectCreate("tableset/table/field", "mybridge.core.table.Field");
+		digester.addSetProperties("tableset/table/field");
+		digester.addSetNext("tableset/table/field", "addField", "mybridge.core.table.Field");
 
-		System.out.println(fl.db);
-		System.out.println(fl.getName());
+		TableSet tableSet = (TableSet) digester.parse(new File("./conf/table.xml"));
+
+		System.out.println(111);
 	}
 }
