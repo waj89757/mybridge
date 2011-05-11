@@ -45,9 +45,9 @@ public class MysqlTool {
 		packetList.add(new PacketEof());
 
 		while (rs.next()) {
-			PacketRow rowPacket = new PacketRow();
+			PacketRow rowPacket = new PacketRow("utf8");
 			for (int i = 1; i <= meta.getColumnCount(); i++) {
-				rowPacket.valueList.add(new String(rs.getBytes(i), charset));
+				rowPacket.addValue(new String(rs.getBytes(i), charset));
 			}
 			packetList.add(rowPacket);
 		}

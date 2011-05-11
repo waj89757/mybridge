@@ -12,13 +12,20 @@ import mybridge.core.sqlparser.Cond;
 import mybridge.core.sqlparser.Limit;
 import mybridge.core.sqlparser.Order;
 
-public class ExampleTable extends Handle {
-	static List<HashMap<String, String>> data = new ArrayList<HashMap<String, String>>();
+public class ExampleHandle extends Handle {
+	static HashMap<String, ArrayList<HashMap<String, String>>> data = new HashMap<String, ArrayList<HashMap<String, String>>>();
+
+	public List<HashMap<String, String>> getData() {
+		if (!data.containsKey(table.getName())) {
+			data.put(table.getName(), new ArrayList<HashMap<String, String>>());
+		}
+		return data.get(table.getName());
+	}
 
 	@Override
 	public int doDelete(List<Cond> where) throws Exception {
 		int count = 0;
-		Iterator<HashMap<String, String>> it = data.iterator();
+		Iterator<HashMap<String, String>> it = getData().iterator();
 		while (it.hasNext()) {
 			HashMap<String, String> rowMap = it.next();
 			boolean condResult = true;
@@ -43,7 +50,7 @@ public class ExampleTable extends Handle {
 		for (Field field : fieldList) {
 			rowMap.put(field.getName(), field.getValue());
 		}
-		data.add(rowMap);
+		getData().add(rowMap);
 		return 1;
 	}
 
@@ -52,7 +59,7 @@ public class ExampleTable extends Handle {
 			Order order, Limit limit) throws Exception {
 		ResultSet rs = new ResultSet();
 		int count = 0;
-		Iterator<HashMap<String, String>> it = data.iterator();
+		Iterator<HashMap<String, String>> it = getData().iterator();
 		while (it.hasNext()) {
 			HashMap<String, String> rowMap = it.next();
 			boolean condResult = true;
@@ -80,6 +87,28 @@ public class ExampleTable extends Handle {
 	@Override
 	public int doUpdate(List<Field> fieldList, List<Cond> where)
 			throws Exception {
-		throw new Exception("not support update operation for example table");
+		ResultSet rs = new ResultSet();
+		int count = 0;
+		Iterator<HashMap<String, String>> it = getData().iterator();
+		while (it.hasNext()) {
+			HashMap<String, String> rowMap = it.next();
+			boolean condResult = true;
+			for (Cond cond : where) {
+				if (cond.op == Cond.EQ && !cond.val.equals(rowMap.get(cond.col))) {
+					condResult = false;
+					break;
+				}
+			}
+			if (!condResult) {
+				continue;
+			}
+
+			rs.addNewRow();
+			for (Field field : fieldList) {
+				rowMap.put(field.getName(), field.getValue());
+			}
+			count++;
+		}
+		return count;
 	}
 }

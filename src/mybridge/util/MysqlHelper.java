@@ -5,7 +5,7 @@ import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.ArrayList; 
+import java.util.ArrayList;
 import java.util.List;
 
 import com.mchange.v2.c3p0.ComboPooledDataSource;
@@ -15,11 +15,12 @@ import mybridge.core.packet.PacketEof;
 import mybridge.core.packet.PacketField;
 import mybridge.core.packet.PacketOk;
 import mybridge.core.packet.PacketResultSet;
-import mybridge.core.packet.PacketRow; 
+import mybridge.core.packet.PacketRow;
 
 public class MysqlHelper {
 	/**
 	 * 获取主库连接
+	 * 
 	 * @param sql
 	 * @return
 	 * @throws SQLException
@@ -31,6 +32,7 @@ public class MysqlHelper {
 
 	/**
 	 * 获取从库连接
+	 * 
 	 * @param sql
 	 * @return
 	 * @throws SQLException
@@ -44,17 +46,18 @@ public class MysqlHelper {
 		ComboPooledDataSource cpds = new ComboPooledDataSource("db1");
 		return cpds.getConnection();
 	}
- 
 
 	/**
 	 * 在mysql中执行sql，并返回resultset packet
+	 * 
 	 * @param conn
 	 * @param sql
 	 * @param charset
 	 * @return
 	 * @throws Exception
 	 */
-	public static List<Packet> query(Connection conn, String sql, String charset) throws Exception {
+	public static List<Packet> query(Connection conn, String sql, String charset)
+			throws Exception {
 		List<Packet> packetList = new ArrayList<Packet>();
 		// statement用来执行SQL语句
 		Statement statement = conn.createStatement();
@@ -88,10 +91,10 @@ public class MysqlHelper {
 		packetList.add(new PacketEof());
 
 		while (rs.next()) {
-			PacketRow rowPacket = new PacketRow();
+			PacketRow rowPacket = new PacketRow("utf8");
 			for (int i = 1; i <= meta.getColumnCount(); i++) {
 				String value = rs.getString(i);
-				rowPacket.valueList.add(value);
+				rowPacket.addValue(value);
 			}
 			packetList.add(rowPacket);
 		}

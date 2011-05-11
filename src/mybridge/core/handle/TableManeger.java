@@ -6,7 +6,7 @@ import java.io.IOException;
 import org.apache.commons.digester.Digester;
 import org.xml.sax.SAXException;
 
-import mybridge.handle.example.ExampleTable;
+import mybridge.handle.example.ExampleHandle;
 
 public class TableManeger {
 	public static TableSet tableSet;
@@ -43,6 +43,6 @@ public class TableManeger {
 	}
 
 	public static Handle getHandle() {
-		return new ExampleTable();
+		return new ExampleHandle();
 	}
 }

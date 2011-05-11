@@ -1,5 +1,7 @@
 package mybridge.util;
 
+import java.io.UnsupportedEncodingException;
+
 import xnet.core.util.Packer;
 import xnet.core.util.StringUtil;
 
@@ -58,9 +60,25 @@ public class Buffer {
 	public void writeLCString(String str) {
 		if (str == null) {
 			writeByte((byte) 251);
-			return ;
+			return;
 		}
 		byte[] tmp = str.getBytes();
+		long len = tmp.length;
+		writeLCB(len);
+		writeBytes(tmp);
+	}
+
+	public void writeLCString(String str, String charset) {
+		if (str == null) {
+			writeByte((byte) 251);
+			return;
+		}
+		byte[] tmp;
+		try {
+			tmp = str.getBytes(charset);
+		} catch (UnsupportedEncodingException e) {
+			tmp = new byte[0];
+		}
 		long len = tmp.length;
 		writeLCB(len);
 		writeBytes(tmp);
@@ -158,6 +176,11 @@ public class Buffer {
 		return new String(tmp);
 	}
 
+	public byte[] readRemainBytes() {
+		int len = buf.length - pos;
+		return readBytes(len);
+	}
+
 	public long readLCB() {
 		int first = readByte() & 0xff;
 		if (first <= 250) {
@@ -203,11 +226,25 @@ public class Buffer {
 		if (str == null) {
 			return 1;
 		}
-		int valueLe = str.getBytes().length;
-		int len = getLCBLen(valueLe);
-		return len + valueLe;
+		int valueLen = str.getBytes().length;
+		int len = getLCBLen(valueLen);
+		return len + valueLen;
 	}
-	
+
+	public static int getLCStringLen(String str, String charset) {
+		if (str == null) {
+			return 1;
+		}
+		int valueLen;
+		try {
+			valueLen = str.getBytes(charset).length;
+		} catch (UnsupportedEncodingException e) {
+			return 1;
+		}
+		int len = getLCBLen(valueLen);
+		return len + valueLen;
+	}
+
 	public String toString() {
 		return StringUtil.dumpAsHex(buf, buf.length);
 	}
