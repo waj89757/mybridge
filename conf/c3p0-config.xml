@@ -1,0 +1,20 @@
+<c3p0-config>
+	<named-config name="db0">
+		<property name="initialPoolSize">2</property>
+		<property name="minPoolSize">2</property>
+		<property name="maxPoolSize">2</property>
+		<property name="user">root</property>
+		<property name="password">111111</property>
+		<property name="driverClass">com.mysql.jdbc.Driver</property>
+		<property name="jdbcUrl">jdbc:mysql://127.0.0.1:3306/</property>
+	</named-config>
+	<named-config name="db1">
+		<property name="initialPoolSize">2</property>
+		<property name="minPoolSize">2</property>
+		<property name="maxPoolSize">2</property>
+		<property name="user">root</property>
+		<property name="password">111111</property>
+		<property name="driverClass">com.mysql.jdbc.Driver</property>
+		<property name="jdbcUrl">jdbc:mysql://127.0.0.1:3306/</property>
+	</named-config>
+</c3p0-config>
