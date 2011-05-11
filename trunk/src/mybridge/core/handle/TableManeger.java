@@ -1,31 +1,48 @@
-package mybridge.core.table;
- 
+package mybridge.core.handle;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.io.File;
+import java.io.IOException; 
 
-import mybridge.table.example.ExampleTable;
+import org.apache.commons.digester.Digester;
+import org.xml.sax.SAXException;
+
+import mybridge.handle.example.ExampleTable;
 
 public class TableManeger {
-	public static List<Field> getTableFields(String db, String table) {
-		List<Field> flist = new ArrayList<Field>();
-		Field f = new Field();
-		f.name = "a";
-		f.defaultValue = "";
-		f.length = 32;
-		f.type = (byte) 253;
-		f.charset = "utf8";
-		flist.add(f);
-		f = new Field();
-		f.name = "b";
-		f.defaultValue = "";
-		f.length = 32;
-		f.type = (byte) 253;
-		f.charset = "utf8";
-		flist.add(f);
-		return flist;
+	public static TableSet tableSet;
+
+	static {
+		reload();
 	}
-	public static Table getTable() {
+
+	public static void reload() {
+		Digester digester = new Digester();
+		digester.setValidating(false);
+		digester.addObjectCreate("tableset", "mybridge.core.handle.TableSet");
+		digester.addSetProperties("tableset");
+
+		digester.addObjectCreate("tableset/table", "mybridge.core.handle.Table");
+		digester.addSetProperties("tableset/table");
+		digester.addSetNext("tableset/table", "addTable", "mybridge.core.handle.Table");
+
+		digester.addObjectCreate("tableset/table/field", "mybridge.core.handle.Field");
+		digester.addSetProperties("tableset/table/field");
+		digester.addSetNext("tableset/table/field", "addField", "mybridge.core.handle.Field");
+
+		try {
+			tableSet = (TableSet) digester.parse(new File("./conf/table.xml"));
+		} catch (IOException e) {
+			e.printStackTrace();
+		} catch (SAXException e) {
+			e.printStackTrace();
+		}
+	}
+
+	public static Table getTable(String db, String table) {
+		return tableSet.getTable(db + "." + table);
+	}
+
+	public static Handle getHandle() {
 		return new ExampleTable();
 	}
 }
