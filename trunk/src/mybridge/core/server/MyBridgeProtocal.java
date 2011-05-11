@@ -7,9 +7,9 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 import xnet.core.util.IOBuffer;
+import mybridge.core.handle.Handle;
+import mybridge.core.handle.TableManeger;
 import mybridge.core.packet.*;
-import mybridge.core.table.Handle;
-import mybridge.core.table.TableManeger;
 
 public class MyBridgeProtocal {
 	static Log logger = LogFactory.getLog(MyBridgeProtocal.class);
@@ -25,7 +25,7 @@ public class MyBridgeProtocal {
 		this.session = session;
 		state = State.WRITE_INIT;
 
-		handle = TableManeger.getTable();
+		handle = TableManeger.getHandle();
 		handle.open();
 	}
 
