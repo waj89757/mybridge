@@ -1,6 +1,7 @@
 package mybridge.core.table;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import org.antlr.runtime.ANTLRStringStream;
@@ -17,7 +18,7 @@ import mybridge.core.packet.PacketField;
 import mybridge.core.packet.PacketOk;
 import mybridge.core.packet.PacketResultSet;
 import mybridge.core.packet.PacketRow;
-import mybridge.core.sqlparser.ColList;
+import mybridge.core.sqlparser.Cond;
 import mybridge.core.sqlparser.DeleteStatement;
 import mybridge.core.sqlparser.InsertStatement;
 import mybridge.core.sqlparser.Limit;
@@ -27,8 +28,6 @@ import mybridge.core.sqlparser.SqlLexer;
 import mybridge.core.sqlparser.SqlParser;
 import mybridge.core.sqlparser.Statement;
 import mybridge.core.sqlparser.UpdateStatement;
-import mybridge.core.sqlparser.Values;
-import mybridge.core.sqlparser.Where;
 
 public abstract class Table {
 	static Log logger = LogFactory.getLog(Table.class);
@@ -42,22 +41,35 @@ public abstract class Table {
 	 * @return
 	 * @throws Exception
 	 */
-	protected int getFieldIndex(String name) throws Exception {
+	protected Field getField(String name) throws Exception {
 		for (int i = 0; i < fieldList.size(); i++) {
 			if (fieldList.get(i).name.equals(name)) {
-				return i;
+				return fieldList.get(i);
 			}
 		}
 		throw new Exception("getFieldIndex error");
 	}
 
 	/**
-	 * 创建新行
+	 * 获取fieldlist
 	 * 
+	 * @param colList
 	 * @return
+	 * @throws Exception
 	 */
-	protected Row createNewRow() {
-		return new Row(this);
+	protected List<Field> getFieldList(List<String> colList) throws Exception {
+		List<Field> fieldList = new ArrayList<Field>();
+		if (colList.size() == 1 && colList.get(0).equals("*")) {
+			fieldList = this.fieldList;
+		} else {
+			for (String name : colList) {
+				fieldList.add(getField(name));
+			}
+		}
+		if (fieldList.size() == 0) {
+			throw new Exception("getFieldIndex error");
+		}
+		return fieldList;
 	}
 
 	/**
@@ -70,20 +82,20 @@ public abstract class Table {
 	public List<Packet> select(SelectStatement select) throws Exception {
 		List<Packet> packetList = new ArrayList<Packet>();
 
-		List<String> colList = select.getColList().cols;
-		List<Integer> indexs = new ArrayList<Integer>();
-		for (String name : colList) {
-			indexs.add(getFieldIndex(name));
+		List<Field> fieldList = getFieldList(select.getColList().cols);
+
+		List<Cond> where = new ArrayList<Cond>();
+		if (select.getWhere() == null) {
+			where = select.getWhere().getCondList();
 		}
 
-		List<Row> rowList = doSelect(select.getColList(), select.getWhere(), select.getOrder(), select.getLimit());
+		ResultSet resultSet = doSelect(fieldList, where, select.getOrder(), select.getLimit());
 
 		PacketResultSet setPacket = new PacketResultSet();
-		setPacket.fieldCount = colList.size();
+		setPacket.fieldCount = fieldList.size();
 		packetList.add(setPacket);
 
-		for (int i : indexs) {
-			Field field = fieldList.get(i);
+		for (Field field : fieldList) {
 			PacketField fieldPacket = new PacketField();
 			fieldPacket.db = "mybridge";
 			fieldPacket.table = select.getTable();
@@ -96,13 +108,13 @@ public abstract class Table {
 		}
 		packetList.add(new PacketEof());
 
-		for (Row row : rowList) {
+		for (HashMap<String, String> row : resultSet.data) {
 			PacketRow rowPacket = new PacketRow();
-			for (int i : indexs) {
-				if (row.data.length > i) {
-					rowPacket.valueList.add(row.data[i]);
+			for (Field field : fieldList) {
+				if (row.containsKey(field.getName())) {
+					rowPacket.valueList.add(row.get(field.getName()));
 				} else {
-					throw new Exception("rows index overflow");
+					rowPacket.valueList.add(field.getValue());
 				}
 			}
 			packetList.add(rowPacket);
@@ -121,8 +133,14 @@ public abstract class Table {
 	 */
 	public List<Packet> insert(InsertStatement insert) throws Exception {
 		List<Packet> packetList = new ArrayList<Packet>();
+		List<Field> fieldList = getFieldList(insert.getColList().cols);
+		HashMap<String, String> data = insert.getValues().data;
+		for (Field field : fieldList) {
+			field.value = data.get(field);
+		}
+		int affectedRows = doInsert(fieldList);
 		PacketOk ok = new PacketOk();
-		ok.affectedRows = doInsert(insert.getColList(), insert.getValues());
+		ok.affectedRows = affectedRows;
 		packetList.add(ok);
 		return packetList;
 	}
@@ -136,8 +154,22 @@ public abstract class Table {
 	 */
 	public List<Packet> update(UpdateStatement update) throws Exception {
 		List<Packet> packetList = new ArrayList<Packet>();
+		HashMap<String, String> data = update.getValues().data;
+		List<Field> fieldList = new ArrayList<Field>();
+		for (String name : data.keySet()) {
+			Field field = getField(name);
+			field.value = data.get(name);
+			fieldList.add(field);
+		}
+
+		List<Cond> where = new ArrayList<Cond>();
+		if (update.getWhere() == null) {
+			where = update.getWhere().getCondList();
+		}
+
+		int affectedRows = doUpdate(fieldList, where);
 		PacketOk ok = new PacketOk();
-		ok.affectedRows = doUpdate(update.getValues(), update.getWhere());
+		ok.affectedRows = affectedRows;
 		packetList.add(ok);
 		return packetList;
 	}
@@ -151,8 +183,14 @@ public abstract class Table {
 	 */
 	public List<Packet> delete(DeleteStatement delete) throws Exception {
 		List<Packet> packetList = new ArrayList<Packet>();
+		List<Cond> where = new ArrayList<Cond>();
+		if (delete.getWhere() == null) {
+			where = delete.getWhere().getCondList();
+		}
+
+		int affectedRows = doDelete(where);
 		PacketOk ok = new PacketOk();
-		ok.affectedRows = doDelete(delete.getWhere());
+		ok.affectedRows = affectedRows;
 		packetList.add(ok);
 		return packetList;
 	}
@@ -167,7 +205,7 @@ public abstract class Table {
 	 * @return
 	 * @throws Exception
 	 */
-	public abstract List<Row> doSelect(ColList colList, Where where,
+	public abstract ResultSet doSelect(List<Field> fieldList, List<Cond> where,
 			Order order, Limit limit) throws Exception;
 
 	/**
@@ -178,8 +216,7 @@ public abstract class Table {
 	 * @return
 	 * @throws Exception
 	 */
-	public abstract int doInsert(ColList colList, Values values)
-			throws Exception;
+	public abstract int doInsert(List<Field> fieldList) throws Exception;
 
 	/**
 	 * 执行update
@@ -189,7 +226,8 @@ public abstract class Table {
 	 * @return
 	 * @throws Exception
 	 */
-	public abstract int doUpdate(Values values, Where where) throws Exception;
+	public abstract int doUpdate(List<Field> fieldList, List<Cond> where)
+			throws Exception;
 
 	/**
 	 * 执行delete
@@ -198,7 +236,7 @@ public abstract class Table {
 	 * @return
 	 * @throws Exception
 	 */
-	public abstract int doDelete(Where where) throws Exception;
+	public abstract int doDelete(List<Cond> where) throws Exception;
 
 	/**
 	 * 初始化
@@ -250,7 +288,9 @@ public abstract class Table {
 			}
 		} catch (Exception e) {
 			PacketError error = new PacketError();
-			error.message = e.getMessage();
+			if (e.getMessage() != null) {
+				error.message = e.getMessage();
+			}
 			packetList.add(error);
 		}
 
