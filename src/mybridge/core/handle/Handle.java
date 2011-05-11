@@ -202,33 +202,29 @@ public abstract class Handle {
 	}
 
 	/**
-	 * 执行select
-	 * 
-	 * @param colList
-	 * @param where
-	 * @param order
-	 * @param limit
-	 * @return
+	 * 查询命令
+	 * @param fieldList 需要返回的字段，如select field1,field2
+	 * @param where	过滤条件，如where a=1 and b=2
+	 * @param order	排序规则，如order by a desc
+	 * @param limit 分页，如limit 0,10
+	 * @return 返回结果集
 	 * @throws Exception
 	 */
 	public abstract ResultSet doSelect(List<Field> fieldList, List<Cond> where,
 			Order order, Limit limit) throws Exception;
 
 	/**
-	 * 执行insert
-	 * 
-	 * @param colList
-	 * @param values
+	 * 插入命令
+	 * @param fieldList 待插入记录的字段名值，分别对应<Field.getName,Field.getValue>
 	 * @return
 	 * @throws Exception
 	 */
 	public abstract int doInsert(List<Field> fieldList) throws Exception;
 
 	/**
-	 * 执行update
-	 * 
-	 * @param values
-	 * @param where
+	 * 更新命令
+	 * @param fieldList 更新记录的字段名值，分别对应<Field.getName,Field.getValue>
+	 * @param where 过滤条件，如where a=1 and b=2
 	 * @return
 	 * @throws Exception
 	 */
@@ -236,26 +232,29 @@ public abstract class Handle {
 			throws Exception;
 
 	/**
-	 * 执行delete
-	 * 
-	 * @param where
+	 * 删除命令
+	 * @param where 过滤条件，如where a=1 and b=2
 	 * @return
 	 * @throws Exception
 	 */
 	public abstract int doDelete(List<Cond> where) throws Exception;
 
 	/**
-	 * open
+	 * 初始化，当连接建立时调用
 	 */
 	public void open() {
 	}
 
 	/**
-	 * close
+	 * 关闭，quit命令或连接断开时调用
 	 */
 	public void close() {
 	}
-
+	/**
+	 * 设置连接编码命令，如set names "utf8"
+	 * @param charset
+	 * @throws Exception
+	 */
 	public void setCharset(String charset) throws Exception {
 		String test = "";
 		try {
@@ -265,11 +264,14 @@ public abstract class Handle {
 		}
 		this.charset = charset;
 	}
-
+	/**
+	 * use db命令
+	 * @param db
+	 */
 	public void setDb(String db) {
 		this.db = db;
 	}
-
+	
 	public List<Packet> executeCommand(PacketCommand cmd) {
 		List<Packet> packetList = new ArrayList<Packet>();
 
