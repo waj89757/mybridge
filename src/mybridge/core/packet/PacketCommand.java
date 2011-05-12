@@ -1,6 +1,5 @@
 package mybridge.core.packet;
 
-import mybridge.util.Buffer;
 
 public class PacketCommand extends Packet {
 	public byte type;

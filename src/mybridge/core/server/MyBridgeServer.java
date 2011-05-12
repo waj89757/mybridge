@@ -1,5 +1,7 @@
 package mybridge.core.server;
 
+import mybridge.core.config.MainConfig;
+
 import org.apache.log4j.PropertyConfigurator;
 import xnet.core.server.*;
 
@@ -10,16 +12,18 @@ public class MyBridgeServer {
 	 * @throws Exception
 	 */
 	public static void main(String[] args) throws Exception {
-		Config config = new Config();
-		config.session = MyBridgeSession.class;
 		PropertyConfigurator.configure("./conf/log4j.properties");
-		config.threadNum = 4;
-		config.port = 10000;
-		config.rTimeout = 0;
-		config.wTimeout = 0;
-		config.ip = "0.0.0.0";
+		MainConfig.load();
+
+		Config config = new Config();
 		config.keepalive = true;
-		config.maxConnection = 1000;
+		config.session = MyBridgeSession.class;
+		config.threadNum = MainConfig.getServerConfig().getThreadNum();
+		config.port = MainConfig.getServerConfig().getPort();
+		config.rTimeout = MainConfig.getServerConfig().getReadTimeout();
+		config.wTimeout = MainConfig.getServerConfig().getWriteTimeout();
+		config.ip = MainConfig.getServerConfig().getIp();
+		config.maxConnection = MainConfig.getServerConfig().getMaxConnection();
 		Server server = new Server(config);
 		server.run();
 	}

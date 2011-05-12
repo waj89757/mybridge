@@ -1,6 +1,5 @@
 package mybridge.core.packet;
 
-import mybridge.util.Buffer;
 
 public class PacketEof extends Packet {
 	public byte type = (byte) 0xfe;

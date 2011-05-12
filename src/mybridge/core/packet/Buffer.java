@@ -1,4 +1,4 @@
-package mybridge.util;
+package mybridge.core.packet;
 
 import java.io.UnsupportedEncodingException;
 

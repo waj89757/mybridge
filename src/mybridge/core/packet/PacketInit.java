@@ -1,7 +1,5 @@
 package mybridge.core.packet;
 
-import mybridge.util.Buffer;
-
 //Handshake Initialization Packet
 //From server to client during initial handshake.
 //Bytes                        Name

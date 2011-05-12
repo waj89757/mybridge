@@ -1,6 +1,5 @@
 package mybridge.core.packet;
 
-import mybridge.util.Buffer;
 
 public class PacketResultSet extends Packet {
 	public long fieldCount;

@@ -3,7 +3,6 @@ package mybridge.core.packet;
 import java.util.ArrayList;
 import java.util.List;
 
-import mybridge.util.Buffer;
 
 public class PacketRow extends Packet {
 	String charset = "utf8";

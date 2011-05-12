@@ -1,6 +1,5 @@
 package mybridge.core.packet;
 
-import mybridge.util.Buffer;
 
 //Client Authentication Packet
 //From client to server during initial handshake.
