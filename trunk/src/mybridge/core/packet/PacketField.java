@@ -1,6 +1,5 @@
 package mybridge.core.packet;
 
-import mybridge.util.Buffer;
 
 public class PacketField extends Packet {
 	public String catalog = "def";

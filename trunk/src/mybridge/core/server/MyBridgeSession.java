@@ -1,5 +1,8 @@
 package mybridge.core.server;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+
 import mybridge.core.packet.*;
 import xnet.core.server.Session;
 import xnet.core.util.IOBuffer;
@@ -10,6 +13,7 @@ import xnet.core.util.IOBuffer;
  *
  */
 public class MyBridgeSession extends Session {
+	static Log logger = LogFactory.getLog(MyBridgeSession.class);
 
 	static int READ_HEADER = 0;//正在读packet头，读操作时有效
 	static int READ_BODY = 1;//正在读packet body，读操作时有效

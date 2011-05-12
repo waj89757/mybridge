@@ -11,25 +11,9 @@ import org.antlr.runtime.RecognitionException;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
-import mybridge.core.packet.Packet;
-import mybridge.core.packet.PacketCommand;
-import mybridge.core.packet.PacketEof;
-import mybridge.core.packet.PacketError;
-import mybridge.core.packet.PacketField;
-import mybridge.core.packet.PacketOk;
-import mybridge.core.packet.PacketResultSet;
-import mybridge.core.packet.PacketRow;
-import mybridge.core.sqlparser.Cond;
-import mybridge.core.sqlparser.DeleteStatement;
-import mybridge.core.sqlparser.InsertStatement;
-import mybridge.core.sqlparser.Limit;
-import mybridge.core.sqlparser.Order;
-import mybridge.core.sqlparser.SelectStatement;
-import mybridge.core.sqlparser.SetNamesStatement;
-import mybridge.core.sqlparser.SqlLexer;
-import mybridge.core.sqlparser.SqlParser;
-import mybridge.core.sqlparser.Statement;
-import mybridge.core.sqlparser.UpdateStatement;
+import mybridge.core.config.MainConfig;
+import mybridge.core.packet.*;
+import mybridge.core.sqlparser.*;
 
 public abstract class Handle {
 	static Log logger = LogFactory.getLog(Handle.class);
@@ -103,7 +87,7 @@ public abstract class Handle {
 
 		for (Field field : fieldList) {
 			PacketField fieldPacket = new PacketField();
-			fieldPacket.db = "mybridge";
+			fieldPacket.db = table.getDb();
 			fieldPacket.table = select.getTable();
 			fieldPacket.orgTable = select.getTable();
 			fieldPacket.name = field.name;
@@ -203,10 +187,15 @@ public abstract class Handle {
 
 	/**
 	 * 查询命令
-	 * @param fieldList 需要返回的字段，如select field1,field2
-	 * @param where	过滤条件，如where a=1 and b=2
-	 * @param order	排序规则，如order by a desc
-	 * @param limit 分页，如limit 0,10
+	 * 
+	 * @param fieldList
+	 *            需要返回的字段，如select field1,field2
+	 * @param where
+	 *            过滤条件，如where a=1 and b=2
+	 * @param order
+	 *            排序规则，如order by a desc
+	 * @param limit
+	 *            分页，如limit 0,10
 	 * @return 返回结果集
 	 * @throws Exception
 	 */
@@ -215,7 +204,9 @@ public abstract class Handle {
 
 	/**
 	 * 插入命令
-	 * @param fieldList 待插入记录的字段名值，分别对应<Field.getName,Field.getValue>
+	 * 
+	 * @param fieldList
+	 *            待插入记录的字段名值，分别对应<Field.getName,Field.getValue>
 	 * @return
 	 * @throws Exception
 	 */
@@ -223,8 +214,11 @@ public abstract class Handle {
 
 	/**
 	 * 更新命令
-	 * @param fieldList 更新记录的字段名值，分别对应<Field.getName,Field.getValue>
-	 * @param where 过滤条件，如where a=1 and b=2
+	 * 
+	 * @param fieldList
+	 *            更新记录的字段名值，分别对应<Field.getName,Field.getValue>
+	 * @param where
+	 *            过滤条件，如where a=1 and b=2
 	 * @return
 	 * @throws Exception
 	 */
@@ -233,7 +227,9 @@ public abstract class Handle {
 
 	/**
 	 * 删除命令
-	 * @param where 过滤条件，如where a=1 and b=2
+	 * 
+	 * @param where
+	 *            过滤条件，如where a=1 and b=2
 	 * @return
 	 * @throws Exception
 	 */
@@ -250,8 +246,10 @@ public abstract class Handle {
 	 */
 	public void close() {
 	}
+
 	/**
 	 * 设置连接编码命令，如set names "utf8"
+	 * 
 	 * @param charset
 	 * @throws Exception
 	 */
@@ -264,14 +262,16 @@ public abstract class Handle {
 		}
 		this.charset = charset;
 	}
+
 	/**
 	 * use db命令
+	 * 
 	 * @param db
 	 */
 	public void setDb(String db) {
 		this.db = db;
 	}
-	
+
 	public List<Packet> executeCommand(PacketCommand cmd) {
 		List<Packet> packetList = new ArrayList<Packet>();
 
@@ -296,7 +296,7 @@ public abstract class Handle {
 				return packetList;
 			}
 
-			table = TableManeger.getTable(db, stat.getTable());
+			table = MainConfig.getTableConfig().getTable(db, stat.getTable());
 			if (table == null) {
 				throw new Exception("table not exists");
 			}
@@ -318,7 +318,7 @@ public abstract class Handle {
 			if (e.getMessage() != null) {
 				error.message = e.getMessage();
 			}
-			packetList.add(error);
+			packetList.add(new PacketOk());
 		}
 
 		return packetList;
