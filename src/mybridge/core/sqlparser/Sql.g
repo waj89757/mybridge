@@ -6,7 +6,6 @@ package mybridge.core.sqlparser;
 @lexer::header{
 package mybridge.core.sqlparser;
 }
-
 @members {
 	public SelectStatement select;
 	public InsertStatement insert;
@@ -49,7 +48,7 @@ parse	:
 	;
 
 setname :	
-	SET NAMES value {setname = new SetNamesStatement();setname.setCharset($value.value);}
+	SET NAMES e=(STRING | ID) {setname = new SetNamesStatement();setname.setCharset($e.text);}
 	;
 	
 select	:
