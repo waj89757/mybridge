@@ -80,16 +80,60 @@ public abstract class Handle {
 		}
 
 		ResultSet resultSet = doSelect(fieldList, where, select.getOrder(), select.getLimit());
+		packetList = packResult(fieldList, resultSet, select.getDb(), select.getTable());
+		return packetList;
+	}
 
+	List<Packet> packTable(List<String> data) throws Exception {
+		if (data.size() == 0) {
+			throw new Exception("invalid table data");
+		}
+
+		// 第一行为field
+		List<Field> fieldList = new ArrayList<Field>();
+		String colsStr = data.get(0);
+		String[] cols = colsStr.split(",");
+
+		for (int i = 0; i < cols.length; i++) {
+			Field f = new Field();
+			f.index = i;
+			f.length = 256;
+			f.type = (byte) 253;// String
+			f.name = cols[i];
+			fieldList.add(f);
+		}
+		ResultSet resultSet = new ResultSet();
+		for (int i = 1; i < data.size(); i++) {
+			resultSet.addNewRow();
+			String rowStr = data.get(i);
+			String[] row = rowStr.split(",");
+			for (int j = 0; j < row.length; j++) {
+				resultSet.add(fieldList.get(j), row[j]);
+			}
+		}
+		return packResult(fieldList, resultSet, "", "");
+	}
+
+	List<Packet> packCoolationResult() throws Exception {
+		return packTable(MysqlServerDef.coolationList);
+	}
+
+	List<Packet> packVariableResult() throws Exception {
+		return packTable(MysqlServerDef.variableList);
+	}
+
+	List<Packet> packResult(List<Field> fieldList, ResultSet resultSet,
+			String db, String table) {
+		List<Packet> packetList = new ArrayList<Packet>();
 		PacketResultSet setPacket = new PacketResultSet();
 		setPacket.fieldCount = fieldList.size();
 		packetList.add(setPacket);
 
 		for (Field field : fieldList) {
 			PacketField fieldPacket = new PacketField();
-			fieldPacket.db = table.getDb();
-			fieldPacket.table = select.getTable();
-			fieldPacket.orgTable = select.getTable();
+			fieldPacket.db = db;
+			fieldPacket.table = table;
+			fieldPacket.orgTable = table;
 			fieldPacket.name = field.name;
 			fieldPacket.orgName = field.name;
 			fieldPacket.type = field.type;
@@ -288,6 +332,20 @@ public abstract class Handle {
 		try {
 			String sql = new String(cmd.value, charset);
 			logger.info("sql:[" + sql + "]");
+			// 处理mysql cleint库初始化sql
+			if (sql.startsWith("SHOW SESSION VARIABLES")) {
+				return packVariableResult();
+			}
+			if (sql.startsWith("SHOW COLLATION")) {
+				return packCoolationResult();
+			}
+			if (sql.startsWith("SET character_set_results = NULL")) {
+				packetList.add(new PacketOk());
+				setCharset("utf8");
+				return packetList;
+			}
+
+			// 执行用户sql
 			Statement stat = parseSql(sql);
 			if (stat instanceof SetNamesStatement) {
 				SetNamesStatement setname = (SetNamesStatement) stat;
@@ -318,7 +376,7 @@ public abstract class Handle {
 			if (e.getMessage() != null) {
 				error.message = e.getMessage();
 			}
-			packetList.add(new PacketOk());
+			packetList.add(error);
 		}
 
 		return packetList;
