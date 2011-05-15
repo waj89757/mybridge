@@ -1,6 +1,5 @@
 package mybridge.core.packet;
 
-
 //Client Authentication Packet
 //From client to server during initial handshake.
 //VERSION 4.0
@@ -93,20 +92,11 @@ public class PacketAuth extends Packet {
 	public byte charsetNum;
 	public byte[] filler;
 	public String user;
-	public String scrambleBuf;
+	public byte[] pass;
 	public String dbName;
 
 	@Override
 	public byte[] getBytes() {
-		int len = 32 + scrambleBuf.getBytes().length + user.getBytes().length + dbName.getBytes().length;
-		Buffer buf = new Buffer(len);
-		buf.writeUInt32(clientFlag);
-		buf.writeUInt32(maxPacketSize);
-		buf.writeByte(charsetNum);
-		buf.writeBytes(filler);
-		buf.writeNullString(user);
-		buf.writeLCString(scrambleBuf);
-		buf.writeNullString(dbName);
 		return null;
 	}
 
@@ -118,7 +108,7 @@ public class PacketAuth extends Packet {
 		charsetNum = buf.readByte();
 		filler = buf.readBytes(23);
 		user = buf.readNullString();
-		scrambleBuf = buf.readLCString();
+		pass = buf.readLCBytes();
 		dbName = buf.readNullString();
 	}
 }

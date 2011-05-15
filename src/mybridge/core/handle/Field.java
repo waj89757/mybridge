@@ -1,5 +1,10 @@
 package mybridge.core.handle;
 
+/**
+ * 通用的字段类型，可以扩展
+ * @author quanwei
+ *
+ */
 public class Field implements Cloneable {
 	String name = "";
 	int index;

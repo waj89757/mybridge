@@ -1,7 +1,8 @@
 package mybridge.core.config;
 
 import mybridge.core.handle.Field;
-import mybridge.core.handle.Handle;
+import mybridge.core.handle.DefaultHandle;
+import mybridge.core.handle.IHandle;
 import mybridge.core.handle.Table;
 import mybridge.handle.example.ExampleHandle;
 
@@ -12,6 +13,24 @@ public class ServerConfig {
 	public int maxConnection = 1000;
 	public int readTimeout = 0;
 	public int writeTimeout = 0;
+	public String getUserName() {
+		return userName;
+	}
+
+	public void setUserName(String userName) {
+		this.userName = userName;
+	}
+
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
+	}
+
+	public String userName = "";
+	public String password = "";
 	Class<?> tableClass = Table.class;
 	Class<?> fieldClass = Field.class;
 	Class<?> handleClass = ExampleHandle.class;
@@ -103,15 +122,15 @@ public class ServerConfig {
 		if (cls == null) {
 			throw new Exception("load handle class error");
 		}
-		if (!cls.isAssignableFrom(Handle.class)) {
+		if (!cls.isAssignableFrom(IHandle.class)) {
 			throw new Exception("handle class is not a subclass of mybridge.core.Handle");
 		}
 		handleClass = cls;
 	}
 
-	public Handle getHandle() throws InstantiationException,
+	public DefaultHandle getHandle() throws InstantiationException,
 			IllegalAccessException {
-		return (Handle) this.handleClass.newInstance();
+		return (DefaultHandle) this.handleClass.newInstance();
 	}
 	
 	public String toString() {

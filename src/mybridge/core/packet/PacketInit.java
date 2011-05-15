@@ -58,7 +58,7 @@ package mybridge.core.packet;
 //                    Hexadecimal                ASCII
 //                    -----------                -----
 //protocol_version    0a                         .
-//server_version      34 2e 31 2e 31 2d 71 6c    4.1.1-al
+//server_version      34 2e 31 2e 31 2d 71 6c    3.1.0-al
 //                    70 68 61 2d 64 65 62 75    pha-debu
 //                    67 00                      g.
 //thread_number       01 00 00 00                ....
@@ -84,16 +84,16 @@ package mybridge.core.packet;
 
 public class PacketInit extends Packet {
 	public static byte[] defaultPacket = { (byte) 0xa, (byte) 0x35, (byte) 0x2e, (byte) 0x31, (byte) 0x2e, (byte) 0x34, (byte) 0x39, (byte) 0x2d, (byte) 0x31, (byte) 0x75, (byte) 0x62, (byte) 0x75, (byte) 0x6e, (byte) 0x74, (byte) 0x75, (byte) 0x38, (byte) 0x2e, (byte) 0x31, (byte) 0x0, (byte) 0x30, (byte) 0x0, (byte) 0x0, (byte) 0x0, (byte) 0x69, (byte) 0x73, (byte) 0x26, (byte) 0x5f, (byte) 0x30, (byte) 0x6d, (byte) 0x55, (byte) 0x45, (byte) 0x0, (byte) 0xff, (byte) 0xf7, (byte) 0x8, (byte) 0x2, (byte) 0x0, (byte) 0x0, (byte) 0x0, (byte) 0x0, (byte) 0x0, (byte) 0x0, (byte) 0x0, (byte) 0x0, (byte) 0x0, (byte) 0x0, (byte) 0x0, (byte) 0x0, (byte) 0x0, (byte) 0x0, (byte) 0x37, (byte) 0x23, (byte) 0x47, (byte) 0x7c, (byte) 0x5f, (byte) 0x44, (byte) 0x74, (byte) 0x3e, (byte) 0x76, (byte) 0x57, (byte) 0x34, (byte) 0x3c, (byte) 0x0 };
-	public byte protocalVersion;
-	public String serverVersion;
-	public long threadId;
-	public byte[] scrambleBuff;
+	public byte protocalVersion = 10;
+	public String serverVersion = "5.1.4\0";
+	public long threadId = Thread.currentThread().getId();;
+	public byte[] scrambleBuff = new byte[] { 1, 1, 1, 1, 1, 1, 1, 1 };
 	public byte filler1 = 0x0;
-	public int serverCapabilities;
-	public byte serverLang;
-	public int serverStatus;
-	public byte[] filler2;
-	public byte[] lastScrambleBuff;
+	public int serverCapabilities = 63487;
+	public byte serverLang = 8;
+	public int serverStatus = 0;
+	public byte[] filler2 = new byte[13];
+	public byte[] lastScrambleBuff = new byte[13];
 
 	@Override
 	public byte[] getBytes() {
@@ -114,16 +114,5 @@ public class PacketInit extends Packet {
 
 	@Override
 	public void putBytes(byte[] bs) {
-		Buffer buf = new Buffer(bs);
-		protocalVersion = buf.readByte();
-		serverVersion = buf.readNullString();
-		threadId = buf.readUInt32();
-		scrambleBuff = buf.readBytes(8);
-		filler1 = buf.readByte();
-		serverCapabilities = buf.readUInt16();
-		serverLang = buf.readByte();
-		serverStatus = buf.readUInt16();
-		filler2 = buf.readBytes(13);
-		lastScrambleBuff = buf.readBytes(13);
 	}
 }
