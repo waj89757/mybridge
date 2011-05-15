@@ -1,11 +1,13 @@
-package mybridge.core.handle;
+package mybridge.util;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 public class MysqlServerDef {
 	public static List<String> variableList = new ArrayList<String>();
 	public static List<String> coolationList = new ArrayList<String>();
+	public static HashMap<Integer, String> index2Charset = new HashMap<Integer, String>();
 	static {
 		variableList.add("character_set_client,utf8");
 		variableList.add("character_set_connection,utf8");
@@ -104,5 +106,7 @@ public class MysqlServerDef {
 		coolationList.add("binary,binary,63,Yes,Yes,1");
 		coolationList.add("geostd8_general_ci,geostd8,92,Yes,,0");
 		coolationList.add("geostd8_bin,geostd8,93,,,0");
+
+		index2Charset.put(8, "latin1");
 	}
 }

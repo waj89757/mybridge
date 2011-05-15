@@ -14,6 +14,7 @@ import org.apache.commons.logging.LogFactory;
 import mybridge.core.config.MainConfig;
 import mybridge.core.packet.*;
 import mybridge.core.sqlparser.*;
+import mybridge.util.MysqlServerDef;
 
 public abstract class DefaultHandle implements IHandle {
 	static Log logger = LogFactory.getLog(DefaultHandle.class);

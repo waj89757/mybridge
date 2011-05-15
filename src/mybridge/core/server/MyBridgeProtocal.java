@@ -9,13 +9,14 @@ import org.apache.commons.logging.LogFactory;
 
 import xnet.core.util.IOBuffer;
 import mybridge.core.config.MainConfig;
-import mybridge.core.handle.DefaultHandle;
+import mybridge.core.handle.IHandle;
 import mybridge.core.packet.*;
+import mybridge.util.MysqlServerDef;
 
 public class MyBridgeProtocal {
 	static Log logger = LogFactory.getLog(MyBridgeProtocal.class);
 
-	DefaultHandle handle;// 连接
+	IHandle handle;// 连接
 	MyBridgeSession session;// 链接对应的session
 	State state;// 当前协议交互状态
 	public byte packetNum = 0;// 下一个packet的序列号
@@ -68,6 +69,11 @@ public class MyBridgeProtocal {
 				user = auth.user.substring(0, auth.user.length() - 1);
 			}
 			try {
+				// 设置初始编码
+				if (MysqlServerDef.index2Charset.containsKey((int) auth.charsetNum)) {
+					handle.setCharset(MysqlServerDef.index2Charset.get((int) auth.charsetNum));
+				}
+				// 验证用户密码
 				if (checkAuth(user, auth.pass)) {
 					writePacket(writeBuf, new PacketOk());
 					break;
@@ -177,7 +183,7 @@ public class MyBridgeProtocal {
 		if (!MainConfig.getServerConfig().getUserName().equals(clientUser)) {
 			return false;
 		}
-		if (cPass.length ==0 && MainConfig.getServerConfig().getPassword().length() == 0) {
+		if (cPass.length == 0 && MainConfig.getServerConfig().getPassword().length() == 0) {
 			return true;
 		}
 		byte[] sPass = encodePassword(MainConfig.getServerConfig().getPassword());
