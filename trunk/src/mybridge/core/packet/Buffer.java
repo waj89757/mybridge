@@ -169,6 +169,11 @@ public class Buffer {
 		byte[] tmp = readBytes((int) len);
 		return new String(tmp);
 	}
+	public byte[] readLCBytes() {
+		long len = readLCB();
+		byte[] tmp = readBytes((int) len);
+		return tmp;
+	}
 
 	public String readRemainString() {
 		int len = buf.length - pos;

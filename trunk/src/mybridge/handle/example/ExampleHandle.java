@@ -6,13 +6,13 @@ import java.util.Iterator;
 import java.util.List;
 
 import mybridge.core.handle.Field;
-import mybridge.core.handle.Handle;
+import mybridge.core.handle.DefaultHandle;
 import mybridge.core.handle.ResultSet;
 import mybridge.core.sqlparser.Cond;
 import mybridge.core.sqlparser.Limit;
 import mybridge.core.sqlparser.Order;
 
-public class ExampleHandle extends Handle {
+public class ExampleHandle extends DefaultHandle {
 	static HashMap<String, ArrayList<HashMap<String, String>>> data = new HashMap<String, ArrayList<HashMap<String, String>>>();
 
 	public List<HashMap<String, String>> getData() {

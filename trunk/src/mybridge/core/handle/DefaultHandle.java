@@ -15,8 +15,8 @@ import mybridge.core.config.MainConfig;
 import mybridge.core.packet.*;
 import mybridge.core.sqlparser.*;
 
-public abstract class Handle {
-	static Log logger = LogFactory.getLog(Handle.class);
+public abstract class DefaultHandle implements IHandle {
+	static Log logger = LogFactory.getLog(DefaultHandle.class);
 	protected Table table;
 	String db = "mybridge";
 	String charset = "utf8";
