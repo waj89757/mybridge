@@ -5,6 +5,10 @@ import java.util.HashMap;
 import java.util.List;
 
 public class MysqlServerDef {
+	public static final int COM_QUIT = 1;
+	public static final int COM_QUERY = 3;
+	public static final int COM_INIT_DB = 2;
+	
 	public static List<String> variableList = new ArrayList<String>();
 	public static List<String> coolationList = new ArrayList<String>();
 	public static HashMap<Integer, String> index2Charset = new HashMap<Integer, String>();

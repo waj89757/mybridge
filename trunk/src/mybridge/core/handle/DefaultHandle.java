@@ -313,11 +313,11 @@ public abstract class DefaultHandle implements IHandle {
 	 * 
 	 * @param db
 	 */
-	public void setDb(String db) {
+	public void setDb(String db) throws Exception {
 		this.db = db;
 	}
 
-	public List<Packet> executeCommand(PacketCommand cmd) {
+	public List<Packet> executeCommand(PacketCommand cmd) throws Exception {
 		List<Packet> packetList = new ArrayList<Packet>();
 
 		if (cmd.type != 3) {

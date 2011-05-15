@@ -1,18 +1,23 @@
 package mybridge.core.config;
 
 import mybridge.core.handle.Field;
-import mybridge.core.handle.DefaultHandle;
 import mybridge.core.handle.IHandle;
 import mybridge.core.handle.Table;
 import mybridge.handle.example.ExampleHandle;
 
 public class ServerConfig {
-	public String ip = "0.0.0.0";
-	public int port = 10000;
-	public int threadNum = Runtime.getRuntime().availableProcessors() + 1;
-	public int maxConnection = 1000;
-	public int readTimeout = 0;
-	public int writeTimeout = 0;
+	String ip = "0.0.0.0";
+	int port = 10000;
+	int threadNum = Runtime.getRuntime().availableProcessors() + 1;
+	int maxConnection = 1000;
+	int readTimeout = 0;
+	int writeTimeout = 0;
+	String userName = "";
+	String password = "";
+	Class<?> tableClass = Table.class;
+	Class<?> fieldClass = Field.class;
+	Class<?> handleClass = ExampleHandle.class;
+
 	public String getUserName() {
 		return userName;
 	}
@@ -28,12 +33,6 @@ public class ServerConfig {
 	public void setPassword(String password) {
 		this.password = password;
 	}
-
-	public String userName = "";
-	public String password = "";
-	Class<?> tableClass = Table.class;
-	Class<?> fieldClass = Field.class;
-	Class<?> handleClass = ExampleHandle.class;
 
 	public String getIp() {
 		return ip;
@@ -87,7 +86,7 @@ public class ServerConfig {
 		return tableClass;
 	}
 
-	public void setTableClass(String className) throws Exception {
+	public void setTableCls(String className) throws Exception {
 		Class<?> cls = Class.forName(className);
 		if (cls == null) {
 			throw new Exception("load handle class error");
@@ -102,7 +101,7 @@ public class ServerConfig {
 		return fieldClass;
 	}
 
-	public void setFieldClass(String className) throws Exception {
+	public void setFieldCls(String className) throws Exception {
 		Class<?> cls = Class.forName(className);
 		if (cls == null) {
 			throw new Exception("load handle class error");
@@ -117,22 +116,23 @@ public class ServerConfig {
 		return handleClass;
 	}
 
-	public void setHandleClass(String className) throws Exception {
+	public void setHandleCls(String className) throws Exception {
 		Class<?> cls = Class.forName(className);
 		if (cls == null) {
 			throw new Exception("load handle class error");
 		}
 		if (!cls.isAssignableFrom(IHandle.class)) {
-			throw new Exception("handle class is not a subclass of mybridge.core.Handle");
+			//@todo
+			//throw new Exception("handle class is not a subclass of mybridge.core.IHandle");
 		}
 		handleClass = cls;
 	}
 
 	public IHandle getHandle() throws InstantiationException,
 			IllegalAccessException {
-		return (DefaultHandle) this.handleClass.newInstance();
+		return (IHandle) this.handleClass.newInstance();
 	}
-	
+
 	public String toString() {
 		String info = "";
 		info += String.format("\nip=%s\n", ip);

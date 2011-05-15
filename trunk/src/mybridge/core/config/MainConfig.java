@@ -23,7 +23,7 @@ public class MainConfig {
 	static void loadServerConfig() throws Exception {
 		Digester digester = new Digester();
 		digester.setValidating(false);
-		digester.addObjectCreate("mybridge/server", "mybridge.core.config.ServerConfig");
+		digester.addObjectCreate("mybridge/server", ServerConfig.class.getName());
 		digester.addSetProperties("mybridge/server");
 		serverConfig = (ServerConfig) digester.parse(new File("./conf/server.xml"));
 	}
@@ -35,7 +35,7 @@ public class MainConfig {
 
 		Digester digester = new Digester();
 		digester.setValidating(false);
-		digester.addObjectCreate("mybridge/tableset", "mybridge.core.config.TableConfig");
+		digester.addObjectCreate("mybridge/tableset",TableConfig.class.getName());
 		digester.addSetProperties("mybridge/tableset");
 		digester.addObjectCreate("mybridge/tableset/table", serverConfig.getTableClass().getName());
 		digester.addSetProperties("mybridge/tableset/table");
