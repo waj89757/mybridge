@@ -10,8 +10,12 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import org.apache.commons.digester.Digester;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.xml.sax.SAXException;
 
 import com.mchange.v2.c3p0.ComboPooledDataSource;
@@ -29,7 +33,9 @@ import mybridge.util.MysqlDefs;
 import mybridge.util.MysqlServerDef;
 
 public class MysqlProxyHandle implements IHandle {
+	static Log logger = LogFactory.getLog(MysqlProxyHandle.class);
 	static ConnectionPool pool;
+	static Pattern pattern = Pattern.compile("^(INSERT|UPDATE|DELETE|BEGIN|CREATE|ALTER|REPLACE)", Pattern.CASE_INSENSITIVE);
 	String charset = "latin1";
 	String db = "";
 	Connection master;
@@ -61,7 +67,14 @@ public class MysqlProxyHandle implements IHandle {
 		if (cmd.type == MysqlServerDef.COM_QUIT) {
 			return null;
 		}
-		if (cmd.type != MysqlServerDef.COM_INIT_DB) {
+		if (cmd.type == MysqlServerDef.COM_FIELD_LIST) {
+			packetList.add(new PacketEof());
+			return packetList;
+			//String table = new String(cmd.value, charset);
+			//String sql = "SHOW FULL FIELDS FROM " + table;
+			//return execute(sql);
+		}
+		if (cmd.type == MysqlServerDef.COM_INIT_DB) {
 			String db = new String(cmd.value, charset);
 			String sql = "USE " + db;
 			setDb(db);
@@ -76,6 +89,7 @@ public class MysqlProxyHandle implements IHandle {
 	}
 
 	List<Packet> execute(String sql) {
+		logger.info(sql);
 		List<Packet> packetList = new ArrayList<Packet>();
 		try {
 			packetList = executeSql(sql);
@@ -90,12 +104,44 @@ public class MysqlProxyHandle implements IHandle {
 	 * 
 	 * @param sql
 	 * @return
+	 * @throws SQLException 
 	 */
-	Connection getConnection(String sql) {
-		if (master == null) {
-			master = pool.getMaster();
+	Connection getConnection(String sql) throws SQLException {
+		//如果已经走主库,则后续的都走主库
+		if (master != null) {
+			return master;
 		}
-		return master;
+
+		//判断sql类型
+		Connection conn = null;
+		boolean updateSql = false;
+		Matcher m = pattern.matcher(sql);
+		if (m.find()) {
+			updateSql = true;
+		}
+
+		if (updateSql) {
+			master = pool.getMaster();
+			conn = master;
+			initConnection(conn);
+		} else {
+			if (slave != null) {
+				conn = slave;
+			} else {
+				slave = pool.getSlave();
+				conn = slave;
+				initConnection(conn);
+			}
+		}
+		return conn;
+	}
+
+	void initConnection(Connection conn) throws SQLException {
+		Statement statement = conn.createStatement();
+		if (db.length() > 0) {
+			statement.execute("USE " + db);
+		}
+		statement.execute("SET NAMES " + charset);
 	}
 
 	/**
@@ -165,6 +211,7 @@ public class MysqlProxyHandle implements IHandle {
 	}
 
 	public void close() {
+		logger.info("ENTER");
 		if (master != null) {
 			try {
 				master.close();
@@ -182,6 +229,7 @@ public class MysqlProxyHandle implements IHandle {
 	}
 
 	public void open() {
+		logger.info("ENTER");
 	}
 
 	public void setCharset(String charset) throws Exception {

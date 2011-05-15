@@ -167,6 +167,8 @@ public class MyBridgeProtocal {
 		writeBuf.writeBytes(bodyBytes);
 		writeBuf.limit(writeBuf.position());
 		writeBuf.position(0);
+		//System.out.println(packet.getClass());
+		//System.out.println(packet);
 		session.setNextState(MyBridgeSession.STATE_WRITE);
 	}
 
