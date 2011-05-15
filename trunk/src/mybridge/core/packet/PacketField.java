@@ -13,7 +13,7 @@ public class PacketField extends Packet {
 	public long length;
 	public byte type;
 	public int flag = 0;
-	public byte decimals;
+	public byte decimals = 0;
 	public byte[] fill2 = new byte[2];
 
 	@Override
