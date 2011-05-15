@@ -1,10 +1,9 @@
 #!/bin/bash
 
 jars=(`ls ./lib/`)
-cp="./bin"
+cp="./dest/mybridge.jar"
 for jar in ${jars[*]};
 do
    cp=$cp":./lib/"$jar
 done 
-/home/$USER/local/jdk/bin/java -cp $cp mybridge.server.MyBridgeServer
-echo $cp
+/home/$USER/local/jdk/bin/java -cp $cp mybridge.core.server.MyBridgeServer
