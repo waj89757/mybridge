@@ -9,7 +9,7 @@
 	<classpathentry kind="lib" path="lib/mysql-connector-java-5.0.8-bin.jar"/>
 	<classpathentry kind="lib" path="lib/memcached-2.6rc2.jar"/>
 	<classpathentry kind="lib" path="lib/c3p0-0.9.1.2.jar"/>
-	<classpathentry kind="lib" path="lib/xnet.jar"/>
+	<classpathentry kind="lib" path="lib/xnet.jar" sourcepath="/xnet"/>
 	<classpathentry kind="lib" path="lib/antlr-3.2.jar" sourcepath="D:/greensoft/apache/antlr/antlr-3.2/runtime/Java/src"/>
 	<classpathentry kind="lib" path="lib/commons-digester-2.1.jar"/>
 	<classpathentry kind="lib" path="lib/commons-beanutils-1.8.3.jar"/>
