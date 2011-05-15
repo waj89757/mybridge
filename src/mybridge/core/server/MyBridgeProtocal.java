@@ -73,6 +73,10 @@ public class MyBridgeProtocal {
 				if (MysqlServerDef.index2Charset.containsKey((int) auth.charsetNum)) {
 					handle.setCharset(MysqlServerDef.index2Charset.get((int) auth.charsetNum));
 				}
+				//设置数据库
+				if (auth.dbName.length() > 0) {
+					handle.setDb(auth.dbName);
+				}
 				// 验证用户密码
 				if (checkAuth(user, auth.pass)) {
 					writePacket(writeBuf, new PacketOk());
