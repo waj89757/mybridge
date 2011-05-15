@@ -25,4 +25,19 @@ public class MysqlProxyHandle implements IHandle {
 		return packetList;
 	}
 
+	public void close() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public void open() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public void setCharset(String string) throws Exception {
+		// TODO Auto-generated method stub
+		
+	}
+
 }

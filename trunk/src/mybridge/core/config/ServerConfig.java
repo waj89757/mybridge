@@ -128,7 +128,7 @@ public class ServerConfig {
 		handleClass = cls;
 	}
 
-	public DefaultHandle getHandle() throws InstantiationException,
+	public IHandle getHandle() throws InstantiationException,
 			IllegalAccessException {
 		return (DefaultHandle) this.handleClass.newInstance();
 	}
