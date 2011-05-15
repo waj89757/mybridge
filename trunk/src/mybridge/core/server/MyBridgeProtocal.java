@@ -22,8 +22,7 @@ public class MyBridgeProtocal {
 	public byte packetNum = 0;// 下一个packet的序列号
 	Iterator<Packet> resultIter = null;// 要写的packet迭代器，只要不为空就会一直写状态直到为空
 
-	public MyBridgeProtocal(MyBridgeSession session)
-			throws InstantiationException, IllegalAccessException {
+	public MyBridgeProtocal(MyBridgeSession session) throws InstantiationException, IllegalAccessException {
 		this.session = session;
 		state = State.WRITE_INIT;
 
@@ -95,8 +94,9 @@ public class MyBridgeProtocal {
 			state = State.WRITE_RESULT;
 			PacketCommand cmd = new PacketCommand();
 			cmd.putBytes(readBuf.getBytes(0, readBuf.limit()));
+			List<Packet> resultList = null;
 			try {
-				List<Packet> resultList = handle.executeCommand(cmd);
+				resultList = handle.executeCommand(cmd);
 				if (resultList == null || resultList.size() == 0) {
 					session.setNextState(MyBridgeSession.STATE_CLOSE);
 					return;
@@ -107,10 +107,7 @@ public class MyBridgeProtocal {
 				session.setNextState(MyBridgeSession.STATE_CLOSE);
 				return;
 			}
-			if (resultIter.hasNext()) {
-				Packet packet = resultIter.next();
-				writePacket(writeBuf, packet);
-			}
+			writePacketList(writeBuf, resultList);
 			break;
 		case CLOSE:
 		default:
@@ -133,18 +130,35 @@ public class MyBridgeProtocal {
 			readPacket(readBuf);
 			break;
 		case WRITE_RESULT:
-			if (resultIter != null && resultIter.hasNext()) {
-				Packet packet = resultIter.next();
-				writePacket(writeBuf, packet);
-			} else {
-				state = State.READ_COMMOND;
-				readPacket(readBuf);
-			}
+			state = State.READ_COMMOND;
+			readPacket(readBuf);
 			break;
 		case CLOSE:
 		default:
 			session.setNextState(MyBridgeSession.STATE_CLOSE);
 		}
+	}
+
+	public void writePacketList(IOBuffer writeBuf, List<Packet> packetList) {
+		logger.info("writePacketList");
+
+		writeBuf.position(0);
+		for (Packet packet : packetList) {
+			logger.info("writePacketList foreach");
+			byte[] bodyBytes = packet.getBytes();
+			PacketHeader header = new PacketHeader();
+			header.packetLen = bodyBytes.length;
+			header.packetNum = packetNum;
+			packetNum++;
+			logger.info("writePacketList foreach " + packet.getClass().getName());
+			writeBuf.writeBytes(header.getBytes());
+			writeBuf.writeBytes(bodyBytes);
+			logger.info("writePacketList foreach over");
+		}
+		writeBuf.limit(writeBuf.position());
+		writeBuf.position(0);
+		session.setNextState(MyBridgeSession.STATE_WRITE);
+		logger.info("writePacketList ok");
 	}
 
 	/**
@@ -154,7 +168,7 @@ public class MyBridgeProtocal {
 	 * @param packet
 	 */
 	public void writePacket(IOBuffer writeBuf, Packet packet) {
-		logger.debug("DEBUG ENTER");
+		logger.info("writePacket");
 
 		byte[] bodyBytes = packet.getBytes();
 		PacketHeader header = new PacketHeader();
