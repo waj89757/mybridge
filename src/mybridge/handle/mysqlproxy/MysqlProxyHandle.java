@@ -35,7 +35,7 @@ import mybridge.util.MysqlServerDef;
 public class MysqlProxyHandle implements IHandle {
 	static Log logger = LogFactory.getLog(MysqlProxyHandle.class);
 	static ConnectionPool pool;
-	static Pattern pattern = Pattern.compile("^(INSERT|UPDATE|DELETE|BEGIN|CREATE|ALTER|REPLACE)", Pattern.CASE_INSENSITIVE);
+	static Pattern pattern = Pattern.compile("^(INSERT|UPDATE|DELETE|BEGIN|CREATE|ALTER|REPLACE|DROP)", Pattern.CASE_INSENSITIVE);
 	String charset = "latin1";
 	String db = "";
 	Connection master;
@@ -89,6 +89,7 @@ public class MysqlProxyHandle implements IHandle {
 	}
 
 	List<Packet> execute(String sql) {
+		logger.info("begin execute");
 		logger.info(sql);
 		List<Packet> packetList = new ArrayList<Packet>();
 		try {
@@ -96,6 +97,7 @@ public class MysqlProxyHandle implements IHandle {
 		} catch (Exception e) {
 			packetList.add(new PacketError());
 		}
+		logger.info("end execute");
 		return packetList;
 	}
 
