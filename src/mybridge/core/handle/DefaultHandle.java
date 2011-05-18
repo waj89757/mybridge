@@ -332,7 +332,7 @@ public abstract class DefaultHandle implements IHandle {
 
 		try {
 			String sql = new String(cmd.value, charset);
-			logger.info("sql:[" + sql + "]");
+			logger.debug("sql:[" + sql + "]");
 			// 处理mysql cleint库初始化sql
 			if (sql.startsWith("SHOW SESSION VARIABLES")) {
 				return packVariableResult();

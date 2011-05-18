@@ -22,7 +22,8 @@ public class MyBridgeProtocal {
 	public byte packetNum = 0;// 下一个packet的序列号
 	Iterator<Packet> resultIter = null;// 要写的packet迭代器，只要不为空就会一直写状态直到为空
 
-	public MyBridgeProtocal(MyBridgeSession session) throws InstantiationException, IllegalAccessException {
+	public MyBridgeProtocal(MyBridgeSession session)
+			throws InstantiationException, IllegalAccessException {
 		this.session = session;
 		state = State.WRITE_INIT;
 
@@ -72,7 +73,7 @@ public class MyBridgeProtocal {
 				if (MysqlServerDef.index2Charset.containsKey((int) auth.charsetNum)) {
 					handle.setCharset(MysqlServerDef.index2Charset.get((int) auth.charsetNum));
 				}
-				//设置数据库
+				// 设置数据库
 				if (auth.dbName.length() > 0) {
 					handle.setDb(auth.dbName);
 				}
@@ -92,6 +93,7 @@ public class MyBridgeProtocal {
 			break;
 		case READ_COMMOND:
 			state = State.WRITE_RESULT;
+			long start = System.currentTimeMillis();
 			PacketCommand cmd = new PacketCommand();
 			cmd.putBytes(readBuf.getBytes(0, readBuf.limit()));
 			List<Packet> resultList = null;
@@ -108,6 +110,8 @@ public class MyBridgeProtocal {
 				return;
 			}
 			writePacketList(writeBuf, resultList);
+			long cost = System.currentTimeMillis() - start;
+			logger.info("finished commond " + cost);
 			break;
 		case CLOSE:
 		default:
@@ -140,25 +144,19 @@ public class MyBridgeProtocal {
 	}
 
 	public void writePacketList(IOBuffer writeBuf, List<Packet> packetList) {
-		logger.info("writePacketList");
-
 		writeBuf.position(0);
 		for (Packet packet : packetList) {
-			logger.info("writePacketList foreach");
 			byte[] bodyBytes = packet.getBytes();
 			PacketHeader header = new PacketHeader();
 			header.packetLen = bodyBytes.length;
 			header.packetNum = packetNum;
 			packetNum++;
-			logger.info("writePacketList foreach " + packet.getClass().getName());
 			writeBuf.writeBytes(header.getBytes());
 			writeBuf.writeBytes(bodyBytes);
-			logger.info("writePacketList foreach over");
 		}
 		writeBuf.limit(writeBuf.position());
 		writeBuf.position(0);
 		session.setNextState(MyBridgeSession.STATE_WRITE);
-		logger.info("writePacketList ok");
 	}
 
 	/**
@@ -181,8 +179,8 @@ public class MyBridgeProtocal {
 		writeBuf.writeBytes(bodyBytes);
 		writeBuf.limit(writeBuf.position());
 		writeBuf.position(0);
-		//System.out.println(packet.getClass());
-		//System.out.println(packet);
+		// System.out.println(packet.getClass());
+		// System.out.println(packet);
 		session.setNextState(MyBridgeSession.STATE_WRITE);
 	}
 
@@ -203,7 +201,8 @@ public class MyBridgeProtocal {
 		if (!MainConfig.getServerConfig().getUserName().equals(clientUser)) {
 			return false;
 		}
-		if (cPass.length == 0 && MainConfig.getServerConfig().getPassword().length() == 0) {
+		if (cPass.length == 0
+				&& MainConfig.getServerConfig().getPassword().length() == 0) {
 			return true;
 		}
 		byte[] sPass = encodePassword(MainConfig.getServerConfig().getPassword());

@@ -1,6 +1,6 @@
 <mybridge>
-	<server ip="127.0.0.1" port="8306" threadNum="4" userName="root"
-		password=""   />
+	<server ip="127.0.0.1" port="8306" threadNum="16" userName="root"
+		password="" />
 	<tableset>
 		<table name="useracct" db="mybridge">
 			<field name="userid" len="10" type="int" value="" charset="utf8" />
