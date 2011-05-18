@@ -13,9 +13,9 @@ MyBridge框架分为4层，从下至上依次为：
 = 实例 =
 
 MyBridge的源码包自带了3个实例，分别为：
- **MysqlProxy*：实现了一个支持读写分离的Mysql连接池中间层。
- *Lucene：全文检索服务，主要是对lucene3.0的网络封装。
- *Example：一个纯内存数据库demo，用hashmap、list容器实现，主要供开发者参考。
+ * *MysqlProxy*：实现了一个支持读写分离的Mysql连接池中间层。
+ * Lucene：全文检索服务，主要是对lucene3.0的网络封装。
+ * Example：一个纯内存数据库demo，用hashmap、list容器实现，主要供开发者参考。
 
 = 用户API =
 
