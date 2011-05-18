@@ -2,7 +2,7 @@
 
 MyBridge是一个纯java实现的基于Mysql协议的高性能的异步网络框架，基于MyBridge开发的Server端只需关注业务逻辑实现部分，就可以让Client通过现有的MysqlClient库来调用，直接复用了已经很成熟的MysqlClient端技术，如协议实现、负载均衡、读写分离等逻辑，同时避免重复开发client端的工作量，也使得新服务的推广变得简单和容易。
 
-= Mybridge框架结构 =
+= 框架结构 =
 
 MyBridge框架分为4层，从下至上依次为：
  *1网络IO层：采用开源的xnet异步网络框架，完成异步的网络事件处理。
@@ -10,14 +10,14 @@ MyBridge框架分为4层，从下至上依次为：
  *3Sql解析层：将原始sql解析成结构化的命令调用，提供给下一层调用。
  *4命令执行层：执行具体的体命令，这一层即是使用者需要关心和实现。
 
-= MyBridge的实例 =
+= 实例 =
 
 MyBridge的源码包自带了3个实例，分别为：
  *1MysqlProxy：实现了一个支持读写分离的Mysql连接池中间层。
  *2Lucene：全文检索服务，主要是对lucene3.0的网络封装。
  *3Example：一个纯内存数据库demo，用hashmap、list容器实现，主要供开发者参考。
 
-= Mybridge用户API =
+= 用户API =
 
 ||命令类型||callback函数||说明||
 ||Select||doSelect||查询语句||
