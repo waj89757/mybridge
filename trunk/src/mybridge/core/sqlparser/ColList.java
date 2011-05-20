@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ColList {
-	public List<String> cols = new ArrayList<String>();
+	List<String> cols = new ArrayList<String>();
 
 	/**
 	 * 添加列

@@ -15,7 +15,7 @@ public class UpdateStatement extends Statement {
 		this.where = where;
 	}
 
-	public List<String> getColList() {
+	public List<String> getCols() {
 		return colList;
 	}
 

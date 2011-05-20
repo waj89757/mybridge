@@ -1,4 +1,4 @@
-package mybridge.core.handle;
+package mybridge.handle.simple;
 
 import java.util.ArrayList;
 import java.util.List;

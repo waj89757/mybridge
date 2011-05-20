@@ -3,7 +3,7 @@ package mybridge.test;
 import java.io.File;
 import java.io.IOException;
  
-import mybridge.core.config.TableConfig; 
+import mybridge.handle.example.TableConfig;
 
 import org.apache.commons.digester.Digester;
 import org.xml.sax.SAXException;

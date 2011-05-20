@@ -8,26 +8,26 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 import xnet.core.util.IOBuffer;
-import mybridge.core.config.MainConfig;
-import mybridge.core.handle.IHandle;
 import mybridge.core.packet.*;
-import mybridge.util.MysqlServerDef;
+import mybridge.core.util.MysqlServerDef;
 
 public class MyBridgeProtocal {
 	static Log logger = LogFactory.getLog(MyBridgeProtocal.class);
 
-	IHandle handle;// 连接
+	MyBridgeHandle handle;// 连接
 	MyBridgeSession session;// 链接对应的session
 	State state;// 当前协议交互状态
-	public byte packetNum = 0;// 下一个packet的序列号
+	byte packetNum = 0;// 下一个packet的序列号
 	Iterator<Packet> resultIter = null;// 要写的packet迭代器，只要不为空就会一直写状态直到为空
+	static Class<?> handleClass;
+	static String userName;
+	static String passWord;
 
-	public MyBridgeProtocal(MyBridgeSession session)
-			throws InstantiationException, IllegalAccessException {
+	public MyBridgeProtocal(MyBridgeSession session) throws InstantiationException, IllegalAccessException {
 		this.session = session;
 		state = State.WRITE_INIT;
 
-		handle = MainConfig.getServerConfig().getHandle();
+		handle = (MyBridgeHandle) handleClass.newInstance();
 		handle.open();
 	}
 
@@ -198,14 +198,13 @@ public class MyBridgeProtocal {
 	}
 
 	boolean checkAuth(String clientUser, byte[] cPass) throws Exception {
-		if (!MainConfig.getServerConfig().getUserName().equals(clientUser)) {
+		if (!userName.equals(clientUser)) {
 			return false;
 		}
-		if (cPass.length == 0
-				&& MainConfig.getServerConfig().getPassword().length() == 0) {
+		if (cPass.length == 0 && passWord.length() == 0) {
 			return true;
 		}
-		byte[] sPass = encodePassword(MainConfig.getServerConfig().getPassword());
+		byte[] sPass = encodePassword(passWord);
 		if (cPass.length != sPass.length) {
 			return false;
 		}

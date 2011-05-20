@@ -1,4 +1,4 @@
-package mybridge.util;
+package mybridge.core.util;
 
 import java.util.ArrayList;
 import java.util.HashMap;

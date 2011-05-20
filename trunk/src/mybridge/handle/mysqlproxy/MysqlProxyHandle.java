@@ -20,7 +20,6 @@ import org.xml.sax.SAXException;
 
 import com.mchange.v2.c3p0.ComboPooledDataSource;
 
-import mybridge.core.handle.IHandle;
 import mybridge.core.packet.Packet;
 import mybridge.core.packet.PacketCommand;
 import mybridge.core.packet.PacketEof;
@@ -29,10 +28,11 @@ import mybridge.core.packet.PacketField;
 import mybridge.core.packet.PacketOk;
 import mybridge.core.packet.PacketResultSet;
 import mybridge.core.packet.PacketRow;
-import mybridge.util.MysqlDefs;
-import mybridge.util.MysqlServerDef;
+import mybridge.core.server.MyBridgeHandle;
+import mybridge.core.util.MysqlDefs;
+import mybridge.core.util.MysqlServerDef;
 
-public class MysqlProxyHandle implements IHandle {
+public class MysqlProxyHandle implements MyBridgeHandle {
 	static Log logger = LogFactory.getLog(MysqlProxyHandle.class);
 	static ConnectionPool pool;
 	static Pattern pattern = Pattern.compile("^(INSERT|UPDATE|DELETE|BEGIN|CREATE|ALTER|REPLACE|DROP)", Pattern.CASE_INSENSITIVE);
