@@ -32,10 +32,10 @@ import mybridge.core.server.MyBridgeHandle;
 import mybridge.core.util.MysqlDefs;
 import mybridge.core.util.MysqlServerDef;
 
-public class MysqlProxyHandle implements MyBridgeHandle {
-	static Log logger = LogFactory.getLog(MysqlProxyHandle.class);
+public class Handle implements MyBridgeHandle {
+	static Log logger = LogFactory.getLog(Handle.class);
 	static ConnectionPool pool;
-	static Pattern pattern = Pattern.compile("^(INSERT|UPDATE|DELETE|BEGIN|CREATE|ALTER|REPLACE|DROP)", Pattern.CASE_INSENSITIVE);
+	static Pattern pattern = Pattern.compile("^(INSERT|UPDATE|DELETE|BEGIN|CREATE|ALTER|REPLACE|DROP|COMMIT|ROLLBACK)", Pattern.CASE_INSENSITIVE);
 	String charset = "latin1";
 	String db = "";
 	Connection master;
@@ -70,9 +70,6 @@ public class MysqlProxyHandle implements MyBridgeHandle {
 		if (cmd.type == MysqlServerDef.COM_FIELD_LIST) {
 			packetList.add(new PacketEof());
 			return packetList;
-			//String table = new String(cmd.value, charset);
-			//String sql = "SHOW FULL FIELDS FROM " + table;
-			//return execute(sql);
 		}
 		if (cmd.type == MysqlServerDef.COM_INIT_DB) {
 			String db = new String(cmd.value, charset);
@@ -147,7 +144,7 @@ public class MysqlProxyHandle implements MyBridgeHandle {
 	}
 
 	/**
-	 * 执行sql
+	 * 执行sqlmaster = pool.getMaster();
 	 * 
 	 * @param conn
 	 * @param sql
