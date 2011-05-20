@@ -31,7 +31,7 @@ package mybridge.core.sqlparser;
 	    	}
 	    	return null;
 	}
-        public void reportError(RecognitionException e) {
+  public void reportError(RecognitionException e) {
 		String hdr = getErrorHeader(e);
 		String msg = getErrorMessage(e, getTokenNames());
 		errorMsg =hdr + ":" + msg;
@@ -168,7 +168,7 @@ SELECT	: S E L E C T;
 WHERE 	: W H E R E ;
 FROM	: F R O M;
 ID 	: ('a'..'z'|'A'..'Z'|'_') ('0'..'9'|'a'..'z'|'A'..'Z'|'_')* ;
-STRING  :  '"' (~('\\'|'"'))* '"' |  '\'' (~('\\'|'"'))* '\''  ;
+STRING  :  ('"' (~('\\'|'"'))* '"') | ('\'' (~('\\'|'\''))* '\'')  ;
 NUM	: ('0'..'9')+('.' ('0'..'9')+)?;
 
 fragment A : 'A'|'a';

@@ -6,4 +6,4 @@ for jar in ${jars[*]};
 do
    cp=$cp":./lib/"$jar
 done 
-/home/$USER/local/jdk1.6/bin/java -cp $cp mybridge.core.server.MyBridgeServer
+/home/$USER/local/jdk/bin/java -Xmx1g -Xms1g -Xmn512m -cp $cp mybridge.core.server.MyBridgeServer

@@ -1,13 +1,15 @@
 package mybridge.core.sqlparser;
 
-public class SelectStatement extends Statement {
-	public ColList colList;
-	public Order order;
-	public Limit limit;
-	public Where where = new Where();
+import java.util.List;
 
-	public ColList getColList() {
-		return colList;
+public class SelectStatement extends Statement {
+	ColList colList;
+	Order order;
+	Limit limit;
+	Where where = new Where();
+
+	public List<String> getCols() {
+		return colList.getCols();
 	}
 
 	public void setColList(ColList colList) {
@@ -38,10 +40,6 @@ public class SelectStatement extends Statement {
 
 	public void setLimit(Limit limit) {
 		this.limit = limit;
-	}
-
-	public SelectStatement() {
-
-	}
+	} 
 
 }

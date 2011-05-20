@@ -1,4 +1,4 @@
-package mybridge.core.handle;
+package mybridge.handle.simple;
 
 /**
  * 通用的字段类型，可以扩展

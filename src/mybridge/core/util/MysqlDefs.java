@@ -22,7 +22,7 @@
 
 
  */
-package mybridge.util;
+package mybridge.core.util;
 
 import java.sql.Types;
 

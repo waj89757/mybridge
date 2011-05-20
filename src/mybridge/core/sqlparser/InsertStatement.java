@@ -1,11 +1,13 @@
 package mybridge.core.sqlparser;
 
+import java.util.List;
+
 public class InsertStatement extends Statement {
 	ColList colList;
 	Values values;
 
-	public ColList getColList() {
-		return colList;
+	public List<String> getCols() {
+		return colList.getCols();
 	}
 
 	public void setColList(ColList colList) {
