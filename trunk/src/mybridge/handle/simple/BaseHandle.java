@@ -13,8 +13,8 @@ import org.apache.commons.logging.LogFactory;
 
 import mybridge.core.packet.*;
 import mybridge.core.server.MyBridgeHandle;
-import mybridge.core.sqlparser.*;
 import mybridge.core.util.MysqlServerDef;
+import mybridge.handle.simple.sqlparser.*;
 
 public abstract class BaseHandle implements MyBridgeHandle {
 	static Log logger = LogFactory.getLog(BaseHandle.class);

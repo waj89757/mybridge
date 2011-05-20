@@ -5,13 +5,13 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 
-import mybridge.core.sqlparser.Cond;
-import mybridge.core.sqlparser.Limit;
-import mybridge.core.sqlparser.Order;
 import mybridge.handle.simple.BaseHandle;
 import mybridge.handle.simple.Field;
 import mybridge.handle.simple.ResultSet;
 import mybridge.handle.simple.Table;
+import mybridge.handle.simple.sqlparser.Cond;
+import mybridge.handle.simple.sqlparser.Limit;
+import mybridge.handle.simple.sqlparser.Order;
 
 public class Handle extends BaseHandle {
 	static HashMap<String, ArrayList<HashMap<String, String>>> data = new HashMap<String, ArrayList<HashMap<String, String>>>();
