@@ -1,4 +1,4 @@
-package mybridge.core.sqlparser;
+package mybridge.handle.simple.sqlparser;
 
 /**
  * 条件语句

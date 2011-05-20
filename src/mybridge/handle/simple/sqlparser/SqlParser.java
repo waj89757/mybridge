@@ -1,6 +1,6 @@
 // $ANTLR 3.2 Sep 23, 2009 12:02:23 /home/quanwei/workspace_java/mybridge/src/mybridge/core/sqlparser/Sql.g 2011-05-20 22:21:37
 
-package mybridge.core.sqlparser;
+package mybridge.handle.simple.sqlparser;
 
 
 import org.antlr.runtime.*;

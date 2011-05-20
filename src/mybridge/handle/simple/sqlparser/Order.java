@@ -1,4 +1,4 @@
-package mybridge.core.sqlparser;
+package mybridge.handle.simple.sqlparser;
 
 public class Order {
 	public static int ASC = 1;

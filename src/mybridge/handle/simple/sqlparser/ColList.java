@@ -1,4 +1,4 @@
-package mybridge.core.sqlparser;
+package mybridge.handle.simple.sqlparser;
 
 import java.util.ArrayList;
 import java.util.List;
