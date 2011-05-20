@@ -29,7 +29,6 @@ import mybridge.core.packet.PacketOk;
 import mybridge.core.packet.PacketResultSet;
 import mybridge.core.packet.PacketRow;
 import mybridge.core.server.MyBridgeHandle;
-import mybridge.core.util.MysqlDefs;
 import mybridge.core.util.MysqlServerDef;
 
 public class Handle implements MyBridgeHandle {
@@ -191,7 +190,7 @@ public class Handle implements MyBridgeHandle {
 			fieldPacket.orgTable = meta.getTableName(i);
 			fieldPacket.name = meta.getColumnName(i);
 			fieldPacket.orgName = meta.getColumnName(i);
-			fieldPacket.type = (byte) MysqlDefs.javaTypeToMysql(meta.getColumnType(i));
+			fieldPacket.type = (byte) MysqlServerDef.javaTypeToMysql(meta.getColumnType(i));
 			fieldPacket.length = meta.getColumnDisplaySize(i);
 			packetList.add(fieldPacket);
 		}

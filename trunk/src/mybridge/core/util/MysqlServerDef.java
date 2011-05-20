@@ -1,5 +1,6 @@
 package mybridge.core.util;
 
+import java.sql.Types;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -9,10 +10,170 @@ public class MysqlServerDef {
 	public static final int COM_QUERY = 3;
 	public static final int COM_INIT_DB = 2;
 	public static final int COM_FIELD_LIST = 4;
-	
+
 	public static List<String> variableList = new ArrayList<String>();
 	public static List<String> coolationList = new ArrayList<String>();
 	public static HashMap<Integer, String> index2Charset = new HashMap<Integer, String>();
+
+	public static final int COM_BINLOG_DUMP = 18;
+
+	public static final int COM_CHANGE_USER = 17;
+
+	public static final int COM_CLOSE_STATEMENT = 25;
+
+	public static final int COM_CONNECT_OUT = 20;
+
+	public static final int COM_END = 29;
+
+	public static final int COM_EXECUTE = 23;
+
+	public static final int COM_FETCH = 28;
+
+	public static final int COM_LONG_DATA = 24;
+
+	public static final int COM_PREPARE = 22;
+
+	public static final int COM_REGISTER_SLAVE = 21;
+
+	public static final int COM_RESET_STMT = 26;
+
+	public static final int COM_SET_OPTION = 27;
+
+	public static final int COM_TABLE_DUMP = 19;
+
+	public static final int CONNECT = 11;
+
+	public static final int CREATE_DB = 5;
+
+	public static final int DEBUG = 13;
+
+	public static final int DELAYED_INSERT = 16;
+
+	public static final int DROP_DB = 6;
+
+	public static final int FIELD_LIST = 4;
+
+	public static final int FIELD_TYPE_BIT = 16;
+
+	public static final int FIELD_TYPE_BLOB = 252;
+
+	public static final int FIELD_TYPE_DATE = 10;
+
+	public static final int FIELD_TYPE_DATETIME = 12;
+
+	// Data Types
+	public static final int FIELD_TYPE_DECIMAL = 0;
+
+	public static final int FIELD_TYPE_DOUBLE = 5;
+
+	public static final int FIELD_TYPE_ENUM = 247;
+
+	public static final int FIELD_TYPE_FLOAT = 4;
+
+	public static final int FIELD_TYPE_GEOMETRY = 255;
+
+	public static final int FIELD_TYPE_INT24 = 9;
+
+	public static final int FIELD_TYPE_LONG = 3;
+
+	public static final int FIELD_TYPE_LONG_BLOB = 251;
+
+	public static final int FIELD_TYPE_LONGLONG = 8;
+
+	public static final int FIELD_TYPE_MEDIUM_BLOB = 250;
+
+	public static final int FIELD_TYPE_NEW_DECIMAL = 246;
+
+	public static final int FIELD_TYPE_NEWDATE = 14;
+
+	public static final int FIELD_TYPE_NULL = 6;
+
+	public static final int FIELD_TYPE_SET = 248;
+
+	public static final int FIELD_TYPE_SHORT = 2;
+
+	public static final int FIELD_TYPE_STRING = 254;
+
+	public static final int FIELD_TYPE_TIME = 11;
+
+	public static final int FIELD_TYPE_TIMESTAMP = 7;
+
+	public static final int FIELD_TYPE_TINY = 1;
+
+	// Older data types
+	public static final int FIELD_TYPE_TINY_BLOB = 249;
+
+	public static final int FIELD_TYPE_VAR_STRING = 253;
+
+	public static final int FIELD_TYPE_VARCHAR = 15;
+
+	//
+	// Constants defined from mysql
+	//
+	// DB Operations
+	public static final int SLEEP = 0;
+
+	public static final int STATISTICS = 9;
+
+	public static final int TIME = 15;
+
+	public static int javaTypeToMysql(int javaType) {
+		int mysqlType;
+		switch (javaType) {
+		case Types.DECIMAL:
+			mysqlType = FIELD_TYPE_DECIMAL;
+			break;
+		case Types.SMALLINT:
+			mysqlType = FIELD_TYPE_SHORT;
+			break;
+		case Types.TINYINT:
+			mysqlType = FIELD_TYPE_TINY;
+			break;
+		case Types.INTEGER:
+			mysqlType = FIELD_TYPE_LONG;
+			break;
+		case Types.REAL:
+			mysqlType = FIELD_TYPE_FLOAT;
+			break;
+		case Types.DOUBLE:
+			mysqlType = FIELD_TYPE_DOUBLE;
+			break;
+		case Types.NULL:
+			mysqlType = FIELD_TYPE_NULL;
+			break;
+		case Types.TIMESTAMP:
+			mysqlType = FIELD_TYPE_TIMESTAMP;
+			break;
+		case Types.BIGINT:
+			mysqlType = FIELD_TYPE_LONGLONG;
+			break;
+		case Types.DATE:
+			mysqlType = FIELD_TYPE_NEWDATE;
+			break;
+		case Types.TIME:
+			mysqlType = FIELD_TYPE_TIME;
+			break;
+		case Types.CHAR:
+			mysqlType = FIELD_TYPE_STRING;
+			break;
+		case Types.LONGVARBINARY:
+			mysqlType = FIELD_TYPE_BLOB;
+			break;
+		case Types.VARCHAR:
+			mysqlType = FIELD_TYPE_VARCHAR;
+			break;
+		case Types.BINARY:
+			mysqlType = FIELD_TYPE_GEOMETRY;
+			break;
+		case Types.BIT:
+			mysqlType = FIELD_TYPE_BIT;
+			break;
+		default:
+			mysqlType = FIELD_TYPE_VARCHAR;
+		}
+		return mysqlType;
+	}
+
 	static {
 		variableList.add("character_set_client,utf8");
 		variableList.add("character_set_connection,utf8");
